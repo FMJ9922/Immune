@@ -45,11 +45,6 @@ public class MenuSceneUI : MonoBehaviour
 
     public void ApplySettingData()
     {
-        /*if(playerName.text != "")
-        {
-            GameManager.Instance.playerName = playerName.text;
-            PlayerPrefs.SetString("PlayerName", playerName.text);
-        }*/
         PlayerPrefs.SetFloat("MusicVolumn", MusicManager.Instance.Volumn);
         PlayerPrefs.SetFloat("SoundVolumn", SoundManager.Instance.Volumn);
         CloseAllCanvas();
