@@ -96,7 +96,7 @@ public class GameManager : MonoBehaviour
         else
         {
             fadeScene = null;
-            Debug.Log("There is no GameObject names 'FadeScene' in this scene");
+            Debug.Log("There is no GameObject names 'FadeImage' in this scene");
         }
     }
 
