@@ -6,27 +6,34 @@ using System;
 
 public class GameManager : MonoBehaviour
 {
-    private static GameManager instance = null;
-    public static GameManager Instance
-    {
-        get
-        {
-            return instance;
-        }
-    }
-
-    public int ilevel;//当前关卡，如果不是关卡值为0，否则为关卡序号，从1开始
+    public static GameManager Instance { get; private set; } = null;
     public string playerName;
     private FadeScene fadeScene;
+    public int iLevel //当前关卡，如果不是关卡值为0，否则为关卡序号，从1开始
+    {
+        set
+        {
+            currentLevel = value;
+            //Debug.Log("set level to:" + currentLevel);
+            if (value != 0) JsonIO.InitLevelData(iLevel);
+
+        }
+        get
+        {
+            return currentLevel;
+        }
+    }
+    [SerializeField] private int currentLevel = 0;
     private void Awake()
     {
-        if (instance != null && instance != this)//检测Instance是否存在且只有一个
+        if (Instance != null && Instance != this)//检测Instance是否存在且只有一个
         {
             Destroy(this.gameObject);
         }
         else
         {
-            instance = this;
+            Instance = this;
+            Debug.Log("Change Instance");
         }
 
         DontDestroyOnLoad(this.gameObject);//加载关卡时不销毁GameManager
@@ -39,6 +46,10 @@ public class GameManager : MonoBehaviour
         {
             playerName = "";
         }
+        JsonIO.InitGameData();//加载游戏数据
+        if (iLevel != 0) JsonIO.InitLevelData(iLevel);
+
+
     }
 
     //用于加载除游戏关卡外的场景
@@ -47,7 +58,7 @@ public class GameManager : MonoBehaviour
         FindFadeImage();
         fadeScene.Fade(1f, 0.5f);
         ClearLevelData();
-        ilevel = 0;
+        iLevel = 0;
         StartCoroutine(DelayToInvokeDo(() => { SceneManager.LoadScene(sceneName, LoadSceneMode.Single); }, 1f));
     }
 
@@ -57,8 +68,9 @@ public class GameManager : MonoBehaviour
         FindFadeImage();
         fadeScene.Fade(1f, 0.5f);
         ClearLevelData();
-        ilevel = levelNum;
+        iLevel = levelNum;
         StartCoroutine(DelayToInvokeDo(() => { SceneManager.LoadScene("LoadScene", LoadSceneMode.Single); }, 1f));
+        //JsonIO.InitLevelData(ilevel);//更新关卡数据
     }
 
     //清空关卡数据，在加载关卡之前

@@ -12,7 +12,7 @@ public class LoadSceneUI : MonoBehaviour
     private AsyncOperation async = null;//储存异步加载的返回值
     private FadeScene fadeScene;
     public TMP_Text progressText;
-    bool hasLoad = false;
+    //bool hasLoad = false;
     void Start()
     {
         loadImage = transform.Find("Image").GetComponent<Image>();
@@ -42,7 +42,7 @@ public class LoadSceneUI : MonoBehaviour
                 progressText.text = "加载完成！请按任意键继续";
                 if (Input.anyKeyDown) 
                 {
-                    hasLoad = true;
+                    //hasLoad = true;
                     fadeScene.Fade(1, 0.5f);
                     Invoke("ActiveLoadLevelScene",0.5f);
                 }

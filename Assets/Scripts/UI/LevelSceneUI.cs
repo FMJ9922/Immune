@@ -24,7 +24,7 @@ public class LevelSceneUI : MonoBehaviour
 
     public void RestartLevel()
     {
-        GameManager.Instance.LoadLevelScene(GameManager.Instance.ilevel);
+        GameManager.Instance.LoadLevelScene(GameManager.Instance.iLevel);
     }
 
     public void OpenMenuScene()

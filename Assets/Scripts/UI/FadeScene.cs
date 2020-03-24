@@ -6,12 +6,12 @@ using DG.Tweening;
 
 public class FadeScene : MonoBehaviour
 {
-    float imageAlpha;
+    //float imageAlpha;
     Image fadeImg;
     void Start()
     {
         fadeImg = transform.GetComponent<Image>();
-        imageAlpha = 1;
+        //imageAlpha = 1;
         fadeImg.color = Color.black;
         Fade(0, 0.5f);
     }
