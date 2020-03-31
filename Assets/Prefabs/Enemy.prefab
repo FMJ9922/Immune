@@ -219,6 +219,7 @@ GameObject:
   - component: {fileID: 3819354599880132403}
   - component: {fileID: 3819354599880132402}
   - component: {fileID: 3819354599880132413}
+  - component: {fileID: -1845478228338593094}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -233,7 +234,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3819354599880132412}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 10.3, y: 2, z: 0}
   m_LocalScale: {x: 0.25, y: 0.25, z: 1}
   m_Children:
@@ -279,7 +280,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 02257710a73bb154d8498f46f1074440, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -304,6 +305,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 3
+  startPos: {x: 0, y: 0}
+  endPos: {x: 0, y: 0}
+  FindPathType: 0
+--- !u!114 &-1845478228338593094
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3819354599880132412}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d4a1351a9e9f8c44a1de6c4d05929f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nodePath: []
+  wayPointList: []
 --- !u!1 &3819354600274416069
 GameObject:
   m_ObjectHideFlags: 0

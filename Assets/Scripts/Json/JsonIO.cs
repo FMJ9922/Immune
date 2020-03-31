@@ -16,7 +16,9 @@ public class LevelData
 {
     public string levelName;
     public Wave[] waves;
-    public WayPoint[] wayPoints;
+    /*public WayPoint[] wayPoints;*/
+    public int[] allowCellType;
+    public int[,] mapType;
 }
 
 [System.Serializable]
@@ -26,14 +28,17 @@ public class Wave
     public int enemyNum;
     public float initDuration;
     public float nextWaveDuration;
+    public int findPathType;
+    public int startX, startY;
+    public int endX, endY;
+
 }
 
 [System.Serializable]
-public class WayPoint
+/*public class WayPoint
 {
     public Vector3 position;
-}
-
+}*/
 
 public class JsonIO : MonoBehaviour
 {
@@ -44,7 +49,7 @@ public class JsonIO : MonoBehaviour
     public static void InitLevelData(int index)
     {
         levelData = gameData.levelDatas[index - 1];
-        //Debug.Log("Load Level " + index);
+        Debug.Log("Load Level " + index);
     }
 
     public static string GetLevelName()
@@ -56,14 +61,22 @@ public class JsonIO : MonoBehaviour
     {
         return levelData.waves;
     }
-
-    public static WayPoint[] GetWayPoints()
+    public static int[] GetAllowCellType()
+    {
+        return levelData.allowCellType;
+    }
+    /*public static WayPoint[] GetWayPoints()
     {
         return levelData.wayPoints;
+    }*/
+    public static int[,] GetMap()
+    {
+        return levelData.mapType;
     }
 
     public static void InitGameData()
     {
+        Debug.Log("GameData Init");
         TextAsset t = (TextAsset)Resources.Load("Data/GameData", typeof(TextAsset));
         string jsonString = t.ToString();
         var dict = (Dictionary<string, object>)Json.Deserialize(jsonString);
@@ -94,15 +107,33 @@ public class JsonIO : MonoBehaviour
         var dict2 = (Dictionary<string, object>)levelDataList[index];
         var levelName = (string)dict2["levelName"];
         var waveList = (List<object>)dict2["waves"];
-        var wayPointList = (List<object>)dict2["wayPoints"];
+        var allowCellList = (List<object>)dict2["allowCell"];
+        var mapTypeList = (List<object>)dict2["mapType"];
 
         levelData.levelName = levelName;
         levelData.waves = PraseWave(waveList);
-        levelData.wayPoints = PraseWayPoint(wayPointList);
+        levelData.allowCellType = PraseInt(allowCellList);
+        levelData.mapType = PraseMap(mapTypeList);
 
        
         return levelData;
     }
+
+    private static int[,] PraseMap(List<object> mapTypeList)
+    {
+        int[,] map = new int[16, 9];
+        for(int i = 0; i < 9; i++)
+        {
+            var row = (List<System.Object>)mapTypeList[i];
+            for (int j = 0; j < 16; j++)
+            {
+                map[j,8-i] = Convert.ToInt16(row[j]);
+            }
+        }
+
+        return map;
+    }
+
     private static Wave[] PraseWave(List<object> wavelist)
     {
         Wave[] _waves = new Wave[wavelist.Count];
@@ -111,7 +142,7 @@ public class JsonIO : MonoBehaviour
             var singleWave = (List<System.Object>)wavelist[i];
             //Debug.Log((double)singleWave[3]);
             _waves[i] = new Wave();
-            for (int j = 0;j< 4; j++)
+            for (int j = 0;j< 9; j++)
             {
                 switch (j)
                 {
@@ -127,14 +158,37 @@ public class JsonIO : MonoBehaviour
                     case 3:
                         _waves[i].nextWaveDuration = (float)(double)singleWave[j];
                         break;
+                    case 4:
+                        _waves[i].findPathType = Convert.ToInt16(singleWave[j]);
+                        break;
+                    case 5:
+                        _waves[i].startX = Convert.ToInt16(singleWave[j]);
+                        break;
+                    case 6:
+                        _waves[i].startY = Convert.ToInt16(singleWave[j]);
+                        break;
+                    case 7:
+                        _waves[i].endX = Convert.ToInt16(singleWave[j]);
+                        break;
+                    case 8:
+                        _waves[i].endY = Convert.ToInt16(singleWave[j]);
+                        break;
                 }
                 
             }
         }
         return _waves;
     }
-
-    private static WayPoint[] PraseWayPoint(List<object> waypointlist)
+    private static int[] PraseInt(List<object> intList)
+    {
+        int[] ret = new int[intList.Count];
+        for(int i = 0; i < intList.Count; i++)
+        {
+            ret[i] = Convert.ToInt16(intList[i]);
+        }
+        return ret;
+    }
+    /*private static WayPoint[] PraseWayPoint(List<object> waypointlist)
     {
         WayPoint[] _wayPoints = new WayPoint[waypointlist.Count];
         for (int i = 0; i < waypointlist.Count; i++)
@@ -164,5 +218,5 @@ public class JsonIO : MonoBehaviour
 
         }
         return _wayPoints;
-    }
+    }*/
 }
