@@ -40,7 +40,7 @@ public class AStarAgent : MonoBehaviour
             n--;
             if (openList.Count <= 0)
             {
-                Debug.LogError("路径被阻挡！");
+                //Debug.LogError("路径被阻挡！");
                 return;
             }
             AStarNode curNode = openList[0];
