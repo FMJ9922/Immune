@@ -23,18 +23,30 @@ public class CameraMoveAndZoom : MonoBehaviour
     public delegate void CameraZoom(float orthographicSize);
     public static event CameraZoom OnCameraZoom;
 
+    void Start()
+    {
+        transform.GetComponentInChildren<CanvasScaler>().scaleFactor = (float)UnityEngine.Screen.width / 192;
+        //GetComponent<Camera>().orthographicSize = til
+        ControlManager.OnMoveToPlant += OnMovingLock;
+    }
+
+    void OnMovingLock(bool doing)
+    {
+        isMovingLocked = doing;
+        //Debug.Log(isMovingLocked);
+
+    }
 #if UNITY_STANDALONE || UNITY_WEBGL || UNITY_EDITOR
 
     // Use this for initialization
-    void Start()
-    {
-        transform.GetComponentInChildren<CanvasScaler>().scaleFactor = (float)UnityEngine.Screen.width/192;
-        //GetComponent<Camera>().orthographicSize = til
-    }
 
     // Update is called once per frame
     void Update()
     {
+        if (isMovingLocked || isTakingAction)
+        {
+            return;
+        }
         Vector2 scroll = Input.mouseScrollDelta;
         GetComponent<Camera>().orthographicSize -= Input.mouseScrollDelta.y * Time.deltaTime * 5f;
         GetComponent<Camera>().orthographicSize = Mathf.Clamp(GetComponent<Camera>().orthographicSize
@@ -69,14 +81,6 @@ public class CameraMoveAndZoom : MonoBehaviour
 #elif UNITY_IOS || UNITY_ANDROID
 
 
-    private void Start()
-    {
-     Debug.Log(UnityEngine.Screen.width);
-     transform.GetComponentInChildren<CanvasScaler>().scaleFactor = (float)UnityEngine.Screen.width/192;
-        //isMovingCamera = true;
-        //btnLockOrUnLock.onClick.AddListener(LockOrUnlockCameraMoving);
-        //isMovingLocked = true;
-    }
 
     /*public void LockOrUnlockCameraMoving()
     {
@@ -88,10 +92,12 @@ public class CameraMoveAndZoom : MonoBehaviour
 
     void Update() 
     {
+    if (isMovingLocked||isTakingAction )
+            {
+                return;
+            }
         maxXAndY = new Vector2(16, 9f) - (GetComponent<Camera>().orthographicSize/4.5f) *new Vector2(8, 4.5f);
         minXAndY = new Vector2(0, 0f) + (GetComponent<Camera>().orthographicSize/4.5f) *new Vector2(8, 4.5f);
-        //InputManager.isTouchingOnBar = false;
-        //isMovingCamera = true;
         Camera camera = Camera.main;
 
         // If there are two touches on the device...
@@ -124,6 +130,13 @@ public class CameraMoveAndZoom : MonoBehaviour
                 // Make sure the orthographic size never drops below zero.
                 camera.orthographicSize = Mathf.Max(camera.orthographicSize, MinOrthograhicSize);
                 camera.orthographicSize = Mathf.Min(camera.orthographicSize, MaxOrthograhicSize);
+                float targetX = transform.position.x;
+                float targetY = transform.position.y;
+                maxXAndY = new Vector2(16, 9f) - (GetComponent<Camera>().orthographicSize / 4.5f) * new Vector2(8, 4.5f);
+                minXAndY = new Vector2(0, 0f) + (GetComponent<Camera>().orthographicSize / 4.5f) * new Vector2(8, 4.5f);
+                targetX = Mathf.Clamp(targetX, minXAndY.x, maxXAndY.x);
+                targetY = Mathf.Clamp(targetY, minXAndY.y, maxXAndY.y);
+                transform.position = new Vector3(targetX, targetY, transform.position.z);
                 if (OnCameraZoom != null)
                {
                     OnCameraZoom(GetComponent<Camera>().orthographicSize);
@@ -142,18 +155,13 @@ public class CameraMoveAndZoom : MonoBehaviour
         {
             /*if (EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))
             {
-                //Debug.Log("Touched the UI");
-                //InputManager.isTouchingOnBar = true;
-                //ItemDragHandler.resetState();
+                Debug.Log("Touched the UI");
                 return;
-            }
+            }*/
             //InputManager.isTouchingOnBar = false;
-            if (isMovingLocked||isTakingAction || ItemDragHandler.currentState == ManipulationState.Harvest)
-            {
-                return;
-            }
+            
            
-            // Check if finger is over a UI element*/
+            // Check if finger is over a UI element
             Touch touch = Input.GetTouch(0);
             //RaycastHit2D[] touches = Physics2D.RaycastAll(touch.position, touch.position, 0.5f);
             if (touch.phase == TouchPhase.Moved)

@@ -25,6 +25,8 @@ public class ControlManager : MonoBehaviour
     public delegate void CellButtonName(CellType cellType);
     public delegate void PlantCell();
     public static event PlantCell OnPlantCell;
+    public delegate void TakeAction(bool doing);
+    public static event TakeAction OnMoveToPlant;
     public Text text;
 
     void Awake()
@@ -41,6 +43,14 @@ public class ControlManager : MonoBehaviour
         OnClick += OnButtonSelect;
         PathAvaliable = true;
         isSelect = false;
+    }
+    public void OnPlantButtonDown()
+    {
+        ControlManager.Instance.isSelect = true;
+        if (OnMoveToPlant != null)
+        {
+            OnMoveToPlant(true);
+        }
     }
     public void OnButtonSelect(CellType cellType)
     {
@@ -92,6 +102,11 @@ public class ControlManager : MonoBehaviour
             //text.text = transform.position.x + "," + transform.position.y + "," + transform.position.z;
             //Debug.Log("!");
             //Debug.Log(targetNode.name);
+            if (OnMoveToPlant != null)
+            {
+                OnMoveToPlant(false);
+            }
+
             if (targetNode != null && targetNode.tileType == TileType.Empty && placeType == PlaceType.Selceted)
             {
 
