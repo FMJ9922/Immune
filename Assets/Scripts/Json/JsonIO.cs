@@ -61,6 +61,18 @@ public class JsonIO : MonoBehaviour
     {
         return levelData.waves;
     }
+    public static Vector4[] GetDefaultPath()
+    {
+        Vector4[] vectors = new Vector4[levelData.waves.Length];
+        for (int i = 0; i < levelData.waves.Length; i++)
+        {
+            vectors[i].x = levelData.waves[i].startX;
+            vectors[i].y = levelData.waves[i].startY;
+            vectors[i].z = levelData.waves[i].endX;
+            vectors[i].w = levelData.waves[i].endY;
+        }
+        return vectors;
+    }
     public static int[] GetAllowCellType()
     {
         return levelData.allowCellType;

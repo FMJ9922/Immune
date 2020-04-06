@@ -15,6 +15,6 @@ public class CellButtonInfo : MonoBehaviour
     }
     public void OnDown()
     {
-        ControlManager.Instance.isSelect = true;
+        ControlManager.Instance.OnPlantButtonDown();
     }
 }
