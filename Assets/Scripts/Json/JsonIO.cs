@@ -35,16 +35,21 @@ public class Wave
 }
 
 [System.Serializable]
-/*public class WayPoint
+public class CellData
 {
-    public Vector3 position;
-}*/
+    public float atkRange;
+    public float atkDamage;
+    public float atkTime;
+    public float atkDuration;
+    public float initCost;
+}
 
 public class JsonIO : MonoBehaviour
 {
     public static GameData gameData;
     private static LevelData levelData;
     public static int lastLevelNum;
+    public static CellData[] cellDatas;
 
     public static void InitLevelData(int index)
     {
@@ -77,15 +82,32 @@ public class JsonIO : MonoBehaviour
     {
         return levelData.allowCellType;
     }
-    /*public static WayPoint[] GetWayPoints()
+    public static CellData GetCellData(CellType cellType)
     {
-        return levelData.wayPoints;
-    }*/
+        return cellDatas[(int)cellType];
+    }
     public static int[,] GetMap()
     {
         return levelData.mapType;
     }
-
+    public static void InitCellData()
+    {
+        TextAsset t = (TextAsset)Resources.Load("Data/CellData", typeof(TextAsset));
+        string jsonString = t.ToString();
+        var dict = (Dictionary<string, object>)Json.Deserialize(jsonString);
+        List<System.Object> CellDataList = (List<System.Object>)dict["lists"];
+        cellDatas = new CellData[CellDataList.Count];
+        for(int i = 0; i < CellDataList.Count; i++)
+        {
+            var dict2 = (Dictionary<string, object>)CellDataList[i];
+            cellDatas[i] = new CellData();
+            cellDatas[i].atkDamage = (float)(double)dict2["AtkDamage"];
+            cellDatas[i].atkRange = (float)(double)dict2["AtkRange"];
+            cellDatas[i].atkTime = (float)(double)dict2["AtkTime"];
+            cellDatas[i].atkDuration = (float)(double)dict2["AtkDuration"];
+            cellDatas[i].initCost = (float)(double)dict2["InitCost"];
+        }
+    }
     public static void InitGameData()
     {
         Debug.Log("GameData Init");

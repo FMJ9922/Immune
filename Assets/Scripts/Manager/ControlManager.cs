@@ -122,7 +122,7 @@ public class ControlManager : MonoBehaviour
                     Quaternion.identity,
                     targetNode.transform);
                     cell.name = cellType.ToString();
-
+                    cell.GetComponent<CellBase>().gridPos = new Vector2Int(targetNode.posX, targetNode.posY);
 
 
                     //To Do 放置正确音效，粒子效果

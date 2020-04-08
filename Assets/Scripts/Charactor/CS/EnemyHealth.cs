@@ -6,34 +6,65 @@ using UnityEngine.UI;
 public class EnemyHealth : MonoBehaviour
 {
     public float InitHealth = 100;//初始生命值
-    private float hp;//当前生命值
+    private float damage;
+    private EnemyAnimator enemyAnimator;
+    public ArrayList cellInRange;
+
+    public delegate void EnemyDie(Transform enmeyTrans);
+    public EnemyDie OnEnemyDie;
+
+    public float Hp
+    {
+        get;
+        private set;
+    }
+
     private Slider hpSlider;//血条
 //public GameObject explosionEffect;
     void Start()
     {
-       hp = InitHealth;
+        cellInRange = new ArrayList();
+          Hp = InitHealth;
         hpSlider = GetComponentInChildren<Slider>();
+        enemyAnimator = transform.GetComponentInChildren<EnemyAnimator>();
     }
 
     void Update()
     {
 
     }
-    public void TakeDamage(float damage)
+   
+    public void TakeDamageInSeconds(float damage,float time)
     {
-        if (hp <= 0) return;
-        hp -= damage;
-        hpSlider.value = (float)hp / InitHealth;
-        if (hp <= 0)
+       // Debug.Log(damage + " " + time);
+        Invoke("TakeDamage", time);
+        this.damage = damage; 
+    }
+    private void TakeDamage()
+    {
+        
+        if (Hp <= 0) return;
+        Hp -= this.damage;
+        hpSlider.value = (float)Hp / InitHealth;
+        //Debug.Log(Hp);
+        if (Hp <= 0)
         {
+            enemyAnimator.OnChangeCellStatus(EnemyStatus.Die);
+            Destroy(hpSlider.gameObject);
             Die();
         }
     }
     void Die()
     {
-      //  GameObject effect = GameObject.Instantiate(explosionEffect, transform.position, transform.rotation);
-        //Destroy(effect, 1.5f);
-        Destroy(this.gameObject);
+        if (cellInRange.Count != 0)
+        {
+            if (OnEnemyDie != null)
+            {
+                //Debug.Log("Des");
+                OnEnemyDie(this.transform);
+            }
+        }
+        Destroy(this.gameObject,2f);
     }
 
 }

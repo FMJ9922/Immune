@@ -50,12 +50,13 @@ public class Turret : MonoBehaviour
         if (timer >= attackRateTime)
         {
             timer = 0;
-            target.GetComponent<EnemyHealth>().TakeDamage(damage);
+            //target.GetComponent<EnemyHealth>().TakeDamage(damage);
         }
         
     }
 
-private void UpdateTarget()//找敌人
+private void UpdateTarget()
+        //找敌人
     {
         GameObject[] enemies = GameObject.FindGameObjectsWithTag(enemyTag);//找到所有enemy返回数组
         float minDistance = Mathf.Infinity;

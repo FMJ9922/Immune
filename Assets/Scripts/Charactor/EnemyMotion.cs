@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyMotion : MonoBehaviour
 {
-    public float speed = 2;//设置敌人的速度
+    public float speed = 1;//设置敌人的速度
     //private WayPoint[] p;//定义数组
     private List<Vector3> wayPointList;
     private int index = 0;//坐标点
@@ -15,7 +15,7 @@ public class EnemyMotion : MonoBehaviour
 
     void Start()
     {
-        speed = 1;
+        speed = 0.5f;
         agent = transform.GetComponent<AStarAgent>();
         InitWayPoint();
         ControlManager.OnPlantCell += ChangeWayPoint;
@@ -63,7 +63,11 @@ public class EnemyMotion : MonoBehaviour
 
     void Update()
     {
-        Move(wayPointList);//每一帧执行方法
+        if (transform.GetComponent<EnemyHealth>().Hp > 0)
+        {
+            Move(wayPointList);
+        }
+        //每一帧执行方法
     }
 
     void Move(List<Vector3> wayPointList)

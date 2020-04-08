@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum EnemyType { Null = 0}
 public enum PlaceType { Null = 0,Selceted = 1}
-public enum CellStatus { Idle = 0,Attack = 1,CoolDown =2,Upgrade =3,Produce = 4}
-
+public enum CellStatus { Idle = 0,Attack = 1,CoolDown =2,Upgrade =3,Produce = 4,Invisable =5}
+public enum EnemyStatus { Idle = 0,Attack = 1,Bite = 2,Die =3,Invisable = 4}
+public enum Direction { Left =0,Right = 1,Up = 2,Down = 3}
 public enum TileType { Empty = 0, Block = 1,Occupy=2}
 
 public enum FindPathType 
@@ -30,4 +30,18 @@ public enum CellType
     BL = 11,//B淋巴
     BJ = 12,//记忆B
     JX = 13//浆细胞
+}
+
+public enum EnemyType
+{
+    TH = 0//天花病毒
+}
+
+public enum PlayAnimaType
+{
+    Loop = 0,
+    Once = 1,
+    Fade = 2,
+    Null = 3
+
 }

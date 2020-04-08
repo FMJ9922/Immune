@@ -47,6 +47,7 @@ public class GameManager : MonoBehaviour
             playerName = "";
         }
         JsonIO.InitGameData();//加载游戏数据
+        JsonIO.InitCellData();//加载细胞数据
         //Debug.Log(iLevel + " " + currentLevel);
         if(iLevel!=0)
             JsonIO.InitLevelData(currentLevel);

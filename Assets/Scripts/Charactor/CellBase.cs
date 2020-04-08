@@ -4,9 +4,9 @@ using UnityEngine;
 
 public interface ShortRangeAttack
 {
-    void InitEnemysInRange();//更新在攻击范围内的敌人，每当一个敌人进出攻击范围的时候调用
+    //void UpdateEnemysInRange();//更新在攻击范围内的敌人，每当一个敌人进出攻击范围的时候调用
     Transform ChooseTargetEnemey();//选择目标敌人
-    void AttackOneTime(Transform enemy, float damage);//攻击一次敌人
+    void AttackOneTime();//攻击一次敌人
 
    
 }
@@ -23,10 +23,11 @@ public interface Produce
 //所有免疫细胞的基类
 public class CellBase : MonoBehaviour
 {
-    public float InitCost;//部署点数
-    public CellStatus cellStatus;//当前状态
+    public float InitCost { get; private set; }//部署点数
+    private CellStatus cellStatus;//当前状态
+    public CellType cellType;
+    public Vector2Int gridPos;
 
-   
 
     public virtual void InitCell() { }
 

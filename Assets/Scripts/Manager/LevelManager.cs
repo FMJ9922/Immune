@@ -87,6 +87,7 @@ public class LevelManager : MonoBehaviour
     {
         int x = Mathf.FloorToInt(pos.x);
         int y = Mathf.FloorToInt(pos.y);
+        if (x < 0 || x > 15 || y < 0 || y > 15) return null;
         //Debug.Log(x + "  "+y);
         return AllNodeGroup[x, y];
     }
@@ -112,6 +113,7 @@ public class LevelManager : MonoBehaviour
                 enemy.GetComponent<EnemyMotion>().startPos = new Vector2(waves[i].startX, waves[i].startY);
                 enemy.GetComponent<EnemyMotion>().endPos = new Vector2(waves[i].endX, waves[i].endY);
                 enemy.GetComponent<EnemyMotion>().FindPathType = (FindPathType)waves[i].findPathType;
+                enemy.GetComponentInChildren<EnemyAnimator>().enemyType = (EnemyType)waves[i].enemyType;
                 yield return new WaitForSeconds(waves[i].initDuration);
             }
             yield return new WaitForSeconds(waves[i].nextWaveDuration);
