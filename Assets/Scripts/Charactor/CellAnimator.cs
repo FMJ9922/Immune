@@ -30,6 +30,7 @@ public class CellAnimator : MonoBehaviour
     }*/
     public void PlayAnimation(Sprite[] sprites,int deltaFrame, PlayAnimaType type)
     {
+        if (sprites.Length <= 0) return;
         frameP++;
         if (frameP >= deltaFrame)
         {

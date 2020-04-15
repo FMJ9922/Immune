@@ -11,10 +11,10 @@ public class CellButtonInfo : MonoBehaviour
   
     public void OnExit()
     {
-        ControlManager.Instance.OnButtonSelect(cellType);
+        ControlManager.Instance.OnPlantButtonSelect(cellType);
     }
     public void OnDown()
     {
-        ControlManager.Instance.OnPlantButtonDown();
+        ControlManager.Instance.OnPlantButtonDown();//用于触发锁定屏幕移动
     }
 }

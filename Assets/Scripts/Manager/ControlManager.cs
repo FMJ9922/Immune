@@ -39,8 +39,8 @@ public class ControlManager : MonoBehaviour
         {
             instance = this;
         }
-        CellButtonName OnClick = new CellButtonName(OnButtonSelect);
-        OnClick += OnButtonSelect;
+        CellButtonName OnClick = new CellButtonName(OnPlantButtonSelect);
+        OnClick += OnPlantButtonSelect;
         PathAvaliable = true;
         isSelect = false;
     }
@@ -52,7 +52,7 @@ public class ControlManager : MonoBehaviour
             OnMoveToPlant(true);
         }
     }
-    public void OnButtonSelect(CellType cellType)
+    public void OnPlantButtonSelect(CellType cellType)
     {
 
         if (placeType == PlaceType.Null && isSelect)
