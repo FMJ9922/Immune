@@ -60,8 +60,11 @@ public class CameraMoveAndZoom : MonoBehaviour
                 OnCameraZoom(GetComponent<Camera>().orthographicSize);
             }
 
-            maxXAndY = new Vector2(16, 9f) - (GetComponent<Camera>().orthographicSize / 4.5f) * new Vector2(8, 4.5f);
-            minXAndY = new Vector2(0, 0f) + (GetComponent<Camera>().orthographicSize / 4.5f) * new Vector2(8, 4.5f);
+            /*maxXAndY = new Vector2(16, 9f) - (GetComponent<Camera>().orthographicSize / 4.5f) * new Vector2(8, 4.5f);
+            minXAndY = new Vector2(0, 0f) + (GetComponent<Camera>().orthographicSize / 4.5f) * new Vector2(8, 4.5f);*/
+
+            maxXAndY = new Vector2(16, 9f) * 5.2f / 4.5f - (GetComponent<Camera>().orthographicSize / 5.2f) * new Vector2(8, 4.5f)*5.2f/4.5f;
+            minXAndY = new Vector2(0, 0f) + (GetComponent<Camera>().orthographicSize / 5.2f) * new Vector2(8, 4.5f) * 5.2f / 4.5f;
 
             float x = Input.GetAxis("Horizontal");
             float y = Input.GetAxis("Vertical");
