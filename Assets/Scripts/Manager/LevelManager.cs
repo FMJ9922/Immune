@@ -108,7 +108,8 @@ public class LevelManager : MonoBehaviour
             //Debug.Log(i+" "+waves[i].enemyNum+" "+ waves[i].initDuration+" "+ waves[i].nextWaveDuration);
             for (int j = 0; j < waves[i].enemyNum; j++)
             {
-                GameObject enemy = Instantiate(enemys[waves[i].enemyType], new Vector3(waves[i].startX+0.5f, waves[i].startY+0.5f,0), Quaternion.identity,EnemyGroup.transform);//随机生成
+                //GameObject enemy = Instantiate(enemys[waves[i].enemyType], new Vector3(waves[i].startX+0.5f, waves[i].startY+0.5f,0), Quaternion.identity,EnemyGroup.transform);//随机生成
+                GameObject enemy = Instantiate(enemys[waves[i].enemyType], new Vector3(-1, -1, 0), Quaternion.identity, EnemyGroup.transform);//随机生成
                 enemy.name = "Enemy" + i + "," + j;
                 enemy.GetComponent<EnemyMotion>().startPos = new Vector2(waves[i].startX, waves[i].startY);
                 enemy.GetComponent<EnemyMotion>().endPos = new Vector2(waves[i].endX, waves[i].endY);
@@ -116,6 +117,7 @@ public class LevelManager : MonoBehaviour
                 enemy.GetComponentInChildren<EnemyAnimator>().enemyType = (EnemyType)waves[i].enemyType;
                 yield return new WaitForSeconds(waves[i].initDuration);
             }
+            //Debug.Log(waves[i].nextWaveDuration);
             yield return new WaitForSeconds(waves[i].nextWaveDuration);
         }
     }

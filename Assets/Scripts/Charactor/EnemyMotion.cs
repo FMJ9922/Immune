@@ -18,6 +18,7 @@ public class EnemyMotion : MonoBehaviour
         speed = 0.5f;
         agent = transform.GetComponent<AStarAgent>();
         InitWayPoint();
+        transform.position = wayPointList[0];
         ControlManager.OnPlantCell += ChangeWayPoint;
     }
 

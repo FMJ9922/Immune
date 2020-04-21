@@ -4,10 +4,8 @@ using UnityEngine;
 
 public class CellAnimator : MonoBehaviour
 {
-    public Sprite[] AtkSpriteL;
-    public Sprite[] AtkSpriteR;
-    public Sprite[] IdleSpriteL;
-    public Sprite[] IdleSpriteR;
+    public Sprite[] AtkSprite;
+    public Sprite[] IdleSprite;
     private CellStatus cellStatus = CellStatus.Invisable;
     private SpriteRenderer spriteRenderer;
     private CellType cellType;
@@ -91,7 +89,7 @@ public class CellAnimator : MonoBehaviour
     {
         if (doFade)
         {
-            PlayAnimation(IdleSpriteL, 8, true);
+            PlayAnimation(IdleSprite, 8, true);
             
         }
         switch (cellStatus)
@@ -100,17 +98,10 @@ public class CellAnimator : MonoBehaviour
                 
                 return;
             case CellStatus.Idle:
-                if(direction == Direction.Left)
-                    PlayAnimation(IdleSpriteL,15,PlayAnimaType.Loop);
-                else if(direction == Direction.Right)
-                    PlayAnimation(IdleSpriteR, 15, PlayAnimaType.Loop);
-
+                PlayAnimation(IdleSprite,15,PlayAnimaType.Loop);
                 break;
             case CellStatus.Attack:
-                if (direction == Direction.Left)
-                    PlayAnimation(AtkSpriteL, 5, PlayAnimaType.Once);
-                else if (direction == Direction.Right)
-                    PlayAnimation(AtkSpriteR, 5, PlayAnimaType.Once);
+                PlayAnimation(AtkSprite, 5, PlayAnimaType.Once);
                 break;
 
         }

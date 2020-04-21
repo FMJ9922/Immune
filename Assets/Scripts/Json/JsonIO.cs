@@ -191,6 +191,7 @@ public class JsonIO : MonoBehaviour
                         break;
                     case 3:
                         _waves[i].nextWaveDuration = (float)(double)singleWave[j];
+                        //Debug.Log(_waves[i].nextWaveDuration);
                         break;
                     case 4:
                         _waves[i].findPathType = Convert.ToInt16(singleWave[j]);

@@ -113,15 +113,18 @@ public class AStarAgent : MonoBehaviour
         if (endNode != null)
         {
             AStarNode temp = endNode;
-
+            AStarNode lastNode = endNode;
+            wayPointList.Add(new Vector3(2*temp.pos.x-temp.parentNode.pos.x, 2*temp.pos.y- temp.parentNode.pos.y, 0));
             while (temp != startNode)
             {
                 nodePath.Add(temp);
                 wayPointList.Add(new Vector3(temp.pos.x,temp.pos.y,0));
                 //Debug.Log(temp.name);
+                lastNode = temp;
                 temp = temp.parentNode;
                 
             }
+            wayPointList.Add(new Vector3(2 * temp.pos.x - lastNode.pos.x, 2 * temp.pos.y - lastNode.pos.y, 0));
             nodePath.Reverse();
             wayPointList.Reverse();
         }

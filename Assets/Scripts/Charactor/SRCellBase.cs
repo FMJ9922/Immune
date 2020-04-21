@@ -13,8 +13,8 @@ public class SRCellBase : CellBase, ShortRangeAttack
     private ArrayList enemyInRange;//范围内的敌人
     private Transform targetEnemy;//目标敌人
     private CellAnimator cellAnimator;
-    private Vector3 revisePosLeft = new Vector3(-0.12f, 0.4f, 0);
-    private Vector3 revisePosRight = new Vector3(0.22f, 0.4f, 0);
+    public Vector3 revisePosLeft = new Vector3(-0.12f, 0.4f, 0);
+    public Vector3 revisePosRight = new Vector3(0.22f, 0.4f, 0);
 
     
 
