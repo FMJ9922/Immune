@@ -58,10 +58,12 @@ public class ControlManager : MonoBehaviour
         if (placeType == PlaceType.Null && isSelect)
         {
             CellOnMove = Instantiate(CellOnMovePfb, transform.position, Quaternion.identity, transform) as GameObject;
+            string path = "Cell/" + (int)cellType + cellType.ToString() + "/" + cellType.ToString();
+            CellOnMove.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(path);
             CellOnMove.name = cellType.ToString();
             //text.text = transform.position.x+","+ transform.position.y + "," + transform.position.z ;
             //To do:增加图片
-            placeType = PlaceType.Selceted;
+            placeType = PlaceType.Selected;
             this.cellType = cellType;
             isSelect = false;
         }
@@ -72,15 +74,22 @@ public class ControlManager : MonoBehaviour
         bool isAvaliable = true;
         Vector4[] vectors = JsonIO.GetDefaultPath();
         AStarAgent agent = transform.GetComponent<AStarAgent>();
+        
         for (int i = 0; i < vectors.Length; i++)
         {
-            bool issuccess;
-            agent.FindPathWithStartAndEndPos(new Vector2(vectors[i].x, vectors[i].y), new Vector2(vectors[i].z, vectors[i].w), FindPathType.Defult, out issuccess);
-
-            if (!issuccess)
+            if (targetNode == LevelManager.Instance.GetNodeByPos(new Vector2(vectors[i].x, vectors[i].y)))
+                return false;
+            else
             {
-                isAvaliable = false;
+                bool issuccess;
+                agent.FindPathWithStartAndEndPos(new Vector2(vectors[i].x, vectors[i].y), new Vector2(vectors[i].z, vectors[i].w), FindPathType.Defult, out issuccess);
+
+                if (!issuccess)
+                {
+                    isAvaliable = false;
+                }
             }
+               
 
         }
         return isAvaliable;
@@ -107,12 +116,12 @@ public class ControlManager : MonoBehaviour
                 OnMoveToPlant(false);
             }
 
-            if (targetNode != null && targetNode.tileType == TileType.Empty && placeType == PlaceType.Selceted)
+            if (targetNode != null && targetNode.tileType == TileType.Empty && placeType == PlaceType.Selected)
             {
 
+                targetNode.tileType = TileType.Occupy;
                 if (OnPlantCell != null)
                 {
-                    targetNode.tileType = TileType.Occupy;
                     OnPlantCell();
                 }
                 if (PathAvaliable && CheckPathAvaliable())
@@ -123,7 +132,7 @@ public class ControlManager : MonoBehaviour
                     targetNode.transform);
                     cell.name = cellType.ToString();
                     cell.GetComponent<CellBase>().gridPos = new Vector2Int(targetNode.posX, targetNode.posY);
-
+                    LevelManager.Instance.DrawDefaultRoute(LevelManager.Instance.curWave);
 
                     //To Do 放置正确音效，粒子效果
                 }
@@ -135,7 +144,7 @@ public class ControlManager : MonoBehaviour
                 }
             }
 
-            if (placeType == PlaceType.Selceted)
+            if (placeType == PlaceType.Selected)
             {
                 placeType = PlaceType.Null;
                 Destroy(CellOnMove);

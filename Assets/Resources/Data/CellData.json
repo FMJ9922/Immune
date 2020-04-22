@@ -3,10 +3,10 @@
 		{
 			"Name":"ÊÈÖÐÐÔÁ£Ï¸°û",
 			"InitCost":5.0,
-			"AtkRange":2.0,
-			"AtkDamage":50.0,
-			"AtkTime":0.5,
-			"AtkDuration":1.0,
+			"AtkRange":1.0,
+			"AtkDamage":34.0,
+			"AtkTime":0.1,
+			"AtkDuration":2.0,
 
 		},
 		{

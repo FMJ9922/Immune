@@ -9,8 +9,7 @@ public class AStarAgent : MonoBehaviour
 
     public List<AStarNode> nodePath;
     public List<Vector3> wayPointList;
-   
-    
+
     void Start()
     {
         //levelManager = GameObject.Find("LevelManager").GetComponent<LevelManager>();
@@ -23,6 +22,7 @@ public class AStarAgent : MonoBehaviour
         int deltay = Mathf.Abs(startNode.posY - endNode.posY);
         return deltaX + deltay;
     }
+    
 
     public void FindPathWithStartAndEndPos(Vector2 startPos,Vector2 endPos,FindPathType type,out bool success)
     {
@@ -46,7 +46,8 @@ public class AStarAgent : MonoBehaviour
             AStarNode curNode = openList[0];
             for (int i = 0; i < openList.Count; i++)//查找一个costF最小的结点作为当前结点
             {
-                if (openList[i].CostF < curNode.CostF)
+                
+                if (openList[i]!=null&&openList[i].CostF < curNode.CostF)
                 {
 
                     curNode = openList[i];
@@ -113,18 +114,18 @@ public class AStarAgent : MonoBehaviour
         if (endNode != null)
         {
             AStarNode temp = endNode;
-            AStarNode lastNode = endNode;
-            wayPointList.Add(new Vector3(2*temp.pos.x-temp.parentNode.pos.x, 2*temp.pos.y- temp.parentNode.pos.y, 0));
+           
             while (temp != startNode)
             {
                 nodePath.Add(temp);
                 wayPointList.Add(new Vector3(temp.pos.x,temp.pos.y,0));
                 //Debug.Log(temp.name);
-                lastNode = temp;
                 temp = temp.parentNode;
                 
             }
-            wayPointList.Add(new Vector3(2 * temp.pos.x - lastNode.pos.x, 2 * temp.pos.y - lastNode.pos.y, 0));
+            wayPointList.Add(new Vector3(startNode.pos.x, startNode.pos.y, 0));
+            //Debug.Log(startNode.pos.x);
+            //wayPointList.Add(new Vector3(2 * temp.pos.x - lastNode.pos.x, 2 * temp.pos.y - lastNode.pos.y, 0));
             nodePath.Reverse();
             wayPointList.Reverse();
         }

@@ -12,14 +12,21 @@ public class EnemyMotion : MonoBehaviour
     public Vector2 endPos;
     private AStarAgent agent;
     public FindPathType FindPathType;
+    /*public bool draw;*/
 
     void Start()
     {
         speed = 0.5f;
         agent = transform.GetComponent<AStarAgent>();
         InitWayPoint();
-        transform.position = wayPointList[0];
+        //Debug.Log(wayPointList[0].x);
+        if(wayPointList[0].x ==0.5f) transform.position = wayPointList[0]+new Vector3(-1,0,0);
+        else if(wayPointList[0].x ==15.5f) transform.position = wayPointList[0]+new Vector3(1,0,0);
+        else if(wayPointList[0].y ==0.5f) transform.position = wayPointList[0]+new Vector3(0,-1,0);
+        else if(wayPointList[0].y ==8.5f) transform.position = wayPointList[0]+new Vector3(0,1,0);
+
         ControlManager.OnPlantCell += ChangeWayPoint;
+        /*if (draw) DrawThisRoute();*/
     }
 
     private void OnDestroy()
@@ -39,7 +46,7 @@ public class EnemyMotion : MonoBehaviour
     }
     void ChangeWayPoint()
     {
-        //Debug.Log("change");
+        //Debug.Log(transform.position.x+","+ transform.position.y);
         agent.FindPathWithStartAndEndPos(new Vector2(transform.position.x, transform.position.y), endPos, FindPathType, out bool success);
         if (success)
         {
@@ -87,4 +94,8 @@ public class EnemyMotion : MonoBehaviour
             }
         }
     }
+    /*public void DrawThisRoute()
+    {
+        StartCoroutine(DrawRoute.Drawarrow(LevelManager.Instance.drawRoute, wayPointList, 0.15f));
+    }*/
 }
