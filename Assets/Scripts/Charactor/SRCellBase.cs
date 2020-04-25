@@ -16,7 +16,7 @@ public class SRCellBase : CellBase, ShortRangeAttack
     public Vector3 revisePosLeft = new Vector3(-0.12f, 0.4f, 0);
     public Vector3 revisePosRight = new Vector3(0.22f, 0.4f, 0);
 
-    
+
 
     public override void InitCell()
     {
@@ -77,7 +77,7 @@ public class SRCellBase : CellBase, ShortRangeAttack
     {
         enemyInRange.Remove(collision.transform);
         EnemyHealth enemyHealth = collision.transform.GetComponent<EnemyHealth>();
-        enemyHealth.cellInRange.Remove(this.transform); 
+        enemyHealth.cellInRange.Remove(this.transform);
         enemyHealth.OnEnemyDie -= OnInRangeEnemyDie;
 
     }
@@ -90,10 +90,35 @@ public class SRCellBase : CellBase, ShortRangeAttack
         }
         else
         {
-            return CheckAndReturnNearestEnemy();
+            return CheckAndReturnFirstEnemy();
         }
     }
+    private Transform CheckAndReturnFirstEnemy()
+    {
+        Transform p = null;
 
+        Transform trans = (Transform)enemyInRange[0];
+        if (trans == null) return null;
+        if (trans.GetComponent<EnemyHealth>().Hp > 0)
+        {
+
+            cellAnimator.direction = Direction.Left;
+            cellAnimator.transform.localPosition = revisePosLeft;
+            p = trans;
+
+        }
+        else
+        {
+
+            cellAnimator.direction = Direction.Right;
+            cellAnimator.transform.localPosition = revisePosRight;
+            p = trans;
+
+        }
+
+
+        return p;
+    }
     private Transform CheckAndReturnNearestEnemy()
     {
         Transform p = null;

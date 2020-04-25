@@ -18,31 +18,44 @@ public class DrawRoute : MonoBehaviour
     {
         //Debug.Log(vector3s.Count);
         if (vector3s.Count == 0) yield break;
-        GameObject[] gameObjects = new GameObject[vector3s.Count - 1];
+        GameObject[] gameObjects = new GameObject[2*vector3s.Count - 2];
         int i = 0;
+        int n = 0;
         do
         {
+            if(i>0&&i< vector3s.Count - 1)
+            {
+                Vector3 position0 = vector3s[i]*0.8f+ vector3s[i + 1]*0.1f + vector3s[i - 1] * 0.1f;
+                Quaternion quaternion0 = Quaternion.LookRotation(vector3s[i + 1] - vector3s[i-1], new Vector3(0, 0, 1));
+                GameObject newarrow0 = Instantiate(arrow, position0, quaternion0, parentNode);
+                newarrow0.name = "Arrow(" + n + ")";
+                Color color0 = newarrow0.GetComponent<MeshRenderer>().material.color;
+                newarrow0.GetComponent<MeshRenderer>().material.color = new Color(color0.r, color0.g, color0.b, 0);
+                Fade(newarrow0, 1f, 0.5f);
+                gameObjects[n] = newarrow0;
+                n++;
+            }
             Vector3 position = (vector3s[i] + vector3s[i + 1]) / 2;
             Quaternion quaternion = Quaternion.LookRotation(vector3s[i + 1] - vector3s[i], new Vector3(0, 0, 1));
-
             GameObject newarrow = Instantiate(arrow, position, quaternion, parentNode);
             newarrow.name = "Arrow(" + i + ")";
             Color color = newarrow.GetComponent<MeshRenderer>().material.color;
             newarrow.GetComponent<MeshRenderer>().material.color = new Color(color.r, color.g, color.b, 0);
             Fade(newarrow, 1f, 0.5f);
-            gameObjects[i] = newarrow;
+            gameObjects[n] = newarrow;
+            n++;
             i++;
             yield return new WaitForSeconds(duration);
         }
         while (i != vector3s.Count - 1);
-
-        for(int j = 0; j< vector3s.Count - 1; j++)
+        yield return new WaitForSeconds(1f);
+        for (int j = 0; j< 2 * vector3s.Count - 3; j++)
         {
             Fade(gameObjects[j], 0, 0.5f);
             yield return new WaitForSeconds(duration);
         }
-        yield return new WaitForSeconds(0.5f);
-        for (int k = 0; k < vector3s.Count - 1; k++)
+        yield return new WaitForSeconds(2f);
+        for (int k = 0; k < 2*vector3s.Count - 2; k++)
         {
             Destroy(gameObjects[k]);
         }

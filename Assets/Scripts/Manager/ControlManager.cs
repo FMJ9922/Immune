@@ -124,7 +124,9 @@ public class ControlManager : MonoBehaviour
                 {
                     OnPlantCell();
                 }
-                if (PathAvaliable && CheckPathAvaliable())
+                CellData cellData;
+                cellData = JsonIO.GetCellData(cellType);
+                if (PathAvaliable && CheckPathAvaliable()&&LevelManager.Instance.SpendPoints(cellData.initCost))
                 {
                     GameObject cell = Instantiate(CellPfbs[(int)cellType],
                     new Vector3(targetNode.pos.x, targetNode.pos.y),

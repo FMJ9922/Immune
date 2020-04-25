@@ -16,7 +16,7 @@ public class EnemyMotion : MonoBehaviour
 
     void Start()
     {
-        speed = 0.5f;
+        //speed = 0.5f;
         agent = transform.GetComponent<AStarAgent>();
         InitWayPoint();
         //Debug.Log(wayPointList[0].x);

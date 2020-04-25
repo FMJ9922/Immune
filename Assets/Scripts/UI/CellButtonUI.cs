@@ -21,6 +21,8 @@ public class CellButtonUI : MonoBehaviour
             GameObject cellButton = Instantiate(cellButtonPrefeb, transform);
             cellButton.name = ((CellType)cellTypes[i]).ToString();
             cellButton.GetComponent<CellButtonInfo>().cellType = (CellType)cellTypes[i];
+            string path = "Cell/" + cellTypes[i] + ((CellType)cellTypes[i]).ToString() + "/" + ((CellType)cellTypes[i]).ToString();
+            cellButton.transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>(path);
         }
     }
 }

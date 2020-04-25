@@ -31,6 +31,7 @@ public class Wave
     public int findPathType;
     public int startX, startY;
     public int endX, endY;
+    public float speed;
 
 }
 
@@ -176,7 +177,7 @@ public class JsonIO : MonoBehaviour
             var singleWave = (List<System.Object>)wavelist[i];
             //Debug.Log((double)singleWave[3]);
             _waves[i] = new Wave();
-            for (int j = 0;j< 9; j++)
+            for (int j = 0;j< 10; j++)
             {
                 switch (j)
                 {
@@ -208,6 +209,9 @@ public class JsonIO : MonoBehaviour
                     case 8:
                         _waves[i].endY = Convert.ToInt16(singleWave[j]);
                         break;
+                    case 9:
+                        _waves[i].speed = (float)(double)singleWave[j];
+                    break;
                 }
                 
             }

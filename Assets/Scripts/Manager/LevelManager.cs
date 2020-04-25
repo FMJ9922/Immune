@@ -17,10 +17,10 @@ public class LevelManager : MonoBehaviour
     public GameObject Map;
     public GameObject Node;
     public Transform drawRoute;
-    public int curWave=0;
+    public int curWave = 0;
+    public float DeployPoints { get; private set; }
 
-
-    public
+    
 
     void Awake()
     {
@@ -42,6 +42,23 @@ public class LevelManager : MonoBehaviour
         Map = transform.Find("Map").gameObject;
         GenerateTileNode();
         StartCoroutine(CreateEnemy());
+        DeployPoints = 5;
+    }
+    private void Update()
+    {
+        DeployPoints += Time.deltaTime/5;
+    }
+    public bool SpendPoints(float points)
+    {
+        if (points <= DeployPoints)
+        {
+            DeployPoints -= points;
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     private void GenerateTileNode()//初始化寻路节点
@@ -89,10 +106,10 @@ public class LevelManager : MonoBehaviour
     {
         int x = Mathf.FloorToInt(pos.x);
         int y = Mathf.FloorToInt(pos.y);
-        if (x < 0) return AllNodeGroup[0, y];
-        else if (x > 15) return AllNodeGroup[15, y];
-        else if (y > 8) return AllNodeGroup[x, 8];
-        else if (y < 0) return AllNodeGroup[x, 0];
+        if (x < 0 && y >= 0 && y <= 8) return AllNodeGroup[0, y];
+        else if (x > 15 && y >= 0 && y <= 8) return AllNodeGroup[15, y];
+        else if (y > 8 && x >= 0 && x <= 15) return AllNodeGroup[x, 8];
+        else if (y < 0 && x >= 0 && x <= 15) return AllNodeGroup[x, 0];
         else return AllNodeGroup[x, y];
     }
     public AStarNode GetNodeByPos(int x, int y)//根据位置返回寻路节点
@@ -119,6 +136,7 @@ public class LevelManager : MonoBehaviour
                 enemy.GetComponent<EnemyMotion>().startPos = new Vector2(waves[i].startX, waves[i].startY);
                 enemy.GetComponent<EnemyMotion>().endPos = new Vector2(waves[i].endX, waves[i].endY);
                 enemy.GetComponent<EnemyMotion>().FindPathType = (FindPathType)waves[i].findPathType;
+                enemy.GetComponent<EnemyMotion>().speed = waves[i].speed;
                 enemy.GetComponentInChildren<EnemyAnimator>().enemyType = (EnemyType)waves[i].enemyType;
 
                 /*enemy.GetComponent<EnemyMotion>().draw = j==0?true:false;*/
@@ -149,7 +167,7 @@ public class LevelManager : MonoBehaviour
         if (issuccess)
         {
             agent.SetPath(new Vector2(vectors[wave].x, vectors[wave].y), new Vector2(vectors[wave].z, vectors[wave].w));
-            StartCoroutine(DrawRoute.Drawarrow(drawRoute, agent.wayPointList, 0.08f));
+            StartCoroutine(DrawRoute.Drawarrow(drawRoute, agent.wayPointList, 0.05f));
         }
     }
 }

@@ -51,7 +51,7 @@ public class EnemyAnimator : MonoBehaviour
                 spriteRenderer.sprite = null;
                 return;
             case EnemyStatus.Idle:
-                PlayAnimation(IdleSprite, 1, PlayAnimaType.Loop);
+                PlayAnimation(IdleSprite, 3, PlayAnimaType.Loop);
                 break;
             case EnemyStatus.Die:
                 PlayAnimation(DieSprite, 2, false);
