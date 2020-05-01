@@ -16,20 +16,20 @@ public enum FindPathType
 }
 public enum CellType
 {
-    SZ = 0,//嗜中性粒细胞
-    SS = 1,//嗜酸性粒细胞
-    SJ = 2,//嗜碱性粒细胞
-    JS = 3,//巨噬细胞
-    ST = 4,//树突细胞
-    NK = 5,//NK细胞
+    SZ = 0,//嗜中性粒细胞近战
+    SS = 1,//嗜酸性粒细胞远程
+    SJ = 2,//嗜碱性粒细胞辅助
+    JS = 3,//巨噬细胞近战
+    ST = 4,//树突细胞辅助
+    NK = 5,//NK细胞近战
     TL = 6,//t淋巴细胞
-    TX = 7,//效应T
-    TF = 8,//辅助T
-    TY = 9,//抑制性T
-    TJ = 10,//记忆T
+    TX = 7,//效应T近战
+    TF = 8,//辅助T辅助
+    TY = 9,//抑制性T辅助
+    TJ = 10,//记忆T辅助
     BL = 11,//B淋巴
-    BJ = 12,//记忆B
-    JX = 13//浆细胞
+    BJ = 12,//记忆B辅助
+    JX = 13//浆细胞远程
 }
 
 public enum EnemyType

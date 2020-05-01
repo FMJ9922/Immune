@@ -3632,7 +3632,7 @@ RectTransform:
   m_GameObject: {fileID: 593571929}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: -0.7, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1522787620}
   m_RootOrder: 0
@@ -3649,7 +3649,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 593571929}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 058cba836c1846c3aa1c5fd2e28aea77, type: 3}
   m_Name: 
@@ -8758,7 +8758,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: "\u7B56\u5212\uFF1A\u9648\u79CB\u9633\n\u7A0B\u5E8F\uFF1A\u6C88\u52A2 \u6768\u9704\u51B0\n\u7F8E\u672F\uFF1A\u6768\u6021\u5A67
-    \u675C\u51B0\u7389\n\u6307\u5BFC\u8001\u5E08\uFF1A\u4E01\u5B81"
+    \u675C\u51B0\u7389\n\u97F3\u4E50&\u97F3\u6548\uFF1A\u7AE0\u677E\u5955\n\u6307\u5BFC\u8001\u5E08\uFF1A\u4E01\u5B81"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 3b2e02f0fbf5de84eab6ef60903e3d5d, type: 2}
   m_sharedMaterial: {fileID: -603571903902536785, guid: 3b2e02f0fbf5de84eab6ef60903e3d5d,
@@ -8787,8 +8787,8 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 23.24
-  m_fontSizeBase: 23.24
+  m_fontSize: 22.97
+  m_fontSizeBase: 22.97
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -8797,14 +8797,14 @@ MonoBehaviour:
   m_textAlignment: 257
   m_characterSpacing: 0
   m_wordSpacing: 0
-  m_lineSpacing: 22.17
+  m_lineSpacing: 21.76
   m_lineSpacingMax: 0
-  m_paragraphSpacing: 0
+  m_paragraphSpacing: -16.8
   m_charWidthMaxAdj: 0
   m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
-  m_firstOverflowCharacterIndex: 28
+  m_firstOverflowCharacterIndex: 38
   m_linkedTextComponent: {fileID: 0}
   m_isLinkedTextComponent: 0
   m_isTextTruncated: 0
@@ -8828,12 +8828,12 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 1522787621}
-    characterCount: 35
+    characterCount: 45
     spriteCount: 0
-    spaceCount: 5
-    wordCount: 10
+    spaceCount: 6
+    wordCount: 13
     linkCount: 0
-    lineCount: 4
+    lineCount: 5
     pageCount: 1
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
@@ -10014,7 +10014,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!223 &1668324429
 Canvas:
   m_ObjectHideFlags: 0
