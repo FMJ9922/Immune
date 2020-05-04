@@ -364,7 +364,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -12.6, y: 45.6}
-  m_SizeDelta: {x: 181.49, y: 16.64}
+  m_SizeDelta: {x: 181.49, y: 17.63}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &22408486
 MonoBehaviour:
@@ -3012,7 +3012,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_UiScaleMode: 0
   m_ReferencePixelsPerUnit: 100
-  m_ScaleFactor: 5.88
+  m_ScaleFactor: 5.822917
   m_ReferenceResolution: {x: 800, y: 600}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
@@ -5736,7 +5736,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -9.950195, y: -3.0499916}
+  m_AnchoredPosition: {x: -9.950195, y: -3.0499878}
   m_SizeDelta: {x: 75.25, y: 53.25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &804831054
@@ -17307,20 +17307,15 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2098768068711026728, guid: d3037c9edaaa41240b63d7884d6db37d,
-        type: 3}
-      propertyPath: m_FlipX
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4039114786660896127, guid: d3037c9edaaa41240b63d7884d6db37d,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 3.5
       objectReference: {fileID: 0}
     - target: {fileID: 4039114786660896127, guid: d3037c9edaaa41240b63d7884d6db37d,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 3.5
       objectReference: {fileID: 0}
     - target: {fileID: 4039114786660896127, guid: d3037c9edaaa41240b63d7884d6db37d,
         type: 3}
@@ -17375,7 +17370,7 @@ PrefabInstance:
     - target: {fileID: 7748084090710211166, guid: d3037c9edaaa41240b63d7884d6db37d,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d3037c9edaaa41240b63d7884d6db37d, type: 3}

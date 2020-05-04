@@ -34,6 +34,7 @@ public class SRCellBase : CellBase, ShortRangeAttack
     void Start()
     {
         InitCell();
+
         InvokeRepeating("AttackOneTime", 0, atkDuration);
         AttackOneTime();
     }
@@ -55,6 +56,7 @@ public class SRCellBase : CellBase, ShortRangeAttack
                     cellAnimator.direction = Direction.Right;
                     cellAnimator.transform.localPosition = revisePosRight;
                 }
+                
             }
             enemyInRange.Add(collision.transform);
             EnemyHealth enemyHealth = collision.transform.GetComponent<EnemyHealth>();
@@ -79,7 +81,9 @@ public class SRCellBase : CellBase, ShortRangeAttack
         EnemyHealth enemyHealth = collision.transform.GetComponent<EnemyHealth>();
         enemyHealth.cellInRange.Remove(this.transform);
         enemyHealth.OnEnemyDie -= OnInRangeEnemyDie;
-
+        if(enemyInRange.Count == 0)
+        {
+        }
     }
     public Transform ChooseTargetEnemey()
     {
@@ -98,24 +102,18 @@ public class SRCellBase : CellBase, ShortRangeAttack
         Transform p = null;
 
         Transform trans = (Transform)enemyInRange[0];
-        if (trans == null) return null;
-        if (trans.GetComponent<EnemyHealth>().Hp > 0)
+        if (trans == null || trans.GetComponent<EnemyHealth>().Hp <= 0) return null;
+        if (trans.position.x<transform.position.x)
         {
-
             cellAnimator.direction = Direction.Left;
             cellAnimator.transform.localPosition = revisePosLeft;
-            p = trans;
-
         }
         else
         {
-
             cellAnimator.direction = Direction.Right;
             cellAnimator.transform.localPosition = revisePosRight;
-            p = trans;
-
         }
-
+        p = trans;
 
         return p;
     }
@@ -126,39 +124,42 @@ public class SRCellBase : CellBase, ShortRangeAttack
         {
             Transform trans = (Transform)enemyInRange[i];
             float minDistance = Mathf.Infinity;
-            if (trans == null) return null;
-            if (trans.GetComponent<EnemyHealth>().Hp > 0)
+            if (trans == null || trans.GetComponent<EnemyHealth>().Hp <= 0) return null;
+
+            if (transform.position.x > trans.position.x)
             {
-                if (transform.position.x > trans.position.x)
+                float distance = Vector3.Distance(trans.position, transform.position + new Vector3(-1, 0, 0));
+                if (distance < minDistance)
                 {
-                    float distance = Vector3.Distance(trans.position, transform.position + new Vector3(-1, 0, 0));
-                    if (distance < minDistance)
-                    {
-                        minDistance = distance;
-                        cellAnimator.direction = Direction.Left;
-                        cellAnimator.transform.localPosition = revisePosLeft;
-                        p = trans;
-                    }
-                }
-                else
-                {
-                    float distance = Vector3.Distance(trans.position, transform.position + new Vector3(1, 0, 0));
-                    if (distance < minDistance)
-                    {
-                        minDistance = distance;
-                        cellAnimator.direction = Direction.Right;
-                        cellAnimator.transform.localPosition = revisePosRight;
-                        p = trans;
-                    }
+                    minDistance = distance;
+                    cellAnimator.direction = Direction.Left;
+                    cellAnimator.transform.localPosition = revisePosLeft;
+                    p = trans;
                 }
             }
+            else
+            {
+                float distance = Vector3.Distance(trans.position, transform.position + new Vector3(1, 0, 0));
+                if (distance < minDistance)
+                {
+                    minDistance = distance;
+                    cellAnimator.direction = Direction.Right;
+                    cellAnimator.transform.localPosition = revisePosRight;
+                    p = trans;
+                }
+            }
+
         }
         return p;
     }
     public void AttackOneTime()
     {
-        if (!isAttack) return;
-        cellAnimator.OnChangeCellStatus(CellStatus.Attack);
+        if (!isAttack)
+        {
+            //cellAnimator.OnChangeCellStatus(CellStatus.Idle,false);
+            return;
+        }
+        cellAnimator.OnChangeCellStatus(CellStatus.Attack,true);
         Invoke("SetDamageToEnemy", atkTime);
     }
     public void SetDamageToEnemy()

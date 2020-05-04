@@ -26,8 +26,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4230687964671167573}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.17, z: 0}
-  m_LocalScale: {x: 0.3, y: 0.3, z: 0.5}
+  m_LocalPosition: {x: 0, y: 0.3, z: 0}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children: []
   m_Father: {fileID: 2832267228240981618}
   m_RootOrder: 0
@@ -71,7 +71,7 @@ SpriteRenderer:
   m_SortingLayerID: -1124903911
   m_SortingLayer: 1
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: b65187b34b41e1444a46cdde0748afab, type: 3}
+  m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 1
   m_FlipY: 0
@@ -79,7 +79,7 @@ SpriteRenderer:
   m_Size: {x: 5.12, y: 5.12}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!114 &1106068102489318478
@@ -95,7 +95,48 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AtkSprite: []
-  IdleSprite: []
+  IdleSprite:
+  - {fileID: 21300000, guid: 28fc18f070bad1b42b397a37aff3ef0d, type: 3}
+  - {fileID: 21300000, guid: 2d7d68ef6d483c945a05589ded7d3af4, type: 3}
+  - {fileID: 21300000, guid: 5c0e76f7c7324b74a9d2e6aa9e01848f, type: 3}
+  - {fileID: 21300000, guid: 4174c56ba292699428121309e5d224e8, type: 3}
+  - {fileID: 21300000, guid: 825cfe8f543db7347973dc436b194938, type: 3}
+  - {fileID: 21300000, guid: dbea6dc3524beae45b3c920ff62faa8d, type: 3}
+  - {fileID: 21300000, guid: e5c20fba5c3863240bd91b7ede0d5c02, type: 3}
+  - {fileID: 21300000, guid: 07b62dd0135267c4ca7e97a338edcf26, type: 3}
+  - {fileID: 21300000, guid: 0b07fb6c5efcc144a965f2062f5b071d, type: 3}
+  - {fileID: 21300000, guid: 5b3ce9ba06af1f743a411f176d05d9f9, type: 3}
+  - {fileID: 21300000, guid: c30025bebb678904eb8d2c4d9020a667, type: 3}
+  - {fileID: 21300000, guid: 544fe1b1282eca14db6c216be80dd554, type: 3}
+  - {fileID: 21300000, guid: 48b559c838a82f640a00ccbe5b2d830e, type: 3}
+  - {fileID: 21300000, guid: 5bc3694f72867794e9e17ace588056d2, type: 3}
+  - {fileID: 21300000, guid: b463ea4184f729e4db6a0556281c6d9e, type: 3}
+  - {fileID: 21300000, guid: b234b88da8ac8494ea7bd94c1ef12957, type: 3}
+  - {fileID: 21300000, guid: 1e5fa8b9f1b2622468fc48e3cb0eff66, type: 3}
+  - {fileID: 21300000, guid: fa0896946d11767458a138aa29150edc, type: 3}
+  - {fileID: 21300000, guid: 47176c5eff86dd0448fedf2a3ceedacb, type: 3}
+  - {fileID: 21300000, guid: 83589531356a433488d8ef48b4cf72cd, type: 3}
+  - {fileID: 21300000, guid: 3fd6d1013f89bf54e885168c6121c8f9, type: 3}
+  - {fileID: 21300000, guid: 3c5afd17ac1df894ea71de383602238f, type: 3}
+  - {fileID: 21300000, guid: 67e5ce23cb2536948a4eca2176a89c4d, type: 3}
+  - {fileID: 21300000, guid: e4ad94905e5c8d5418d31535450f8d51, type: 3}
+  - {fileID: 21300000, guid: fe1f041faed4c674986d1ba980dfff27, type: 3}
+  - {fileID: 21300000, guid: d4b1b5c945898e94992cc72efca734c5, type: 3}
+  - {fileID: 21300000, guid: 22156358e994c3249a93e7d4825eb38a, type: 3}
+  - {fileID: 21300000, guid: 33f1a2880cf02e04cb09bb5fe080d671, type: 3}
+  - {fileID: 21300000, guid: bdc7756849137e1419786a4fef8e2744, type: 3}
+  - {fileID: 21300000, guid: d1f3fd5f773a6e846bb6152a82f0daa9, type: 3}
+  - {fileID: 21300000, guid: af3491f26d16d7648b1a4b11d3db4dc6, type: 3}
+  - {fileID: 21300000, guid: 821c456e140771e4bb929f2e6f989f0b, type: 3}
+  - {fileID: 21300000, guid: edbc5f9148030a146a153afefd4d781d, type: 3}
+  - {fileID: 21300000, guid: 453ec2ad974b21742a8cd3e0d3142dbf, type: 3}
+  - {fileID: 21300000, guid: 54ba18964626b1e48ba231b6c0daafa7, type: 3}
+  - {fileID: 21300000, guid: 57dedee2c4c13f343a9e5288bbbd1d0b, type: 3}
+  - {fileID: 21300000, guid: 6924865a81e607c49985a0729e2191c3, type: 3}
+  - {fileID: 21300000, guid: d2e112dbb45b2ce42a3e73a0a391f34a, type: 3}
+  - {fileID: 21300000, guid: 0a93a7188689a0d48be6c6ef84d49002, type: 3}
+  - {fileID: 21300000, guid: a9b41017510abbb4abdd0580d103adad, type: 3}
+  - {fileID: 21300000, guid: 402f97b97edd34c4d806f26ab118eb69, type: 3}
   direction: 0
 --- !u!1 &7521691899511647251
 GameObject:
@@ -182,5 +223,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cellType: 1
   gridPos: {x: 0, y: 0}
-  revisePosLeft: {x: 0, y: 0.17, z: 0}
-  revisePosRight: {x: 0, y: 0.17, z: 0}
+  revisePosLeft: {x: 0, y: 0.3, z: 0}
+  revisePosRight: {x: 0, y: 0.3, z: 0}

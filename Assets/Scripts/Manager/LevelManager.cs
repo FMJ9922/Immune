@@ -42,7 +42,7 @@ public class LevelManager : MonoBehaviour
         Map = transform.Find("Map").gameObject;
         GenerateTileNode();
         StartCoroutine(CreateEnemy());
-        DeployPoints = 5;
+        DeployPoints = 100;
     }
     private void Update()
     {

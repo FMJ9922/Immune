@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public enum PlaceType { Null = 0,Selected = 1}
-public enum CellStatus { Idle = 0,Attack = 1,CoolDown =2,Upgrade =3,Produce = 4,Invisable =5}
+public enum CellStatus { Idle = 0,Attack = 1,CoolDown =2,Upgrade =3,Produce = 4, Invisable = 5}
 public enum EnemyStatus { Idle = 0,Attack = 1,Bite = 2,Die =3,Invisable = 4}
 public enum Direction { Left =0,Right = 1,Up = 2,Down = 3}
 public enum TileType { Empty = 0, Block = 1,Occupy=2}

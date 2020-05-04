@@ -5,7 +5,7 @@
 			"InitCost":5.0,
 			"AtkRange":1.5,
 			"AtkDamage":34.0,
-			"AtkTime":0.1,
+			"AtkTime":0.08,
 			"AtkDuration":1.5,
 
 		},
@@ -67,8 +67,8 @@
 			"Name":"Ð§Ó¦TÏ¸°û",
 			"InitCost":5.0,
 			"AtkRange":1.5,
-			"AtkDamage":21.0,
-			"AtkTime":0.9,
+			"AtkDamage":101.0,
+			"AtkTime":0.8,
 			"AtkDuration":2.0,
 
 		},
