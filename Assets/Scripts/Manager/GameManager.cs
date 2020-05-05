@@ -121,4 +121,17 @@ public class GameManager : MonoBehaviour
         action();
     }
 
+    public static void Set2xTimeScale()//二倍速
+    {
+        Time.timeScale = 2.0f;
+    }
+    public static void Set1xTimeScale()//一倍速
+    {
+        Time.timeScale = 1.0f;
+    }
+    public static void Set0xTimeScale()//暂停
+    {
+        Time.timeScale = 0.0f;
+    }
+
 }
