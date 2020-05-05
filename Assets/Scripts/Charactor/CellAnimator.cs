@@ -57,7 +57,7 @@ public class CellAnimator : MonoBehaviour
 
         float alpha = fadeIn ? (index*deltaFrame+frameP) / ((float)sprites.Length*deltaFrame)
             : 1 - (index * deltaFrame + frameP) / ((float)sprites.Length * deltaFrame);
-        Debug.Log(alpha);
+        //Debug.Log(alpha);
         spriteRenderer.color = new Color(spriteRenderer.color.r,
                                 spriteRenderer.color.g,
                                 spriteRenderer.color.b,

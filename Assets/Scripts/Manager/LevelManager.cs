@@ -106,10 +106,10 @@ public class LevelManager : MonoBehaviour
     {
         int x = Mathf.FloorToInt(pos.x);
         int y = Mathf.FloorToInt(pos.y);
-        if (x < 0 && y >= 0 && y <= 8) return AllNodeGroup[0, y];
-        else if (x > 15 && y >= 0 && y <= 8) return AllNodeGroup[15, y];
-        else if (y > 8 && x >= 0 && x <= 15) return AllNodeGroup[x, 8];
-        else if (y < 0 && x >= 0 && x <= 15) return AllNodeGroup[x, 0];
+        if (x < 0 && y >= 0) return AllNodeGroup[0, y];
+        else if (x > 15 && y <= 8) return AllNodeGroup[15, y];
+        else if (y > 8 && x >= 0) return AllNodeGroup[x, 8];
+        else if (y < 0 &&x <= 15) return AllNodeGroup[x, 0];
         else return AllNodeGroup[x, y];
     }
     public AStarNode GetNodeByPos(int x, int y)//根据位置返回寻路节点

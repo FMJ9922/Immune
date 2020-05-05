@@ -27,7 +27,11 @@ public class ControlManager : MonoBehaviour
     public static event PlantCell OnPlantCell;
     public delegate void TakeAction(bool doing);
     public static event TakeAction OnMoveToPlant;
+    public static event TakeAction OnClickTile;
     public Text text;
+
+    public AStarNode lastNode = null;
+    public CellBase lastCell;
 
     void Awake()
     {
@@ -184,18 +188,41 @@ public class ControlManager : MonoBehaviour
             CellOnMove.transform.position = transform.position;
         }
         targetNode = LevelManager.Instance.GetNodeByPos(transform.position);
+       
+        if (targetNode == lastNode|| placeType == PlaceType.Selected) return;
+        else
+        {
+            if(lastCell!=null)
+                lastCell.CloseRangePic();
+            lastNode = targetNode;
+            //Debug.Log(targetNode.name);
+            //if (OnClickTile != null)
+            //{
+            //    OnClickTile(true);
+            //}
+            if(targetNode.tileType ==TileType.Occupy)
+            {
+                lastCell = targetNode.transform.GetChild(0).GetComponent<CellBase>();
+                lastCell.ShowRangePic();
+                Debug.Log("StartShow");
+            }
+            
+
+        }
+        
+
         /*Ray ray = Camera.main.ScreenPointToRay(transform.position);
         RaycastHit[] touches = Physics.RaycastAll(ray, Mathf.Infinity);
-
-       
-        //Debug.Log(transform.position+"=>"+targetNode.name);
         if (touches.Length == 0)
         {
-            //Debug.Log("null touch");
+            Debug.Log("null touch");
             return;
         }
 
         var hit = touches[0];
-        */
+        for (int i = 0; i < touches.Length; i++)
+        {
+            Debug.Log((touches[i].collider.name));
+        }*/
     }
 }

@@ -30,11 +30,11 @@ public class SRCellBase : CellBase, ShortRangeAttack
         enemyInRange = new ArrayList();
         cellAnimator = transform.GetComponentInChildren<CellAnimator>();
         cellAnimator.transform.localPosition = revisePosLeft;
+        this.rangePicManage = transform.GetComponentInChildren<RangePicManage>();
     }
     void Start()
     {
         InitCell();
-
         InvokeRepeating("AttackOneTime", 0, atkDuration);
         AttackOneTime();
     }

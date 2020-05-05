@@ -27,8 +27,22 @@ public class CellBase : MonoBehaviour
     private CellStatus cellStatus;//当前状态
     public CellType cellType;
     public Vector2Int gridPos;
+    protected RangePicManage rangePicManage;
 
 
-    public virtual void InitCell() { }
+    public virtual void InitCell() {  }
+
+    public void ShowRangePic()
+    {
+        if(rangePicManage == null)
+        {
+            rangePicManage = transform.GetComponentInChildren<RangePicManage>();
+        }
+        rangePicManage.ChangeLocalScale(1);
+    }
+    public void CloseRangePic()
+    {
+        rangePicManage.ChangeLocalScale(0);
+    }
 
 }
