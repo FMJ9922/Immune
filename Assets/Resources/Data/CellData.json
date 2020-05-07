@@ -68,8 +68,8 @@
 			"InitCost":20.0,
 			"AtkRange":1.5,
 			"AtkDamage":101.0,
-			"AtkTime":0.8,
-			"AtkDuration":2.0,
+			"AtkTime":0.6,
+			"AtkDuration":3.0,
 
 		},
 		{

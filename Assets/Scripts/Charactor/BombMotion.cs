@@ -124,7 +124,7 @@ public class BombMotion : MonoBehaviour
                 transform.localScale *= 2;
                 transform.GetComponent<CircleCollider2D>().radius /= 2;
                 transform.position -= new Vector3(0, 0.4f);
-                Invoke("SetDamageToEnemys", 0.8f);
+                Invoke("SetDamageToEnemys", 0.7f);
             }
         }
     }

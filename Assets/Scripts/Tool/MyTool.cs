@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class MyTool : MonoBehaviour
 {
-   
-    /*public static void DoRotate(Transform _transform,Vector3 angle,float speed,float howlong)
-    {
-        IEnumerator enumerator = RotateEnumerator(_transform, angle, speed, howlong);
-        Coroutine coroutine = StartCoroutine(enumerator);
-    }*/
+    /// <summary>
+    /// 对物体进行旋转
+    /// </summary>/// 
+    /// <param name="_transform"></param>需要旋转的物体
+    /// <param name="lockwise"></param>是否是顺时针（反之逆时针）
+    /// <param name="speed"></param>旋转角速度
+    /// <param name="howlong"></param>多长时间内完成
     public static IEnumerator DoRotate(Transform _transform, bool clockwise, float speed, float howlong)
     {
         float timer = howlong;
@@ -21,6 +22,12 @@ public class MyTool : MonoBehaviour
             yield return 0;
         }
     }
+    /// <summary>
+    /// 对物体进行缩放
+    /// </summary>/// 
+    /// <param name="_transform"></param>需要缩放的物体
+    /// <param name="targetScale"></param>目标缩放大小
+    /// <param name="howlong"></param>多长时间内完成
     public static IEnumerator DoScale(Transform _transform, float targetScale, float howlong)
     {
         float timer = howlong;
