@@ -30,7 +30,7 @@ public class RangePicManage : MonoBehaviour
         //Debug.Log("?");
         if (enumerator != null)
             StopCoroutine(enumerator);
-        enumerator = ChangeScale(targetScale*0.6f);
+        enumerator = ChangeScale(targetScale*0.4f);
         StartCoroutine(enumerator);
         shineLoop = !shineLoop;
     }
@@ -42,7 +42,7 @@ public class RangePicManage : MonoBehaviour
         {
             //Debug.Log(transform.localScale.x);
             transform.localScale = (targetScale * Vector3.one - local) * (1 - Mathf.Pow(0.5f, time)) + local;
-            time += 3*Time.deltaTime;
+            time += 3 * Time.deltaTime;
             yield return 0;
         }
     }

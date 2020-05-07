@@ -6,7 +6,6 @@ using UnityEngine.UI;
 public class EnemyHealth : MonoBehaviour
 {
     public float InitHealth = 100;//初始生命值
-    private float damage;
     private EnemyAnimator enemyAnimator;
     public ArrayList cellInRange;
 
@@ -18,38 +17,41 @@ public class EnemyHealth : MonoBehaviour
         get;
         private set;
     }
+    private float DieTimeConter;
 
     private Slider hpSlider;//血条
-//public GameObject explosionEffect;
+                            //public GameObject explosionEffect;
     void Start()
     {
         cellInRange = new ArrayList();
-          Hp = InitHealth;
+        Hp = InitHealth;
         hpSlider = GetComponentInChildren<Slider>();
         enemyAnimator = transform.GetComponentInChildren<EnemyAnimator>();
     }
 
-    void Update()
-    {
-
-    }
-   
-    public void TakeDamageInSeconds(float damage,float time)
+    /*public void TakeDamageInSeconds(float damage,float time)
     {
        // Debug.Log(damage + " " + time);
         Invoke("TakeDamage", time);
         this.damage = damage; 
-    }
-    private void TakeDamage()
+    }*/
+    public void TakeDamage(float damage, EnemyStatus _enemyStatus)
     {
-        
         if (Hp <= 0) return;
-        Hp -= this.damage;
+        Hp -= damage;
         hpSlider.value = (float)Hp / InitHealth;
-        //Debug.Log(Hp);
+
         if (Hp <= 0)
         {
-            enemyAnimator.OnChangeCellStatus(EnemyStatus.Die);
+            //Debug.Log(_enemyStatus);
+            enemyAnimator.OnChangeEnemyStatus(_enemyStatus);
+            transform.GetComponent<EnemyMotion>().enemyStatus = _enemyStatus;
+            if (_enemyStatus == EnemyStatus.Engulfed)
+            {
+                StartCoroutine(MyTool.DoRotate(transform, true, -50f, 1f));
+                StartCoroutine(MyTool.DoScale(transform, 0.12f, 1.0f));
+            }
+            
             Destroy(hpSlider.gameObject);
             Die();
         }
@@ -64,7 +66,8 @@ public class EnemyHealth : MonoBehaviour
                 OnEnemyDie(this.transform);
             }
         }
-        Destroy(this.gameObject,2f);
+        DieTimeConter = 2f;
+        Destroy(this.gameObject, 2f);
     }
 
 }

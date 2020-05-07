@@ -5,22 +5,29 @@ using UnityEngine;
 
 public class CellAnimator : MonoBehaviour
 {
-    public Sprite[] AtkSprite;
-    public Sprite[] IdleSprite;
-    private CellStatus cellStatus = CellStatus.Invisable;
+    public Sprite[] AtkSprite;//普攻图集
+    public Sprite[] IdleSprite;//缓动图集
+    public Sprite[] SBSprite;//特殊能力图集
+    //private CellStatus cellStatus = CellStatus.Invisable;
     private SpriteRenderer spriteRenderer;
-    private CellType cellType;
     int frameP = 0;
     int index = 0;
     public Direction direction = Direction.Left;
     private bool doFadeIn = true;
-    
-    void Start()
+    public delegate void StatusChange(CellStatus cellStatus);
+    public event StatusChange OnStatusChange;
+    private CellBase cellBase;
+
+    private void Awake()
     {
         spriteRenderer = transform.GetComponent<SpriteRenderer>();
-        cellType = transform.GetComponentInParent<CellBase>().cellType;
-        transform.localPosition = new Vector3(0, transform.localPosition.y, transform.position.y);
+        cellBase = transform.GetComponentInParent<CellBase>();
 
+    }
+    void Start()
+    {
+        
+        transform.localPosition = new Vector3(0, transform.localPosition.y, transform.position.y);
         //FlipPicture.SaveFlipTextures(IdleSpriteR,CellType.TX);
     }
     /*private Texture2D[] LoadTextureFromFile()
@@ -28,6 +35,12 @@ public class CellAnimator : MonoBehaviour
 
         
     }*/
+    public void CleanFrameData()
+    {
+        frameP = 0;
+        index = 0;
+
+    }
     public void PlayAnimation(Sprite[] sprites,int deltaFrame, PlayAnimaType type)
     {
         if (sprites.Length <= 0) return;
@@ -41,7 +54,7 @@ public class CellAnimator : MonoBehaviour
                 index = 0;
                 if (type == PlayAnimaType.Once)
                 {
-                    cellStatus = CellStatus.Idle;
+                    OnStatusChange(CellStatus.Idle);
                     return;
                 }
             }
@@ -74,8 +87,7 @@ public class CellAnimator : MonoBehaviour
                 index = 0;
                 if (type == PlayAnimaType.Fade)
                 {
-                    
-                    cellStatus = CellStatus.Idle;
+                    OnStatusChange(CellStatus.Idle);
                     doFadeIn = false;
                     return;
                 }
@@ -85,17 +97,15 @@ public class CellAnimator : MonoBehaviour
         }
         else return;
     }
-    public void OnChangeCellStatus(CellStatus status,bool resetIndex)
-    {
-        cellStatus = status;
-        if (resetIndex) { index = 0; }
-    }
+    
     void FixedUpdate()
     {
+        //Debug.Log(cellBase.cellStatus);
         spriteRenderer.flipX = direction == Direction.Left ? true : false;
-       
-        switch (cellStatus)
+        //Debug.Log(cellBase.cellStatus);
+        switch (cellBase.cellStatus)
         {
+            
             case CellStatus.Invisable:
                 PlayAnimation(IdleSprite, 2, true, PlayAnimaType.Fade);
                 return;
@@ -105,7 +115,9 @@ public class CellAnimator : MonoBehaviour
             case CellStatus.Attack:
                 PlayAnimation(AtkSprite, 2, PlayAnimaType.Once);
                 break;
-
+            case CellStatus.SpecialAbility:
+                PlayAnimation(SBSprite, 2, PlayAnimaType.Once);
+                break;
         }
     }
     [ContextMenu("SetUp")]

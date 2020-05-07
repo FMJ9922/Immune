@@ -12,8 +12,8 @@ public interface ShortRangeAttack
 }
 public interface LongRangeAttack
 {
-    void InitEnemysInRange();
-    void AttackOnce(Transform[] enemys, float damage);
+    Transform ChooseTargetEnemeys();
+    void AttackOneTime();
 }
 
 public interface Produce
@@ -24,7 +24,7 @@ public interface Produce
 public class CellBase : MonoBehaviour
 {
     public float InitCost { get; private set; }//部署点数
-    private CellStatus cellStatus;//当前状态
+    public CellStatus cellStatus;//当前状态
     public CellType cellType;
     public Vector2Int gridPos;
     protected RangePicManage rangePicManage;
@@ -38,7 +38,7 @@ public class CellBase : MonoBehaviour
         {
             rangePicManage = transform.GetComponentInChildren<RangePicManage>();
         }
-        rangePicManage.ChangeLocalScale(1);
+        rangePicManage.ChangeLocalScale(JsonIO.GetCellData(cellType).atkRange);
     }
     public void CloseRangePic()
     {

@@ -12,18 +12,21 @@ public class EnemyMotion : MonoBehaviour
     public Vector2 endPos;
     private AStarAgent agent;
     public FindPathType FindPathType;
+    public EnemyStatus enemyStatus;
+    public Vector3 TargetPoint { private get; set; }
     /*public bool draw;*/
 
     void Start()
     {
         //speed = 0.5f;
+        enemyStatus = EnemyStatus.Idle;
         agent = transform.GetComponent<AStarAgent>();
         InitWayPoint();
         //Debug.Log(wayPointList[0].x);
-        if(wayPointList[0].x ==0.5f) transform.position = wayPointList[0]+new Vector3(-1,0,0);
-        else if(wayPointList[0].x ==15.5f) transform.position = wayPointList[0]+new Vector3(1,0,0);
-        else if(wayPointList[0].y ==0.5f) transform.position = wayPointList[0]+new Vector3(0,-1,0);
-        else if(wayPointList[0].y ==8.5f) transform.position = wayPointList[0]+new Vector3(0,1,0);
+        if (wayPointList[0].x == 0.5f) transform.position = wayPointList[0] + new Vector3(-1, 0, 0);
+        else if (wayPointList[0].x == 15.5f) transform.position = wayPointList[0] + new Vector3(1, 0, 0);
+        else if (wayPointList[0].y == 0.5f) transform.position = wayPointList[0] + new Vector3(0, -1, 0);
+        else if (wayPointList[0].y == 8.5f) transform.position = wayPointList[0] + new Vector3(0, 1, 0);
 
         ControlManager.OnPlantCell += ChangeWayPoint;
         /*if (draw) DrawThisRoute();*/
@@ -41,8 +44,8 @@ public class EnemyMotion : MonoBehaviour
             agent.SetPath(startPos, endPos);
             wayPointList = agent.wayPointList;
         }
-        
-        
+
+
     }
     void ChangeWayPoint()
     {
@@ -69,17 +72,25 @@ public class EnemyMotion : MonoBehaviour
         this.FindPathType = _FindPathType;
     }
 
-    void Update()
+    void FixedUpdate()//每一帧执行方法
     {
-        if (transform.GetComponent<EnemyHealth>().Hp > 0)
+        //Debug.Log(enemyStatus+" " + TargetPoint);
+        if (enemyStatus == EnemyStatus.Engulfed&& TargetPoint != null)
+        {
+            
+            Move(TargetPoint);
+            return;
+        }
+        else if (transform.GetComponent<EnemyHealth>().Hp > 0 && enemyStatus == EnemyStatus.Idle)
         {
             Move(wayPointList);
         }
-        //每一帧执行方法
+
     }
 
-    void Move(List<Vector3> wayPointList)
-    {   if(wayPointList.Count == 0)
+    private void Move(List<Vector3> wayPointList)
+    {
+        if (wayPointList.Count == 0)
         {
             Destroy(gameObject);
         }
@@ -94,8 +105,14 @@ public class EnemyMotion : MonoBehaviour
             }
         }
     }
-    /*public void DrawThisRoute()
+
+    private void Move(Vector3 targetPoint)
     {
-        StartCoroutine(DrawRoute.Drawarrow(LevelManager.Instance.drawRoute, wayPointList, 0.15f));
-    }*/
+        transform.Translate((targetPoint - transform.position).normalized * Time.deltaTime * speed*5f);
+        if (Vector3.Distance(targetPoint, transform.position) < 0.01f)
+        {
+            enemyStatus = EnemyStatus.Die;
+            Destroy(this.gameObject);//销毁物体
+        }
+    }
 }

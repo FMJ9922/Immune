@@ -37,10 +37,12 @@ public class EnemyAnimator : MonoBehaviour
         else return;
 
     }
-    public void OnChangeCellStatus(EnemyStatus status)
+    
+    public void OnChangeEnemyStatus(EnemyStatus status)
     {
         enemyStatus = status;
         index = 0;
+        //Debug.Log(enemyStatus);
     }
 
     void FixedUpdate()
@@ -54,6 +56,9 @@ public class EnemyAnimator : MonoBehaviour
                 PlayAnimation(IdleSprite, 3, PlayAnimaType.Loop);
                 break;
             case EnemyStatus.Die:
+                PlayAnimation(DieSprite, 2, false);
+                break;
+            case EnemyStatus.Engulfed:
                 PlayAnimation(DieSprite, 2, false);
                 break;
 

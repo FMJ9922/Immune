@@ -4,18 +4,18 @@
 			"Name":" »÷––‘¡£œ∏∞˚",
 			"InitCost":5.0,
 			"AtkRange":1.5,
-			"AtkDamage":34.0,
-			"AtkTime":0.08,
-			"AtkDuration":1.5,
+			"AtkDamage":51.0,
+			"AtkTime":0.4,
+			"AtkDuration":3.0,
 
 		},
 		{
 			"Name":" »À·–‘¡£œ∏∞˚",
-			"InitCost":5.0,
-			"AtkRange":2.0,
-			"AtkDamage":50.0,
+			"InitCost":15.0,
+			"AtkRange":2.5,
+			"AtkDamage":34.0,
 			"AtkTime":0.5,
-			"AtkDuration":1.0,
+			"AtkDuration":5.0,
 
 		},
 		{
@@ -65,7 +65,7 @@
 		},
 		{
 			"Name":"–ß”¶Tœ∏∞˚",
-			"InitCost":5.0,
+			"InitCost":20.0,
 			"AtkRange":1.5,
 			"AtkDamage":101.0,
 			"AtkTime":0.8,

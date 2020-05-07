@@ -4,24 +4,23 @@ using UnityEngine;
 
 public class SRCellBase : CellBase, ShortRangeAttack
 {
-    private float atkRange;//攻击范围
-    private float atkDamage;//攻击伤害
-    private float atkDuration;//冷却时间
-    private float atkTime;//攻击时长
-    private bool isAttack;//是否正在攻击
-    private CellData cellData;
-    private ArrayList enemyInRange;//范围内的敌人
-    private Transform targetEnemy;//目标敌人
-    private CellAnimator cellAnimator;
+    protected float atkRange;//攻击范围
+    protected float atkDamage;//攻击伤害
+    protected float atkDuration;//冷却时间
+    protected float atkTime;//攻击时长
+    protected CellData cellData;
+    protected ArrayList enemyInRange;//范围内的敌人
+    protected Transform targetEnemy;//目标敌人
+    protected CellAnimator cellAnimator;
     public Vector3 revisePosLeft = new Vector3(-0.12f, 0.4f, 0);
     public Vector3 revisePosRight = new Vector3(0.22f, 0.4f, 0);
-
+    protected FireMode fireMode;
+    protected IEnumerator enumerator;
 
 
     public override void InitCell()
     {
         cellData = JsonIO.GetCellData(cellType);
-        isAttack = false;
         atkDamage = cellData.atkDamage;
         atkDuration = cellData.atkDuration;
         atkRange = cellData.atkRange;
@@ -31,43 +30,39 @@ public class SRCellBase : CellBase, ShortRangeAttack
         cellAnimator = transform.GetComponentInChildren<CellAnimator>();
         cellAnimator.transform.localPosition = revisePosLeft;
         this.rangePicManage = transform.GetComponentInChildren<RangePicManage>();
+        cellAnimator.OnStatusChange += OnCellStatusChange;
+        fireMode = FireMode.Nearest;
+        enumerator = null;
+        cellStatus = CellStatus.Idle;
     }
-    void Start()
+    private void Start()
     {
         InitCell();
-        InvokeRepeating("AttackOneTime", 0, atkDuration);
-        AttackOneTime();
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    protected void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "Enemy")
+        if (collision.CompareTag("Enemy"))
         {
             if (enemyInRange.Count == 0)
             {
-                if (transform.position.x > collision.transform.position.x)
-                {
-                    cellAnimator.direction = Direction.Left;
-                    cellAnimator.transform.localPosition = revisePosLeft;
-
-                }
-                else
-                {
-                    cellAnimator.direction = Direction.Right;
-                    cellAnimator.transform.localPosition = revisePosRight;
-                }
-                
+                CheckLeftOrRight(collision.transform);
             }
             enemyInRange.Add(collision.transform);
             EnemyHealth enemyHealth = collision.transform.GetComponent<EnemyHealth>();
             enemyHealth.cellInRange.Add(this.transform);
             enemyHealth.OnEnemyDie += OnInRangeEnemyDie;
-            isAttack = true;
-            //Debug.Log(collision.name);
+
+
+            if (enumerator == null)
+            {
+                enumerator = StartAttackEnemy();
+                StartCoroutine(enumerator);
+            }
         }
 
     }
-    private void OnInRangeEnemyDie(Transform enemyTrans)
+    protected void OnInRangeEnemyDie(Transform enemyTrans)
     {
         enemyTrans.GetComponent<EnemyHealth>().OnEnemyDie -= OnInRangeEnemyDie;
         if (enemyInRange.Contains(enemyTrans))
@@ -75,105 +70,148 @@ public class SRCellBase : CellBase, ShortRangeAttack
             enemyInRange.Remove(enemyTrans);
         }
     }
-    private void OnTriggerExit2D(Collider2D collision)
+    protected void OnTriggerExit2D(Collider2D collision)
     {
-        enemyInRange.Remove(collision.transform);
-        EnemyHealth enemyHealth = collision.transform.GetComponent<EnemyHealth>();
-        enemyHealth.cellInRange.Remove(this.transform);
-        enemyHealth.OnEnemyDie -= OnInRangeEnemyDie;
-        if(enemyInRange.Count == 0)
-        {
+        if(collision.CompareTag("Enemy")){
+            enemyInRange.Remove(collision.transform);
+            EnemyHealth enemyHealth = collision.transform.GetComponent<EnemyHealth>();
+            enemyHealth.cellInRange.Remove(this.transform);
+            enemyHealth.OnEnemyDie -= OnInRangeEnemyDie;
+            if (enemyInRange.Count == 0)
+            {
+                if (enumerator != null)
+                {
+                    StopCoroutine(enumerator);
+                    enumerator = null;
+                }
+            }
         }
     }
     public Transform ChooseTargetEnemey()
     {
         if (enemyInRange.Count == 0)
         {
-            isAttack = false;
+            // Debug.LogError("No Target in range");
             return null;
         }
         else
         {
-            return CheckAndReturnFirstEnemy();
+            switch (fireMode)
+            {
+                case FireMode.First:
+                    return CheckAndReturnFirstEnemy();
+                case FireMode.Nearest:
+                    return CheckAndReturnNearestEnemy();
+                case FireMode.Weakest:
+                    return CheckAndReturnWeakestEnemy();
+                default: return CheckAndReturnFirstEnemy();
+            }
         }
     }
-    private Transform CheckAndReturnFirstEnemy()
-    {
-        Transform p = null;
-
-        Transform trans = (Transform)enemyInRange[0];
-        if (trans == null || trans.GetComponent<EnemyHealth>().Hp <= 0) return null;
-        if (trans.position.x<transform.position.x)
-        {
-            cellAnimator.direction = Direction.Left;
-            cellAnimator.transform.localPosition = revisePosLeft;
-        }
-        else
-        {
-            cellAnimator.direction = Direction.Right;
-            cellAnimator.transform.localPosition = revisePosRight;
-        }
-        p = trans;
-
-        return p;
-    }
-    private Transform CheckAndReturnNearestEnemy()
+    protected Transform CheckAndReturnFirstEnemy()
     {
         Transform p = null;
         for (int i = 0; i < enemyInRange.Count; i++)
         {
             Transform trans = (Transform)enemyInRange[i];
-            float minDistance = Mathf.Infinity;
-            if (trans == null || trans.GetComponent<EnemyHealth>().Hp <= 0) return null;
-
-            if (transform.position.x > trans.position.x)
-            {
-                float distance = Vector3.Distance(trans.position, transform.position + new Vector3(-1, 0, 0));
-                if (distance < minDistance)
-                {
-                    minDistance = distance;
-                    cellAnimator.direction = Direction.Left;
-                    cellAnimator.transform.localPosition = revisePosLeft;
-                    p = trans;
-                }
-            }
-            else
-            {
-                float distance = Vector3.Distance(trans.position, transform.position + new Vector3(1, 0, 0));
-                if (distance < minDistance)
-                {
-                    minDistance = distance;
-                    cellAnimator.direction = Direction.Right;
-                    cellAnimator.transform.localPosition = revisePosRight;
-                    p = trans;
-                }
-            }
-
+            if (trans == null || trans.GetComponent<EnemyHealth>().Hp <= 0) continue;
+            CheckLeftOrRight(p);
+            p = trans;
+            return p;
         }
+        return null;
+    }
+    protected Transform CheckAndReturnNearestEnemy()
+    {
+        Transform p = null;
+        float minDistance = Mathf.Infinity;
+        for (int i = 0; i < enemyInRange.Count; i++)
+        {
+            Transform trans = (Transform)enemyInRange[i];
+            if (trans == null || trans.GetComponent<EnemyHealth>().Hp <= 0) continue;
+
+            float distance = Vector3.Distance(trans.position, transform.position);
+            //Debug.Log(distance);
+            if (distance <= minDistance)
+            {
+                minDistance = distance;
+                p = trans;
+            }
+        }
+        CheckLeftOrRight(p);
+
         return p;
     }
-    public void AttackOneTime()
+
+    protected Transform CheckAndReturnWeakestEnemy()
     {
-        if (!isAttack)
+        Transform p = null;
+        float minHp = 1000f;
+        for (int i = 0; i < enemyInRange.Count; i++)
         {
-            //cellAnimator.OnChangeCellStatus(CellStatus.Idle,false);
+            Transform trans = (Transform)enemyInRange[i];
+            if (trans == null || trans.GetComponent<EnemyHealth>().Hp <= 0) continue;
+
+            float hp = trans.GetComponent<EnemyHealth>().Hp;
+            if (hp < minHp)
+            {
+                minHp = hp;
+                p = trans;
+            }
+        }
+        CheckLeftOrRight(p);
+        return p;
+    }
+    private void CheckLeftOrRight(Transform targetTransfrom)
+    {
+        if (targetTransfrom == null) return;
+        cellAnimator.direction = transform.position.x > targetTransfrom.position.x ?
+                                    Direction.Left :
+                                    Direction.Right;
+        cellAnimator.transform.localPosition = cellAnimator.direction == Direction.Left ?
+                                    revisePosLeft :
+                                    revisePosRight;
+    }
+    public IEnumerator StartAttackEnemy()
+    {
+        while (true)
+        {
+            AttackOneTime();
+            yield return new WaitForSeconds(atkDuration);
+        }
+    }
+    public virtual void AttackOneTime()
+    {
+        targetEnemy = ChooseTargetEnemey();
+        if (targetEnemy == null)
+        {
+            cellStatus = CellStatus.Idle;
             return;
         }
-        cellAnimator.OnChangeCellStatus(CellStatus.Attack,true);
+        cellStatus = CellStatus.Attack;
         Invoke("SetDamageToEnemy", atkTime);
     }
     public void SetDamageToEnemy()
     {
-        targetEnemy = ChooseTargetEnemey();
         if (targetEnemy != null)
         {
-            targetEnemy.GetComponent<EnemyHealth>().TakeDamageInSeconds(atkDamage, 0);
-        }
-        else
-        {
-            targetEnemy = null;
-            return;
+            targetEnemy.GetComponent<EnemyHealth>().TakeDamage(atkDamage, EnemyStatus.Die);
         }
     }
+    public void SetDamageToEnemy(EnemyStatus enemyStatus)
+    {
+        if (targetEnemy != null)
+        {
+            targetEnemy.GetComponent<EnemyHealth>().TakeDamage(atkDamage, enemyStatus);
+        }
+    }
+    public void OnCellStatusChange(CellStatus cellStatus)
+    {
+        this.cellStatus = cellStatus;
+    }
 
+    public void OnDestroy()
+    {
+        cellAnimator.OnStatusChange -= OnCellStatusChange;
+    }
 }
