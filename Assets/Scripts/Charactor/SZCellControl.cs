@@ -5,11 +5,11 @@ using UnityEngine;
 public class SZCellControl : SRCellBase
 {
     public Transform eatTrans;
+    private int eatTimes;
     private void Start()
     {
         InitCell();
-        //InvokeRepeating("AttackOneTime", 0, atkDuration);
-        //AttackOneTime();
+        eatTimes = 10;
     }
 
     public override void AttackOneTime()
@@ -26,7 +26,8 @@ public class SZCellControl : SRCellBase
             targetEnemy.GetComponent<EnemyMotion>().TargetPoint = eatTrans.position;
             SetDamageToEnemy(EnemyStatus.Engulfed);
             cellAnimator.CleanFrameData();
-            
+            eatTimes--;
+            if (eatTimes <= 0) EatTooMuch();
         }
         else
         {
@@ -35,6 +36,15 @@ public class SZCellControl : SRCellBase
             Invoke("SetDamageToEnemy", atkTime);
         }
     }
+
+    public void EatTooMuch()
+    {
+        cellStatus = CellStatus.Die;
+    }
+    /*public void OnDie()
+    {
+        Destroy(gameObject);
+    }*/
 
 }
     

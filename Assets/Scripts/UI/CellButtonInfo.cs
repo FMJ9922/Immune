@@ -24,8 +24,24 @@ public class CellButtonInfo : MonoBehaviour
                 name.text = "嗜酸性粒细胞";
                 cost.text = "花费：" + JsonIO.GetCellData(cellType).initCost.ToString();
                 break;
+            case CellType.SJ:
+                name.text = "嗜碱性粒细胞";
+                cost.text = "花费：" + JsonIO.GetCellData(cellType).initCost.ToString();
+                break;
+            case CellType.JS:
+                name.text = "巨噬细胞";
+                cost.text = "花费：" + JsonIO.GetCellData(cellType).initCost.ToString();
+                break;
             case CellType.TX:
                 name.text = "效应T细胞";
+                cost.text = "花费：" + JsonIO.GetCellData(cellType).initCost.ToString();
+                break;
+            case CellType.ST:
+                name.text = "树突细胞";
+                cost.text = "花费：" + JsonIO.GetCellData(cellType).initCost.ToString();
+                break;
+            case CellType.NK:
+                name.text = "NK自然杀伤细胞";
                 cost.text = "花费：" + JsonIO.GetCellData(cellType).initCost.ToString();
                 break;
         }

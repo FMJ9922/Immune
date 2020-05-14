@@ -45,4 +45,10 @@ public class CellBase : MonoBehaviour
         rangePicManage.ChangeLocalScale(0);
     }
 
+    public void OnDie()
+    {
+        LevelManager.Instance.GetNodeByPos(transform.position).tileType = TileType.Empty;
+        Destroy(gameObject);
+    }
+
 }

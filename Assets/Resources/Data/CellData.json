@@ -20,38 +20,38 @@
 		},
 		{
 			"Name":"ÊÈ¼îÐÔÁ£Ï¸°û",
-			"InitCost":5.0,
-			"AtkRange":2.0,
-			"AtkDamage":50.0,
-			"AtkTime":0.5,
-			"AtkDuration":1.0,
+			"InitCost":20.0,
+			"AtkRange":2.5,
+			"AtkDamage":1.0,
+			"AtkTime":0.0,
+			"AtkDuration":10.0,
 
 		},
 		{
 			"Name":"¾ÞÊÉÏ¸°û",
-			"InitCost":5.0,
-			"AtkRange":2.0,
-			"AtkDamage":50.0,
+			"InitCost":15.0,
+			"AtkRange":1.0,
+			"AtkDamage":101.0,
 			"AtkTime":0.5,
 			"AtkDuration":1.0,
 
 		},
 		{
 			"Name":"Ê÷Í»Ï¸°û",
-			"InitCost":5.0,
+			"InitCost":15.0,
 			"AtkRange":2.0,
 			"AtkDamage":50.0,
-			"AtkTime":0.5,
+			"AtkTime":0.0,
 			"AtkDuration":1.0,
 
 		},
 		{
 			"Name":"NKÏ¸°û",
-			"InitCost":5.0,
+			"InitCost":20.0,
 			"AtkRange":2.0,
-			"AtkDamage":50.0,
-			"AtkTime":0.5,
-			"AtkDuration":1.0,
+			"AtkDamage":101.0,
+			"AtkTime":1.5,
+			"AtkDuration":5.0,
 
 		},
 		{

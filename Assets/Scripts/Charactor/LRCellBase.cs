@@ -229,5 +229,6 @@ public class LRCellBase :  CellBase,LongRangeAttack
     public void OnDestroy()
     {
         cellAnimator.OnStatusChange -= OnCellStatusChange;
+        StopAllCoroutines();
     }
 }

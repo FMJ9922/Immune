@@ -162,7 +162,7 @@ public class SRCellBase : CellBase, ShortRangeAttack
         CheckLeftOrRight(p);
         return p;
     }
-    private void CheckLeftOrRight(Transform targetTransfrom)
+    protected void CheckLeftOrRight(Transform targetTransfrom)
     {
         if (targetTransfrom == null) return;
         cellAnimator.direction = transform.position.x > targetTransfrom.position.x ?
@@ -208,10 +208,14 @@ public class SRCellBase : CellBase, ShortRangeAttack
     public void OnCellStatusChange(CellStatus cellStatus)
     {
         this.cellStatus = cellStatus;
+        if (cellStatus == CellStatus.Die) Destroy(gameObject);
     }
 
     public void OnDestroy()
     {
         cellAnimator.OnStatusChange -= OnCellStatusChange;
+        StopAllCoroutines();
     }
+
+    
 }

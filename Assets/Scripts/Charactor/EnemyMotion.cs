@@ -14,6 +14,7 @@ public class EnemyMotion : MonoBehaviour
     public FindPathType FindPathType;
     public EnemyStatus enemyStatus;
     public Vector3 TargetPoint { private get; set; }
+    private IEnumerator SlowDown;
     /*public bool draw;*/
 
     void Start()
@@ -35,6 +36,7 @@ public class EnemyMotion : MonoBehaviour
     private void OnDestroy()
     {
         ControlManager.OnPlantCell -= ChangeWayPoint;
+        StopAllCoroutines();
     }
     void InitWayPoint()
     {
@@ -115,4 +117,18 @@ public class EnemyMotion : MonoBehaviour
             Destroy(this.gameObject);//销毁物体
         }
     }
+
+    public void GetSlowDown(float scale,float duration)
+    {
+        StopAllCoroutines();   
+        SlowDown = SlowDownWithSpeedScaleAndDuration(scale, duration);
+        StartCoroutine(SlowDown);
+    }
+    private IEnumerator SlowDownWithSpeedScaleAndDuration(float scale, float duration)
+    {
+        speed *= scale;
+        yield return new WaitForSeconds(duration);
+        speed /= scale;
+    }
+    
 }

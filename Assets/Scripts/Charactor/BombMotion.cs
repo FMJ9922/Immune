@@ -139,6 +139,7 @@ public class BombMotion : MonoBehaviour
             if (trans != null)
             {
                 trans.GetComponent<EnemyHealth>().TakeDamage(damage, EnemyStatus.Die);
+                trans.GetComponent<EnemyMotion>().GetSlowDown(0.5f, 3f);
             }
         }
     }

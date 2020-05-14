@@ -8,21 +8,25 @@ public class CellAnimator : MonoBehaviour
     public Sprite[] AtkSprite;//普攻图集
     public Sprite[] IdleSprite;//缓动图集
     public Sprite[] SBSprite;//特殊能力图集
+    public Sprite[] DieSprite;//死亡图集
+    public Sprite[] ChangeSprite;//变化图集
+    public Sprite[] ProduceSprite;//生产图集
     //private CellStatus cellStatus = CellStatus.Invisable;
     private SpriteRenderer spriteRenderer;
     int frameP = 0;
     int index = 0;
     public Direction direction = Direction.Left;
-    private bool doFadeIn = true;
+    //private bool doFadeIn = true;
     public delegate void StatusChange(CellStatus cellStatus);
     public event StatusChange OnStatusChange;
     private CellBase cellBase;
+    public bool reverse;
 
     private void Awake()
     {
         spriteRenderer = transform.GetComponent<SpriteRenderer>();
         cellBase = transform.GetComponentInParent<CellBase>();
-
+        reverse = false;
     }
     void Start()
     {
@@ -30,18 +34,13 @@ public class CellAnimator : MonoBehaviour
         transform.localPosition = new Vector3(0, transform.localPosition.y, transform.position.y);
         //FlipPicture.SaveFlipTextures(IdleSpriteR,CellType.TX);
     }
-    /*private Texture2D[] LoadTextureFromFile()
-    {
-
-        
-    }*/
     public void CleanFrameData()
     {
         frameP = 0;
         index = 0;
-
+        reverse = false;
     }
-    public void PlayAnimation(Sprite[] sprites,int deltaFrame, PlayAnimaType type)
+    public void PlayAnimation(Sprite[] sprites,int deltaFrame, PlayAnimaType type, bool isReverse=false)
     {
         if (sprites.Length <= 0) return;
         frameP++;
@@ -52,17 +51,24 @@ public class CellAnimator : MonoBehaviour
             if (index >= sprites.Length - 1)
             {
                 index = 0;
-                if (type == PlayAnimaType.Once)
+                if (type == PlayAnimaType.Once&&(sprites == AtkSprite||sprites == SBSprite))
                 {
                     OnStatusChange(CellStatus.Idle);
                     return;
                 }
+                else if (type == PlayAnimaType.Once &&sprites == ChangeSprite)
+                {
+                    if (isReverse) OnStatusChange(CellStatus.Idle);
+                    else OnStatusChange(CellStatus.Produce);
+                    return;
+                }
             }
-            spriteRenderer.sprite = sprites[index];
+            spriteRenderer.sprite = isReverse?sprites[sprites.Length-1-index]:sprites[index];
         }
         else return;
 
     }
+
     public void PlayAnimation(Sprite[] sprites, int deltaFrame, bool fadeIn, PlayAnimaType type = PlayAnimaType.Fade)
     {
         
@@ -87,8 +93,15 @@ public class CellAnimator : MonoBehaviour
                 index = 0;
                 if (type == PlayAnimaType.Fade)
                 {
-                    OnStatusChange(CellStatus.Idle);
-                    doFadeIn = false;
+                    if (fadeIn)
+                    {
+                        OnStatusChange(CellStatus.Idle);
+                    }
+                    else
+                    {
+                        cellBase.OnDie();
+                    }
+                    //doFadeIn = false;
                     return;
                 }
             }
@@ -117,6 +130,15 @@ public class CellAnimator : MonoBehaviour
                 break;
             case CellStatus.SpecialAbility:
                 PlayAnimation(SBSprite, 2, PlayAnimaType.Once);
+                break;
+            case CellStatus.Die:
+                PlayAnimation(DieSprite, 2, false,PlayAnimaType.Fade);
+                break;
+            case CellStatus.Change:
+                PlayAnimation(ChangeSprite, 2, PlayAnimaType.Once, reverse);
+                break;
+            case CellStatus.Produce:
+                PlayAnimation(ProduceSprite, 2, PlayAnimaType.Loop);
                 break;
         }
     }

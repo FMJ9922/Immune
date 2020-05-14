@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum PlaceType { Null = 0,Selected = 1}
-public enum CellStatus { Idle = 0,Attack = 1,CoolDown =2,Upgrade =3,Produce = 4, Invisable = 5,SpecialAbility = 6}
+public enum PlaceType { Null = 0,Selected = 1,Remove = 2}
+public enum CellStatus { Idle = 0,Attack = 1,Change =2,Upgrade =3,Produce = 4, Invisable = 5,SpecialAbility = 6,Die =7}
 public enum EnemyStatus { Idle = 0,Attack = 1,Bite = 2,Die =3,Invisable = 4,Engulfed = 5
 }
 public enum Direction { Left =0,Right = 1,Up = 2,Down = 3}

@@ -73,6 +73,12 @@ public class ControlManager : MonoBehaviour
         }
 
     }
+    public void OnRemoveButtonDown()
+    {
+        placeType = PlaceType.Remove;
+        Instance.isSelect = false;
+        
+    }
     public bool CheckPathAvaliable()
     {
         bool isAvaliable = true;
@@ -189,17 +195,24 @@ public class ControlManager : MonoBehaviour
         }
         targetNode = LevelManager.Instance.GetNodeByPos(transform.position);
        
-        if (targetNode == lastNode|| placeType == PlaceType.Selected) return;
-        else
+        if (placeType ==PlaceType.Remove)
+        {
+            placeType = PlaceType.Null;
+            if (targetNode.tileType == TileType.Occupy)
+            {
+                Destroy(targetNode.transform.GetChild(0).gameObject);
+                targetNode.tileType = TileType.Empty;
+            }
+        }
+        else if (targetNode == lastNode || placeType == PlaceType.Selected)
+        {
+            return;
+        }
+        else 
         {
             if(lastCell!=null)
                 lastCell.CloseRangePic();
             lastNode = targetNode;
-            //Debug.Log(targetNode.name);
-            //if (OnClickTile != null)
-            //{
-            //    OnClickTile(true);
-            //}
             if(targetNode.tileType ==TileType.Occupy)
             {
                 lastCell = targetNode.transform.GetChild(0).GetComponent<CellBase>();

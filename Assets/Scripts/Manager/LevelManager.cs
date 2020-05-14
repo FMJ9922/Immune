@@ -42,7 +42,7 @@ public class LevelManager : MonoBehaviour
         Map = transform.Find("Map").gameObject;
         GenerateTileNode();
         StartCoroutine(CreateEnemy());
-        DeployPoints = 10;
+        DeployPoints = 100;
     }
     private void Update()
     {
@@ -59,6 +59,11 @@ public class LevelManager : MonoBehaviour
         {
             return false;
         }
+    }
+    public void AddPoints(float points)
+    {
+        DeployPoints += points;
+
     }
 
     private void GenerateTileNode()//初始化寻路节点
@@ -121,7 +126,6 @@ public class LevelManager : MonoBehaviour
         }
         return AllNodeGroup[x, y];
     }
-
     private IEnumerator CreateEnemy()
     {
         DrawDefaultRoute(0);
