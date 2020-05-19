@@ -15,7 +15,7 @@ public class ArticleItem : MonoBehaviour
 
       private void Awake()
     {
-        this.article = article;
+ 
         articleSprite = transform.GetComponent<Image>();//图片
       
 
@@ -32,7 +32,12 @@ public class ArticleItem : MonoBehaviour
         articleSprite.sprite = Resources.Load<Sprite>( article.spritePath);
        
 
+    
+    }
+    public string GetArticleInfo()
+    {
+
+        return this.article.GetArticleInfo();
     }
 
-   
 }

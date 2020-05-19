@@ -1,8 +1,10 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
+using TMPro;
 
 
 
@@ -37,18 +39,12 @@ public class Article
 
 
     //TMP的对应代码
-    /*public virtual string GetArticleInfo()
+    public virtual string GetArticleInfo()
     {
-        StringBuilder stringBuilder = new StringBuilder();
-       // stringBuilder.Append("<color=#92FF26>");
-        stringBuilder.Append("名称:").Append(this.name);
-       // stringBuilder.Append("</color>");
+        System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+        stringBuilder.Append(this.name);
         stringBuilder.Append("\n");
-              
-        stringBuilder.Append("类型:").Append(GetTypeName(this.articleType)).Append("\n");
-      
-        stringBuilder.Append("属性:").Append(this.attribute);
-
+        stringBuilder.Append(GetTypeName(this.articleType)).Append("\n");
         return stringBuilder.ToString();
     }
 
@@ -68,7 +64,7 @@ public class Article
                 return "正常细胞";
         }
         return "";
-    }*/
+    }
 
 
 
