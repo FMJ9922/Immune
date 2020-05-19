@@ -1,0 +1,130 @@
+{
+	"lists": [
+		{
+			"Name":"ÊÈÖÐÐÔÁ£Ï¸°û",
+			"InitCost":5.0,
+			"AtkRange":1.5,
+			"AtkDamage":51.0,
+			"AtkTime":0.4,
+			"AtkDuration":3.0,
+
+		},
+		{
+			"Name":"ÊÈËáÐÔÁ£Ï¸°û",
+			"InitCost":15.0,
+			"AtkRange":2.5,
+			"AtkDamage":34.0,
+			"AtkTime":0.5,
+			"AtkDuration":5.0,
+
+		},
+		{
+			"Name":"ÊÈ¼îÐÔÁ£Ï¸°û",
+			"InitCost":20.0,
+			"AtkRange":2.5,
+			"AtkDamage":1.0,
+			"AtkTime":0.0,
+			"AtkDuration":10.0,
+
+		},
+		{
+			"Name":"¾ÞÊÉÏ¸°û",
+			"InitCost":15.0,
+			"AtkRange":1.0,
+			"AtkDamage":101.0,
+			"AtkTime":0.5,
+			"AtkDuration":1.0,
+
+		},
+		{
+			"Name":"Ê÷Í»Ï¸°û",
+			"InitCost":15.0,
+			"AtkRange":2.0,
+			"AtkDamage":50.0,
+			"AtkTime":0.0,
+			"AtkDuration":1.0,
+
+		},
+		{
+			"Name":"NKÏ¸°û",
+			"InitCost":20.0,
+			"AtkRange":2.0,
+			"AtkDamage":101.0,
+			"AtkTime":1.5,
+			"AtkDuration":5.0,
+
+		},
+		{
+			"Name":"TÁÜ°ÍÏ¸°û",
+			"InitCost":5.0,
+			"AtkRange":1.0,
+			"AtkDamage":50.0,
+			"AtkTime":0.5,
+			"AtkDuration":1.0,
+
+		},
+		{
+			"Name":"Ð§Ó¦TÏ¸°û",
+			"InitCost":20.0,
+			"AtkRange":1.5,
+			"AtkDamage":101.0,
+			"AtkTime":0.6,
+			"AtkDuration":3.0,
+
+		},
+		{
+			"Name":"¸¨ÖúTÏ¸°û",
+			"InitCost":5.0,
+			"AtkRange":2.0,
+			"AtkDamage":50.0,
+			"AtkTime":0.5,
+			"AtkDuration":1.0,
+
+		},
+		{
+			"Name":"ÒÖÖÆÐÔTÏ¸°û",
+			"InitCost":5.0,
+			"AtkRange":2.0,
+			"AtkDamage":50.0,
+			"AtkTime":0.5,
+			"AtkDuration":1.0,
+
+		},
+		{
+			"Name":"¼ÇÒäTÏ¸°û",
+			"InitCost":5.0,
+			"AtkRange":2.0,
+			"AtkDamage":50.0,
+			"AtkTime":0.5,
+			"AtkDuration":1.0,
+
+		},
+		{
+			"Name":"BÁÜ°ÍÏ¸°û",
+			"InitCost":5.0,
+			"AtkRange":2.0,
+			"AtkDamage":50.0,
+			"AtkTime":0.5,
+			"AtkDuration":1.0,
+
+		},
+		{
+			"Name":"¼ÇÒäBÏ¸°û",
+			"InitCost":5.0,
+			"AtkRange":2.0,
+			"AtkDamage":50.0,
+			"AtkTime":0.5,
+			"AtkDuration":1.0,
+
+		},
+		{
+			"Name":"½¬Ï¸°û",
+			"InitCost":5.0,
+			"AtkRange":2.0,
+			"AtkDamage":50.0,
+			"AtkTime":0.5,
+			"AtkDuration":1.0,
+
+		},
+	]
+}
