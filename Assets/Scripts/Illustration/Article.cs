@@ -10,28 +10,19 @@ using TMPro;
 
 //信息
 
-public enum ArticleType {
-    //类型
-    SRCell,
-    LRCell,
-    HelpCell,
-    Enemy,
-    Cell
-}
+
 
 public class Article
 {
     public string name;//名字
     public string spritePath;//图片（根据路径加载图片）
     public ArticleType articleType;//枚举类型
-    public string attribute;//属性
 
 
 
-    public Article(string name,string spritePath,ArticleType articleType,string attribute)
+    public Article(string name,string spritePath,ArticleType articleType)
     {
         this.name = name;
-        this.attribute = attribute;
         this.spritePath = spritePath;
         this.articleType = articleType;
         

@@ -1,130 +1,132 @@
 {
 	"lists": [
 		{
-			"Name":"ÊÈÖĞĞÔÁ£Ï¸°û",
+			"Name":"å—œä¸­æ€§ç²’ç»†èƒ",
 			"InitCost":5.0,
 			"AtkRange":1.5,
 			"AtkDamage":51.0,
 			"AtkTime":0.4,
 			"AtkDuration":3.0,
+			"Introduce":"123465781245",
 
 		},
 		{
-			"Name":"ÊÈËáĞÔÁ£Ï¸°û",
+			"Name":"å—œé…¸æ€§ç²’ç»†èƒ",
 			"InitCost":15.0,
 			"AtkRange":2.5,
 			"AtkDamage":34.0,
 			"AtkTime":0.5,
 			"AtkDuration":5.0,
+			"Introduce":"123465781245",
 
 		},
 		{
-			"Name":"ÊÈ¼îĞÔÁ£Ï¸°û",
+			"Name":"å—œç¢±æ€§ç²’ç»†èƒ",
 			"InitCost":20.0,
 			"AtkRange":2.5,
 			"AtkDamage":1.0,
 			"AtkTime":0.0,
 			"AtkDuration":10.0,
-
+			"Introduce":"123465781245",
 		},
 		{
-			"Name":"¾ŞÊÉÏ¸°û",
+			"Name":"å·¨å™¬ç»†èƒ",
 			"InitCost":15.0,
 			"AtkRange":1.0,
 			"AtkDamage":101.0,
 			"AtkTime":0.5,
 			"AtkDuration":1.0,
-
+			"Introduce":"123465781245",
 		},
 		{
-			"Name":"Ê÷Í»Ï¸°û",
+			"Name":"æ ‘çªç»†èƒ",
 			"InitCost":15.0,
 			"AtkRange":2.0,
 			"AtkDamage":50.0,
 			"AtkTime":0.0,
 			"AtkDuration":1.0,
-
+			"Introduce":"123465781245",
 		},
 		{
-			"Name":"NKÏ¸°û",
+			"Name":"NKç»†èƒ",
 			"InitCost":20.0,
 			"AtkRange":2.0,
 			"AtkDamage":101.0,
 			"AtkTime":1.5,
 			"AtkDuration":5.0,
-
+			"Introduce":"123465781245",
 		},
 		{
-			"Name":"TÁÜ°ÍÏ¸°û",
+			"Name":"Tæ·‹å·´ç»†èƒ",
 			"InitCost":5.0,
 			"AtkRange":1.0,
 			"AtkDamage":50.0,
 			"AtkTime":0.5,
 			"AtkDuration":1.0,
-
+			"Introduce":"123465781245",
 		},
 		{
-			"Name":"Ğ§Ó¦TÏ¸°û",
+			"Name":"æ•ˆåº”Tç»†èƒ",
 			"InitCost":20.0,
 			"AtkRange":1.5,
 			"AtkDamage":101.0,
 			"AtkTime":0.6,
 			"AtkDuration":3.0,
-
+			"Introduce":"123465781245",
 		},
 		{
-			"Name":"¸¨ÖúTÏ¸°û",
+			"Name":"è¾…åŠ©Tç»†èƒ",
 			"InitCost":5.0,
 			"AtkRange":2.0,
 			"AtkDamage":50.0,
 			"AtkTime":0.5,
 			"AtkDuration":1.0,
-
+			"Introduce":"123465781245",
 		},
 		{
-			"Name":"ÒÖÖÆĞÔTÏ¸°û",
+			"Name":"æŠ‘åˆ¶æ€§Tç»†èƒ",
 			"InitCost":5.0,
 			"AtkRange":2.0,
 			"AtkDamage":50.0,
 			"AtkTime":0.5,
 			"AtkDuration":1.0,
-
+			"Introduce":"123465781245",
 		},
 		{
-			"Name":"¼ÇÒäTÏ¸°û",
+			"Name":"è®°å¿†Tç»†èƒ",
 			"InitCost":5.0,
 			"AtkRange":2.0,
 			"AtkDamage":50.0,
 			"AtkTime":0.5,
 			"AtkDuration":1.0,
-
+			"Introduce":"123465781245",
 		},
 		{
-			"Name":"BÁÜ°ÍÏ¸°û",
+			"Name":"Bæ·‹å·´ç»†èƒ",
 			"InitCost":5.0,
 			"AtkRange":2.0,
 			"AtkDamage":50.0,
 			"AtkTime":0.5,
 			"AtkDuration":1.0,
-
+			"Introduce":"123465781245",
 		},
 		{
-			"Name":"¼ÇÒäBÏ¸°û",
+			"Name":"è®°å¿†Bç»†èƒ",
 			"InitCost":5.0,
 			"AtkRange":2.0,
 			"AtkDamage":50.0,
 			"AtkTime":0.5,
 			"AtkDuration":1.0,
-
+			"Introduce":"123465781245",
 		},
 		{
-			"Name":"½¬Ï¸°û",
+			"Name":"æµ†ç»†èƒ",
 			"InitCost":5.0,
 			"AtkRange":2.0,
 			"AtkDamage":50.0,
 			"AtkTime":0.5,
 			"AtkDuration":1.0,
-
+			"Introduce":"123465781245",
 		},
 	]
 }

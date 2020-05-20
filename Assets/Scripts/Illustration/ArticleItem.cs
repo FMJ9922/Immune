@@ -29,7 +29,7 @@ public class ArticleItem : MonoBehaviour
         this.article = article;
 
         // 显示数据
-        articleSprite.sprite = Resources.Load<Sprite>( article.spritePath);
+        //articleSprite.sprite = Resources.Load<Sprite>( article.spritePath);
        
 
     

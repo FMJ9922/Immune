@@ -9,6 +9,15 @@ public enum EnemyStatus { Idle = 0,Attack = 1,Bite = 2,Die =3,Invisable = 4,Engu
 public enum Direction { Left =0,Right = 1,Up = 2,Down = 3}
 public enum TileType { Empty = 0, Block = 1,Occupy=2}
 
+public enum ArticleType
+{
+    //类型
+    SRCell,
+    LRCell,
+    HelpCell,
+    Enemy,
+    Cell
+}
 public enum FindPathType 
 {
     Defult = 0,//可通过empty,被block和occupy阻挡
@@ -37,7 +46,36 @@ public enum EnemyType
 {
     TH = 0//天花病毒
 }
+public enum ActorType
+{
+    SZ = 0,//嗜中性粒细胞 近战
+    SS = 1,//嗜酸性粒细胞 远程
+    SJ = 2,//嗜碱性粒细胞 辅助
+    JS = 3,//巨噬细胞     近战
+    ST = 4,//树突细胞     辅助
+    NK = 5,//NK细胞       远程
+    TL = 6,//t淋巴细胞    辅助
+    TX = 7,//效应T        近战
+    TF = 8,//辅助T        辅助
+    TY = 9,//抑制性T      辅助
+    TJ = 10,//记忆T       辅助
+    BL = 11,//B淋巴       辅助
+    BJ = 12,//记忆B       辅助
+    JX = 13,//浆细胞      远程
+    TH = 14,//天花病毒
+    EB = 15,//eb
+    BD = 16,//病毒宿主
+    HJ = 17,//黄金葡萄球
+    JXB = 18,//巨细胞病毒
+    MD = 19,//梅毒螺旋体
+    ZC = 20,//正常细胞
+    QT = 21,//其他正常细胞
 
+
+
+
+
+}
 public enum PlayAnimaType
 {
     Loop = 0,

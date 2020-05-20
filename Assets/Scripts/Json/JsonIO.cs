@@ -38,11 +38,13 @@ public class Wave
 [System.Serializable]
 public class CellData
 {
+    public string name;
     public float atkRange;
     public float atkDamage;
     public float atkTime;
     public float atkDuration;
     public float initCost;
+    public string introduce;
 }
 
 public class JsonIO : MonoBehaviour
@@ -102,11 +104,13 @@ public class JsonIO : MonoBehaviour
         {
             var dict2 = (Dictionary<string, object>)CellDataList[i];
             cellDatas[i] = new CellData();
+            cellDatas[i].name = (string)dict2["Name"];
             cellDatas[i].atkDamage = (float)(double)dict2["AtkDamage"];
             cellDatas[i].atkRange = (float)(double)dict2["AtkRange"];
             cellDatas[i].atkTime = (float)(double)dict2["AtkTime"];
             cellDatas[i].atkDuration = (float)(double)dict2["AtkDuration"];
             cellDatas[i].initCost = (float)(double)dict2["InitCost"];
+            cellDatas[i].introduce = (string)dict2["Introduce"];
         }
     }
     public static void InitGameData()

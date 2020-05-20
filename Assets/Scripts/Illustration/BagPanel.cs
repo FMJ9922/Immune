@@ -11,29 +11,33 @@ public class BagPanel : ViewBase
 
     #region 数据
 
-    private List<Article> articles = new List<Article>();
+    //private Article[] articles = new Article[21];
    // private List<GameObject> articleItems = new List<GameObject>();
     #endregion
 
-
     public GameObject articleItemPrefab;
-    public GameObject ImagePrefab;
+    //public GameObject ImagePrefab;
     private BagGrid[] bagGrids;
     public Information Information;
     public static BagPanel _instance;
 
     #region Unity回调
 
+    delegate void ActorTypeName(int actortype);
+    
+
     private void Awake()
     {
        
-        InitArticleData();
+        //InitArticleData();
         bagGrids = transform.GetComponentsInChildren<BagGrid>();
+        
     }
 
     private void Start()
     {
         LoadData();
+        ActiveButton();
     }
 
 
@@ -44,7 +48,7 @@ public class BagPanel : ViewBase
     // 初始化物品数据
     public void InitArticleData()
     {
-       
+       /*
         // 近战
         articles.Add(new Article("嗜中性粒细胞", "SRCell/嗜中性粒细胞", ArticleType.SRCell,"属性"));
         articles.Add(new Article("巨嗜细胞", "SRCell/巨嗜细胞", ArticleType.SRCell, "属性"));
@@ -71,37 +75,137 @@ public class BagPanel : ViewBase
         articles.Add(new Article("天花病毒", "EnemyCell/天花病毒", ArticleType.Enemy, "属性"));
         // 正常细胞
        // articles.Add(new Article("红细胞", "Sprite/book1", ArticleType.Cell, "属性"));
-       // articles.Add(new Article("其他正常细胞", "Sprite/book2", ArticleType.Cell, "属性"));
+       // articles.Add(new Article("其他正常细胞", "Sprite/book2", ArticleType.Cell, "属性"));*/
 
     }
 
+    public ArticleType PraseEnum(int actorType)
+    {
+        ArticleType articleType;
+        switch (actorType)
+        {
+            //近战
+            case 0:
+                articleType = ArticleType.SRCell;
+                return articleType;
+            case 3:
+                articleType = ArticleType.SRCell;
+                return articleType;
+            case 11:
+                articleType = ArticleType.SRCell;
+                return articleType;
+            case 7:
+                articleType = ArticleType.SRCell;
+                return articleType;
+
+            //远程
+            case 1:
+                articleType = ArticleType.LRCell;
+                return articleType;
+            case 13:
+                articleType = ArticleType.LRCell;
+                return articleType;
+            case 5:
+                articleType = ArticleType.LRCell;
+                return articleType;
+            case 9:
+                articleType = ArticleType.LRCell;
+                return articleType;
+            //辅助
+            case 2:
+                articleType = ArticleType.HelpCell;
+                return articleType;
+            case 4:
+                articleType = ArticleType.HelpCell;
+                return articleType;
+            case 6:
+                articleType = ArticleType.HelpCell;
+                return articleType;
+            case 8:
+                articleType = ArticleType.HelpCell;
+                return articleType;
+            case 12:
+                articleType = ArticleType.HelpCell;
+                return articleType;
+            //病毒细胞
+            case 14:
+                articleType = ArticleType.Enemy;
+                return articleType;
+            case 15:
+                articleType = ArticleType.Enemy;
+                return articleType;
+            case 16:
+                articleType = ArticleType.Enemy;
+                return articleType;
+            case 17:
+                articleType = ArticleType.Enemy;
+                return articleType;
+            case 18:
+                articleType = ArticleType.Enemy;
+                return articleType;
+            case 19:
+                articleType = ArticleType.Enemy;
+                return articleType;
+            //正常细胞
+            case 20:
+                articleType = ArticleType.Cell;
+                return articleType;
+            case 21:
+                articleType = ArticleType.Cell;
+                return articleType;
+        }
+        return articleType = ArticleType.Cell; 
+        
+    }
     // 加载数据 ( 加载全部的数据 )
     public void LoadData()
     {
+        
 
-        for (int i = 0; i < articles.Count; i++)
+        for (int i = 0; i < 21; i++)
         {
-            //HideAllArticleItems();
-            if (articles[i].articleType == articleType)
+            
+            if (PraseEnum(i) == articleType)
             {
-                GameObject obj = GameObject.Instantiate(articleItemPrefab);//实化物体
-                ArticleItem articleItem = obj.GetComponent<ArticleItem>();//设置给物品
-                articleItem.SetArticle(articles[i]);
+                GameObject obj = Instantiate(articleItemPrefab,transform);//实化物体
+                obj.name = i.ToString();
                 if (a == num)
                 {
                     a = 0;
                 }
                 if (a < num)
                 {  
-                    bagGrids[a].SetArticleItem(articleItem);//设置给格子 
+                    bagGrids[a].SetArticleItem(obj.transform);//设置给格子 
                     a++;
                 }
-                       
+                string path ="";
+                if (i < 15) path = "Cell";
+                else if (i < 20) path = "Enemy";
+
+                //Debug.Log(obj.GetComponent<SpriteRenderer>()==null);
+                obj.GetComponent<Image>().sprite = Resources.Load<Sprite>(path + "/" + i.ToString() + ((ActorType)i).ToString() + "/" + ((ActorType)i).ToString());
+                
             }
                
         }
     }
+    public void ActiveButton()
+    {
+        ActorTypeName OnClick = new ActorTypeName(SetInformation);
+        OnClick += SetInformation;
+        for(int i= 0; i < gameObject.GetComponentsInChildren<Button>().Length; i++)
+        {
+            Button btn = gameObject.GetComponentsInChildren<Button>()[i];
+            //Debug.Log(int.Parse(btn.gameObject.name));
+            btn.onClick.AddListener(() => { OnClick(int.Parse(btn.gameObject.name)); });
+        }
 
+    }
+    public void SetInformation(int actorType)
+    {
+        //Debug.Log("actor" + actorType);
+        Information.SetActorType(actorType);
+    }
     
 }
 

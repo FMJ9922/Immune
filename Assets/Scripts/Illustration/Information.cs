@@ -6,22 +6,36 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
 
-public class Information : ViewBase 
+public class Information :MonoBehaviour
 {
-    private RectTransform rectInfo;
-    private Text text;
+    private ActorType actorType;
 
+    public Image image;
+    public string name;
     private void Start()
     {
-        rectInfo = transform.Find("info").GetComponent<RectTransform>();
-        text = rectInfo.GetComponentInChildren<Text>();
     }
-    public void SetShowInfo(string info)
+
+    public void SetActorType(int actorType)
     {
-        if (text != null)
+        this.actorType = (ActorType)actorType;
+        InitData();
+    }
+
+    private void InitData()
+    {
+        string path = "";
+        if ((int)actorType < 15)
         {
-            text.text = info;
+            path = "Cell";
+            image.sprite = Resources.Load<Sprite>(path + "/" + ((int)actorType).ToString() + actorType.ToString() + "/" + actorType.ToString());
+            name = JsonIO.GetCellData((CellType)(int)actorType).introduce;
+            Debug.Log(name);
         }
+        else if ((int)actorType < 20) path = "Enemy";
+
+        
+
     }
 }
 

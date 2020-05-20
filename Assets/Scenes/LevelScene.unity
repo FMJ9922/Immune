@@ -1850,6 +1850,7 @@ GameObject:
   - component: {fileID: 120655478}
   - component: {fileID: 120655480}
   - component: {fileID: 120655479}
+  - component: {fileID: 120655481}
   m_Layer: 5
   m_Name: 'ArticleItemInformation '
   m_TagString: Untagged
@@ -1876,7 +1877,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -42.880005, y: -9.512512}
+  m_AnchoredPosition: {x: -42.879944, y: -9.512512}
   m_SizeDelta: {x: -103.51, y: -36.805}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &120655479
@@ -1915,6 +1916,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 120655477}
   m_CullTransparentMesh: 0
+--- !u!114 &120655481
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 120655477}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b31db727915e6924f9be8811eb02da28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &121371286
 GameObject:
   m_ObjectHideFlags: 0
@@ -2054,8 +2067,7 @@ MonoBehaviour:
   num: 6
   articleItemPrefab: {fileID: 1343729608652384851, guid: b27f2a4d017116546b2209a98bcefe61,
     type: 3}
-  ImagePrefab: {fileID: 0}
-  Information: {fileID: 0}
+  Information: {fileID: 120655481}
 --- !u!1 &153816131
 GameObject:
   m_ObjectHideFlags: 0
@@ -6973,8 +6985,7 @@ MonoBehaviour:
   num: 4
   articleItemPrefab: {fileID: 1343729608652384851, guid: b27f2a4d017116546b2209a98bcefe61,
     type: 3}
-  ImagePrefab: {fileID: 0}
-  Information: {fileID: 0}
+  Information: {fileID: 120655481}
 --- !u!1 &755618598
 GameObject:
   m_ObjectHideFlags: 0
@@ -12613,8 +12624,7 @@ MonoBehaviour:
   num: 4
   articleItemPrefab: {fileID: 1343729608652384851, guid: b27f2a4d017116546b2209a98bcefe61,
     type: 3}
-  ImagePrefab: {fileID: 0}
-  Information: {fileID: 0}
+  Information: {fileID: 120655481}
 --- !u!1 &1436207015
 GameObject:
   m_ObjectHideFlags: 0
@@ -12811,8 +12821,7 @@ MonoBehaviour:
   num: 2
   articleItemPrefab: {fileID: 1343729608652384851, guid: b27f2a4d017116546b2209a98bcefe61,
     type: 3}
-  ImagePrefab: {fileID: 0}
-  Information: {fileID: 0}
+  Information: {fileID: 120655481}
 --- !u!1 &1448768023
 GameObject:
   m_ObjectHideFlags: 0
@@ -13006,8 +13015,7 @@ MonoBehaviour:
   num: 5
   articleItemPrefab: {fileID: 1343729608652384851, guid: b27f2a4d017116546b2209a98bcefe61,
     type: 3}
-  ImagePrefab: {fileID: 0}
-  Information: {fileID: 0}
+  Information: {fileID: 120655481}
 --- !u!1 &1466057285
 GameObject:
   m_ObjectHideFlags: 0
