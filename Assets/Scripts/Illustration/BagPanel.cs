@@ -19,7 +19,7 @@ public class BagPanel : ViewBase
     //public GameObject ImagePrefab;
     private BagGrid[] bagGrids;
     public Information Information;
-    public static BagPanel _instance;
+    //public static BagPanel _instance;
 
     #region Unity回调
 
@@ -91,13 +91,9 @@ public class BagPanel : ViewBase
             case 3:
                 articleType = ArticleType.SRCell;
                 return articleType;
-            case 11:
-                articleType = ArticleType.SRCell;
-                return articleType;
             case 7:
                 articleType = ArticleType.SRCell;
                 return articleType;
-
             //远程
             case 1:
                 articleType = ArticleType.LRCell;
@@ -106,9 +102,6 @@ public class BagPanel : ViewBase
                 articleType = ArticleType.LRCell;
                 return articleType;
             case 5:
-                articleType = ArticleType.LRCell;
-                return articleType;
-            case 9:
                 articleType = ArticleType.LRCell;
                 return articleType;
             //辅助
@@ -122,6 +115,9 @@ public class BagPanel : ViewBase
                 articleType = ArticleType.HelpCell;
                 return articleType;
             case 8:
+                articleType = ArticleType.HelpCell;
+                return articleType;
+            case 9:
                 articleType = ArticleType.HelpCell;
                 return articleType;
             case 12:

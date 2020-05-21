@@ -1,132 +1,132 @@
 {
-	"lists": [
-		{
-			"Name":"嗜中性粒细胞",
-			"InitCost":5.0,
-			"AtkRange":1.5,
-			"AtkDamage":51.0,
-			"AtkTime":0.4,
-			"AtkDuration":3.0,
-			"Introduce":"123465781245",
+  "lists": [
+    {
+      "Name": "嗜中性粒细胞",
+      "InitCost": 5.0,
+      "AtkRange": 1.5,
+      "AtkDamage": 51.0,
+      "AtkTime": 0.4,
+      "AtkDuration": 3.0,
+      "Introduce": "嗜中性粒细胞"
 
-		},
-		{
-			"Name":"嗜酸性粒细胞",
-			"InitCost":15.0,
-			"AtkRange":2.5,
-			"AtkDamage":34.0,
-			"AtkTime":0.5,
-			"AtkDuration":5.0,
-			"Introduce":"123465781245",
+    },
+    {
+      "Name": "嗜酸性粒细胞",
+      "InitCost": 15.0,
+      "AtkRange": 2.5,
+      "AtkDamage": 34.0,
+      "AtkTime": 0.5,
+      "AtkDuration": 5.0,
+      "Introduce": "嗜酸性粒细胞"
 
-		},
-		{
-			"Name":"嗜碱性粒细胞",
-			"InitCost":20.0,
-			"AtkRange":2.5,
-			"AtkDamage":1.0,
-			"AtkTime":0.0,
-			"AtkDuration":10.0,
-			"Introduce":"123465781245",
-		},
-		{
-			"Name":"巨噬细胞",
-			"InitCost":15.0,
-			"AtkRange":1.0,
-			"AtkDamage":101.0,
-			"AtkTime":0.5,
-			"AtkDuration":1.0,
-			"Introduce":"123465781245",
-		},
-		{
-			"Name":"树突细胞",
-			"InitCost":15.0,
-			"AtkRange":2.0,
-			"AtkDamage":50.0,
-			"AtkTime":0.0,
-			"AtkDuration":1.0,
-			"Introduce":"123465781245",
-		},
-		{
-			"Name":"NK细胞",
-			"InitCost":20.0,
-			"AtkRange":2.0,
-			"AtkDamage":101.0,
-			"AtkTime":1.5,
-			"AtkDuration":5.0,
-			"Introduce":"123465781245",
-		},
-		{
-			"Name":"T淋巴细胞",
-			"InitCost":5.0,
-			"AtkRange":1.0,
-			"AtkDamage":50.0,
-			"AtkTime":0.5,
-			"AtkDuration":1.0,
-			"Introduce":"123465781245",
-		},
-		{
-			"Name":"效应T细胞",
-			"InitCost":20.0,
-			"AtkRange":1.5,
-			"AtkDamage":101.0,
-			"AtkTime":0.6,
-			"AtkDuration":3.0,
-			"Introduce":"123465781245",
-		},
-		{
-			"Name":"辅助T细胞",
-			"InitCost":5.0,
-			"AtkRange":2.0,
-			"AtkDamage":50.0,
-			"AtkTime":0.5,
-			"AtkDuration":1.0,
-			"Introduce":"123465781245",
-		},
-		{
-			"Name":"抑制性T细胞",
-			"InitCost":5.0,
-			"AtkRange":2.0,
-			"AtkDamage":50.0,
-			"AtkTime":0.5,
-			"AtkDuration":1.0,
-			"Introduce":"123465781245",
-		},
-		{
-			"Name":"记忆T细胞",
-			"InitCost":5.0,
-			"AtkRange":2.0,
-			"AtkDamage":50.0,
-			"AtkTime":0.5,
-			"AtkDuration":1.0,
-			"Introduce":"123465781245",
-		},
-		{
-			"Name":"B淋巴细胞",
-			"InitCost":5.0,
-			"AtkRange":2.0,
-			"AtkDamage":50.0,
-			"AtkTime":0.5,
-			"AtkDuration":1.0,
-			"Introduce":"123465781245",
-		},
-		{
-			"Name":"记忆B细胞",
-			"InitCost":5.0,
-			"AtkRange":2.0,
-			"AtkDamage":50.0,
-			"AtkTime":0.5,
-			"AtkDuration":1.0,
-			"Introduce":"123465781245",
-		},
-		{
-			"Name":"浆细胞",
-			"InitCost":5.0,
-			"AtkRange":2.0,
-			"AtkDamage":50.0,
-			"AtkTime":0.5,
-			"AtkDuration":1.0,
-			"Introduce":"123465781245",
-		},
-	]
+    },
+    {
+      "Name": "嗜碱性粒细胞",
+      "InitCost": 20.0,
+      "AtkRange": 2.5,
+      "AtkDamage": 1.0,
+      "AtkTime": 0.0,
+      "AtkDuration": 10.0,
+      "Introduce": "嗜碱性粒细胞"
+    },
+    {
+      "Name": "巨噬细胞",
+      "InitCost": 15.0,
+      "AtkRange": 1.0,
+      "AtkDamage": 101.0,
+      "AtkTime": 0.5,
+      "AtkDuration": 1.0,
+      "Introduce": "巨噬细胞"
+    },
+    {
+      "Name": "树突细胞",
+      "InitCost": 15.0,
+      "AtkRange": 2.0,
+      "AtkDamage": 50.0,
+      "AtkTime": 0.0,
+      "AtkDuration": 1.0,
+      "Introduce": "树突细胞"
+    },
+    {
+      "Name": "NK细胞",
+      "InitCost": 20.0,
+      "AtkRange": 2.0,
+      "AtkDamage": 101.0,
+      "AtkTime": 1.5,
+      "AtkDuration": 5.0,
+      "Introduce": "NK细胞"
+    },
+    {
+      "Name": "T淋巴细胞",
+      "InitCost": 5.0,
+      "AtkRange": 1.0,
+      "AtkDamage": 50.0,
+      "AtkTime": 0.5,
+      "AtkDuration": 1.0,
+      "Introduce": "T淋巴细胞"
+    },
+    {
+      "Name": "效应T细胞",
+      "InitCost": 20.0,
+      "AtkRange": 1.5,
+      "AtkDamage": 101.0,
+      "AtkTime": 0.6,
+      "AtkDuration": 3.0,
+      "Introduce": "效应T细胞"
+    },
+    {
+      "Name": "辅助T细胞",
+      "InitCost": 5.0,
+      "AtkRange": 2.0,
+      "AtkDamage": 50.0,
+      "AtkTime": 0.5,
+      "AtkDuration": 1.0,
+      "Introduce": "辅助T细胞"
+    },
+    {
+      "Name": "抑制性T细胞",
+      "InitCost": 5.0,
+      "AtkRange": 2.0,
+      "AtkDamage": 50.0,
+      "AtkTime": 0.5,
+      "AtkDuration": 1.0,
+      "Introduce": "抑制性T细胞"
+    },
+    {
+      "Name": "记忆T细胞",
+      "InitCost": 5.0,
+      "AtkRange": 2.0,
+      "AtkDamage": 50.0,
+      "AtkTime": 0.5,
+      "AtkDuration": 1.0,
+      "Introduce": "记忆T细胞"
+    },
+    {
+      "Name": "B淋巴细胞",
+      "InitCost": 5.0,
+      "AtkRange": 2.0,
+      "AtkDamage": 50.0,
+      "AtkTime": 0.5,
+      "AtkDuration": 1.0,
+      "Introduce": "B淋巴细胞"
+    },
+    {
+      "Name": "记忆B细胞",
+      "InitCost": 5.0,
+      "AtkRange": 2.0,
+      "AtkDamage": 50.0,
+      "AtkTime": 0.5,
+      "AtkDuration": 1.0,
+      "Introduce": "记忆B细胞"
+    },
+    {
+      "Name": "浆细胞",
+      "InitCost": 5.0,
+      "AtkRange": 2.0,
+      "AtkDamage": 50.0,
+      "AtkTime": 0.5,
+      "AtkDuration": 1.0,
+      "Introduce": "浆细胞"
+    }
+  ]
 }

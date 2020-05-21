@@ -34,10 +34,10 @@ public class ArticleItem : MonoBehaviour
 
     
     }
-    public string GetArticleInfo()
+   /* public string GetArticleInfo()
     {
 
         return this.article.GetArticleInfo();
-    }
+    }*/
 
 }
