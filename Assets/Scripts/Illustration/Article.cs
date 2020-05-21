@@ -29,7 +29,7 @@ public class Article
     }
 
 
-    //TMP的对应代码
+   /* //TMP的对应代码
     public virtual string GetArticleInfo()
     {
         System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
@@ -55,7 +55,7 @@ public class Article
                 return "正常细胞";
         }
         return "";
-    }
+    }*/
 
 
 

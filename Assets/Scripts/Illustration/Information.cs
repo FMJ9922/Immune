@@ -11,7 +11,9 @@ public class Information :MonoBehaviour
     private ActorType actorType;
 
     public Image image;
-    public string name;
+   // public GameObject ImagePrefab;
+    public Text Name;//名字
+    public Text Attribute;//属性
     private void Start()
     {
     }
@@ -20,17 +22,25 @@ public class Information :MonoBehaviour
     {
         this.actorType = (ActorType)actorType;
         InitData();
+       
     }
 
     private void InitData()
     {
+       // GameObject image = Instantiate(ImagePrefab, transform);
         string path = "";
         if ((int)actorType < 15)
         {
             path = "Cell";
-            image.sprite = Resources.Load<Sprite>(path + "/" + ((int)actorType).ToString() + actorType.ToString() + "/" + actorType.ToString());
-            name = JsonIO.GetCellData((CellType)(int)actorType).introduce;
-            Debug.Log(name);
+          //  image.GetComponent<Image>().sprite = Resources.Load<Sprite>(path + "/" + ((int)actorType).ToString() + actorType.ToString() + "/" + actorType.ToString());
+        image.sprite = Resources.Load<Sprite>(path + "/" + ((int)actorType).ToString() + actorType.ToString() + "/" + actorType.ToString());
+            Name.text = JsonIO.GetCellData((CellType)(int)actorType).name.ToString();
+            //Debug.Log(Name);
+            Attribute.text = "花费：" + JsonIO.GetCellData((CellType)(int)actorType).initCost.ToString() +
+                "\n" + "攻击范围：" + JsonIO.GetCellData((CellType)(int)actorType).atkRange.ToString() +
+                  "\n" + "攻击伤害：" + JsonIO.GetCellData((CellType)(int)actorType).atkDamage.ToString() +
+                  "\n\n" + "介绍：\n" + JsonIO.GetCellData((CellType)(int)actorType).introduce.ToString();
+
         }
         else if ((int)actorType < 20) path = "Enemy";
 
