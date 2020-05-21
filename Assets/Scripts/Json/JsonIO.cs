@@ -45,6 +45,8 @@ public class CellData
     public float atkDuration;
     public float initCost;
     public string introduce;
+    public string type;
+    public string ability;
 }
 
 public class JsonIO : MonoBehaviour
@@ -111,6 +113,9 @@ public class JsonIO : MonoBehaviour
             cellDatas[i].atkDuration = (float)(double)dict2["AtkDuration"];
             cellDatas[i].initCost = (float)(double)dict2["InitCost"];
             cellDatas[i].introduce = (string)dict2["Introduce"];
+            cellDatas[i].type = (string)dict2["Type"];
+            cellDatas[i].ability = (string)dict2["Ability"];
+
         }
     }
     public static void InitGameData()

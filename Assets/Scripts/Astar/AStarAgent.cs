@@ -62,34 +62,46 @@ public class AStarAgent : MonoBehaviour
                 success = true;
                 return;
             }
-            List<AStarNode> nearByNodes = LevelManager.Instance.GetAroundNodes(curNode);
-            foreach(AStarNode nearByNode in nearByNodes)
+            List<AStarNode> nearByNodes =null;
+            try
             {
-                if (closeList.Contains(nearByNode)) continue;
-                if (type == FindPathType.Over) continue;
-                else if (type == FindPathType.Through && nearByNode.tileType == TileType.Occupy) continue;
-                else if (type == FindPathType.Defult && nearByNode.tileType != TileType.Empty) continue;
-                if (!openList.Contains(nearByNode))
+                nearByNodes = LevelManager.Instance.GetAroundNodes(curNode);
+            }
+            catch
+            {
+                Debug.Log(transform.name+curNode.name);
+            }
+            finally
+            {
+                foreach (AStarNode nearByNode in nearByNodes)
                 {
-                    nearByNode.costG = curNode.costG + 1;
-                    nearByNode.costH = GetDistance(nearByNode, endNode);
-                    nearByNode.parentNode = curNode;
-                    //Debug.Log(nearByNode.name + nearByNode.CostF + "=>" + curNode.name + curNode.CostF);
-                    Debug.DrawLine(nearByNode.pos, curNode.pos, Color.red, 1f);
-                    openList.Add(nearByNode);
-                }
-                else 
-                {
-                    int costG = curNode.costG + 1;
-                    if (costG < nearByNode.costG)
+                    if (closeList.Contains(nearByNode)) continue;
+                    if (type == FindPathType.Over) continue;
+                    else if (type == FindPathType.Through && nearByNode.tileType == TileType.Occupy) continue;
+                    else if (type == FindPathType.Defult && nearByNode.tileType != TileType.Empty) continue;
+                    if (!openList.Contains(nearByNode))
                     {
-                        nearByNode.costG = costG;
+                        nearByNode.costG = curNode.costG + 1;
+                        nearByNode.costH = GetDistance(nearByNode, endNode);
                         nearByNode.parentNode = curNode;
                         //Debug.Log(nearByNode.name + nearByNode.CostF + "=>" + curNode.name + curNode.CostF);
-                        Debug.DrawLine(nearByNode.pos, curNode.pos,Color.red,1f);
+                        Debug.DrawLine(nearByNode.pos, curNode.pos, Color.red, 1f);
+                        openList.Add(nearByNode);
+                    }
+                    else
+                    {
+                        int costG = curNode.costG + 1;
+                        if (costG < nearByNode.costG)
+                        {
+                            nearByNode.costG = costG;
+                            nearByNode.parentNode = curNode;
+                            //Debug.Log(nearByNode.name + nearByNode.CostF + "=>" + curNode.name + curNode.CostF);
+                            Debug.DrawLine(nearByNode.pos, curNode.pos, Color.red, 1f);
+                        }
                     }
                 }
             }
+            
         }
         Debug.LogError("超过遍历次数上限！");
     }

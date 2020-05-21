@@ -34,6 +34,17 @@ public class RangePicManage : MonoBehaviour
         StartCoroutine(enumerator);
         shineLoop = !shineLoop;
     }
+    public void ChangeSpriteColor(Color color)
+    {
+        try
+        {
+            spriteRenderer.color = color;
+        }
+        catch
+        {
+
+        }
+    }
     private IEnumerator ChangeScale(float targetScale)
     {
         Vector3 local = transform.localScale;

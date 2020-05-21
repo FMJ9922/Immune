@@ -20,7 +20,7 @@ public class LevelManager : MonoBehaviour
     public int curWave = 0;
     public float DeployPoints { get; private set; }
 
-    
+
 
     void Awake()
     {
@@ -46,7 +46,7 @@ public class LevelManager : MonoBehaviour
     }
     private void Update()
     {
-        DeployPoints += Time.deltaTime/5;
+        DeployPoints += Time.deltaTime / 5;
     }
     public bool SpendPoints(float points)
     {
@@ -87,6 +87,7 @@ public class LevelManager : MonoBehaviour
     }
     public List<AStarNode> GetAroundNodes(AStarNode curNode)//查找节点周围
     {
+        //Debug.Log(curNode.name);
         List<AStarNode> retGroup = new List<AStarNode>();
         for (int i = -1; i <= 1; i++)
         {
@@ -114,8 +115,10 @@ public class LevelManager : MonoBehaviour
         if (x < 0 && y >= 0) return AllNodeGroup[0, y];
         else if (x > 15 && y <= 8) return AllNodeGroup[15, y];
         else if (y > 8 && x >= 0) return AllNodeGroup[x, 8];
-        else if (y < 0 &&x <= 15) return AllNodeGroup[x, 0];
-        else return AllNodeGroup[x, y];
+        else if (y < 0 && x <= 15) return AllNodeGroup[x, 0];
+        else if (x >= 0 && y >= 0 && y <= 8 && x <= 15) return AllNodeGroup[x, y];
+        else return null;
+
     }
     public AStarNode GetNodeByPos(int x, int y)//根据位置返回寻路节点
     {

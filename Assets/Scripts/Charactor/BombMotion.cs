@@ -26,7 +26,7 @@ public class BombMotion : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        Debug.Log(wayPoints != null);
+        //Debug.Log(wayPoints != null);
         if(explosion)
         {
             PlayAnimation(ExplosionSprite, 2, PlayAnimaType.Once);

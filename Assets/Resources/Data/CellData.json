@@ -7,8 +7,9 @@
 			"AtkDamage":51.0,
 			"AtkTime":0.4,
 			"AtkDuration":3.0,
-			"Introduce":"123465781245",
-
+			"Introduce":"有效杀伤多种病原体，寿命较短",
+			"Type":"近战",
+			"Ability":"吞噬"
 		},
 		{
 			"Name":"嗜酸性粒细胞",
@@ -17,7 +18,9 @@
 			"AtkDamage":34.0,
 			"AtkTime":0.5,
 			"AtkDuration":5.0,
-			"Introduce":"123465781245",
+			"Introduce":"释放杀伤物质造成范围伤害",
+			"Type":"远程",
+			"Ability":"减速"
 
 		},
 		{
@@ -27,7 +30,10 @@
 			"AtkDamage":1.0,
 			"AtkTime":0.0,
 			"AtkDuration":10.0,
-			"Introduce":"123465781245",
+			"Introduce":"加快部署，鉴别不明病原体",
+			"Type":"辅助",
+			"Ability":"鉴别,生产"
+
 		},
 		{
 			"Name":"巨噬细胞",
@@ -36,7 +42,9 @@
 			"AtkDamage":101.0,
 			"AtkTime":0.5,
 			"AtkDuration":1.0,
-			"Introduce":"123465781245",
+			"Introduce":"吞噬病原体，寿命较长，低效提呈抗原",
+			"Type":"近战",
+			"Ability":"吞噬,提呈"
 		},
 		{
 			"Name":"树突细胞",
@@ -45,7 +53,9 @@
 			"AtkDamage":50.0,
 			"AtkTime":0.0,
 			"AtkDuration":1.0,
-			"Introduce":"123465781245",
+			"Introduce":"高效提呈抗原",
+			"Type":"辅助",
+			"Ability":"提呈"
 		},
 		{
 			"Name":"NK细胞",
@@ -55,6 +65,9 @@
 			"AtkTime":1.5,
 			"AtkDuration":5.0,
 			"Introduce":"123465781245",
+			"Type":"远程",
+			"Ability":""
+
 		},
 		{
 			"Name":"T淋巴细胞",
@@ -64,6 +77,8 @@
 			"AtkTime":0.5,
 			"AtkDuration":1.0,
 			"Introduce":"123465781245",
+			"Type":"",
+			"Ability":""
 		},
 		{
 			"Name":"效应T细胞",
@@ -73,6 +88,8 @@
 			"AtkTime":0.6,
 			"AtkDuration":3.0,
 			"Introduce":"123465781245",
+			"Type":"",
+			"Ability":""
 		},
 		{
 			"Name":"辅助T细胞",
@@ -82,6 +99,8 @@
 			"AtkTime":0.5,
 			"AtkDuration":1.0,
 			"Introduce":"123465781245",
+			"Type":"",
+			"Ability":""
 		},
 		{
 			"Name":"抑制性T细胞",
@@ -91,6 +110,8 @@
 			"AtkTime":0.5,
 			"AtkDuration":1.0,
 			"Introduce":"123465781245",
+			"Type":"",
+			"Ability":""
 		},
 		{
 			"Name":"记忆T细胞",
@@ -100,6 +121,8 @@
 			"AtkTime":0.5,
 			"AtkDuration":1.0,
 			"Introduce":"123465781245",
+			"Type":"",
+			"Ability":""
 		},
 		{
 			"Name":"B淋巴细胞",
@@ -109,6 +132,8 @@
 			"AtkTime":0.5,
 			"AtkDuration":1.0,
 			"Introduce":"123465781245",
+			"Type":"",
+			"Ability":""
 		},
 		{
 			"Name":"记忆B细胞",
@@ -118,6 +143,8 @@
 			"AtkTime":0.5,
 			"AtkDuration":1.0,
 			"Introduce":"123465781245",
+			"Type":"",
+			"Ability":""
 		},
 		{
 			"Name":"浆细胞",
@@ -127,6 +154,8 @@
 			"AtkTime":0.5,
 			"AtkDuration":1.0,
 			"Introduce":"123465781245",
+			"Type":"",
+			"Ability":""
 		},
 	]
 }

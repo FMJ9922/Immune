@@ -33,6 +33,8 @@ public class ControlManager : MonoBehaviour
     public AStarNode lastNode = null;
     public CellBase lastCell;
 
+    public Transform SelectGlow;
+
     void Awake()
     {
         if (instance != null && instance != this)
@@ -58,20 +60,28 @@ public class ControlManager : MonoBehaviour
     }
     public void OnPlantButtonSelect(CellType cellType)
     {
-
-        if (placeType == PlaceType.Null && isSelect)
+        if (placeType == PlaceType.Null && isSelect&&transform.position.x<16.3f)
         {
+
+            //Debug.Log(transform.position.x);
             CellOnMove = Instantiate(CellOnMovePfb, transform.position, Quaternion.identity, transform) as GameObject;
             string path = "Cell/" + (int)cellType + cellType.ToString() + "/" + cellType.ToString();
             CellOnMove.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(path);
             CellOnMove.name = cellType.ToString();
             //text.text = transform.position.x+","+ transform.position.y + "," + transform.position.z ;
-            //To do:增加图片
+            
             placeType = PlaceType.Selected;
             this.cellType = cellType;
             isSelect = false;
+            CellOnMove.GetComponentInChildren<RangePicManage>().ChangeLocalScale(JsonIO.GetCellData(cellType).atkRange*3.3f);
         }
 
+    }
+    public void OnPlantButtonClick(Transform trans)
+    {
+        SelectGlow.gameObject.SetActive(true);
+        SelectGlow.SetParent(trans.parent);
+        SelectGlow.localPosition = new Vector3(2, 2.6F, 0);
     }
     public void OnRemoveButtonDown()
     {
@@ -87,8 +97,16 @@ public class ControlManager : MonoBehaviour
         
         for (int i = 0; i < vectors.Length; i++)
         {
-            if (targetNode == LevelManager.Instance.GetNodeByPos(new Vector2(vectors[i].x, vectors[i].y)))
+            if (targetNode == null)
+            {
+                Debug.Log("null");
                 return false;
+            }
+            else if (targetNode == LevelManager.Instance.GetNodeByPos(new Vector2(vectors[i].x, vectors[i].y)))
+            {
+                Debug.Log("atInitPos");
+                return false;
+            }
             else
             {
                 bool issuccess;
@@ -125,10 +143,16 @@ public class ControlManager : MonoBehaviour
             {
                 OnMoveToPlant(false);
             }
-
+            /*if (targetNode == null)
+            {
+                Debug.Log("NULL");
+                placeType = PlaceType.Null;
+                Destroy(CellOnMove);
+                CellOnMove = null;
+            }*/
             if (targetNode != null && targetNode.tileType == TileType.Empty && placeType == PlaceType.Selected)
             {
-
+                
                 targetNode.tileType = TileType.Occupy;
                 if (OnPlantCell != null)
                 {
@@ -136,8 +160,10 @@ public class ControlManager : MonoBehaviour
                 }
                 CellData cellData;
                 cellData = JsonIO.GetCellData(cellType);
+                Debug.Log(""+PathAvaliable + CheckPathAvaliable() + LevelManager.Instance.SpendPoints(cellData.initCost));
                 if (PathAvaliable && CheckPathAvaliable()&&LevelManager.Instance.SpendPoints(cellData.initCost))
                 {
+                    Debug.Log("plan1");
                     GameObject cell = Instantiate(CellPfbs[(int)cellType],
                     new Vector3(targetNode.pos.x, targetNode.pos.y),
                     Quaternion.identity,
@@ -193,9 +219,10 @@ public class ControlManager : MonoBehaviour
         {
             CellOnMove.transform.position = transform.position;
         }
+
         targetNode = LevelManager.Instance.GetNodeByPos(transform.position);
        
-        if (placeType ==PlaceType.Remove)
+        if (placeType ==PlaceType.Remove)//如果是铲除
         {
             placeType = PlaceType.Null;
             if (targetNode.tileType == TileType.Occupy)
@@ -204,16 +231,34 @@ public class ControlManager : MonoBehaviour
                 targetNode.tileType = TileType.Empty;
             }
         }
-        else if (targetNode == lastNode || placeType == PlaceType.Selected)
+        else if (targetNode == lastNode || targetNode==null)//如果目标结点和上帧结点相同或为空
         {
             return;
+        }
+        else if ( placeType == PlaceType.Selected)
+        {
+            if (CellOnMove != null)
+            {
+                if (CheckPathAvaliable()&&targetNode.tileType==TileType.Empty)
+                {
+                    CellOnMove.GetComponentInChildren<RangePicManage>().ChangeSpriteColor(Color.white);
+                    Debug.Log("White");
+                }
+                else
+                {
+                    CellOnMove.GetComponentInChildren<RangePicManage>().ChangeSpriteColor(Color.red);
+                    Debug.Log("Red");
+                }
+            }
         }
         else 
         {
             if(lastCell!=null)
                 lastCell.CloseRangePic();
             lastNode = targetNode;
-            if(targetNode.tileType ==TileType.Occupy)
+
+            
+            if (targetNode.tileType ==TileType.Occupy)
             {
                 lastCell = targetNode.transform.GetChild(0).GetComponent<CellBase>();
                 lastCell.ShowRangePic();
