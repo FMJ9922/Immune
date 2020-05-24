@@ -8,11 +8,12 @@ public class BagPanel : ViewBase
     public ArticleType articleType;
     public int  num;
     int a = 0;
+    public CellType cellType;
 
     #region 数据
 
     //private Article[] articles = new Article[21];
-   // private List<GameObject> articleItems = new List<GameObject>();
+    // private List<GameObject> articleItems = new List<GameObject>();
     #endregion
 
     public GameObject articleItemPrefab;
@@ -120,6 +121,10 @@ public class BagPanel : ViewBase
             case 9:
                 articleType = ArticleType.HelpCell;
                 return articleType;
+         
+            case 11:
+                articleType = ArticleType.HelpCell;
+                return articleType;
             case 12:
                 articleType = ArticleType.HelpCell;
                 return articleType;
@@ -175,7 +180,7 @@ public class BagPanel : ViewBase
                     a++;
                 }
                 string path ="";
-                if (i < 15) path = "Cell";
+                if (i < 14) path = "Cell";
                 else if (i < 20) path = "Enemy";
 
                 //Debug.Log(obj.GetComponent<SpriteRenderer>()==null);
@@ -200,7 +205,8 @@ public class BagPanel : ViewBase
     public void SetInformation(int actorType)
     {
         //Debug.Log("actor" + actorType);
-        Information.SetActorType(actorType);
+         Information.SetActorType(actorType);
+       // Information.Instance.dateInfo(cellType);
     }
     
 }
