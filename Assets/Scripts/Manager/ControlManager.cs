@@ -104,7 +104,7 @@ public class ControlManager : MonoBehaviour
             }
             else if (targetNode == LevelManager.Instance.GetNodeByPos(new Vector2(vectors[i].x, vectors[i].y)))
             {
-                Debug.Log("atInitPos");
+                //Debug.Log("atInitPos");
                 return false;
             }
             else
@@ -160,10 +160,10 @@ public class ControlManager : MonoBehaviour
                 }
                 CellData cellData;
                 cellData = JsonIO.GetCellData(cellType);
-                Debug.Log(""+PathAvaliable + CheckPathAvaliable() + LevelManager.Instance.SpendPoints(cellData.initCost));
+                //Debug.Log(""+PathAvaliable + CheckPathAvaliable() + LevelManager.Instance.SpendPoints(cellData.initCost));
                 if (PathAvaliable && CheckPathAvaliable()&&LevelManager.Instance.SpendPoints(cellData.initCost))
                 {
-                    Debug.Log("plan1");
+                    //Debug.Log("plan1");
                     GameObject cell = Instantiate(CellPfbs[(int)cellType],
                     new Vector3(targetNode.pos.x, targetNode.pos.y),
                     Quaternion.identity,
@@ -242,12 +242,12 @@ public class ControlManager : MonoBehaviour
                 if (CheckPathAvaliable()&&targetNode.tileType==TileType.Empty)
                 {
                     CellOnMove.GetComponentInChildren<RangePicManage>().ChangeSpriteColor(Color.white);
-                    Debug.Log("White");
+                    //Debug.Log("White");
                 }
                 else
                 {
                     CellOnMove.GetComponentInChildren<RangePicManage>().ChangeSpriteColor(Color.red);
-                    Debug.Log("Red");
+                    //Debug.Log("Red");
                 }
             }
         }
