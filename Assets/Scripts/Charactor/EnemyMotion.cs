@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class EnemyMotion : MonoBehaviour
 {
-    public float speed = 1;//设置敌人的速度
+    public float originSpeed = 1;//设置敌人的速度
+    private float speed = 1;
     //private WayPoint[] p;//定义数组
     private List<Vector3> wayPointList;
     private int index = 0;//坐标点
@@ -19,7 +20,7 @@ public class EnemyMotion : MonoBehaviour
 
     void Start()
     {
-        //speed = 0.5f;
+        speed = originSpeed;
         enemyStatus = EnemyStatus.Idle;
         agent = transform.GetComponent<AStarAgent>();
         InitWayPoint();
@@ -79,14 +80,20 @@ public class EnemyMotion : MonoBehaviour
     void FixedUpdate()//每一帧执行方法
     {
         //Debug.Log(enemyStatus+" " + TargetPoint);
-        if (enemyStatus == EnemyStatus.Engulfed&& TargetPoint != null)
+        if (enemyStatus == EnemyStatus.Engulfed && TargetPoint != null)
         {
-            
+
             Move(TargetPoint);
             return;
         }
         else if (transform.GetComponent<EnemyHealth>().Hp > 0 && enemyStatus == EnemyStatus.Idle)
         {
+            Move(wayPointList);
+        }
+        else if (enemyStatus == EnemyStatus.Die)
+           
+        {
+            //Debug.Log("???");
             Move(wayPointList);
         }
 
@@ -128,9 +135,9 @@ public class EnemyMotion : MonoBehaviour
     }
     private IEnumerator SlowDownWithSpeedScaleAndDuration(float scale, float duration)
     {
-        speed *= scale;
+        speed = scale*originSpeed;
         yield return new WaitForSeconds(duration);
-        speed /= scale;
+        speed = originSpeed;
     }
     
 }

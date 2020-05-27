@@ -10,6 +10,7 @@ public class SZCellControl : SRCellBase
     {
         InitCell();
         eatTimes = 10;
+        attackType = AttackType.Swallow;
     }
 
     public override void AttackOneTime()
@@ -24,7 +25,7 @@ public class SZCellControl : SRCellBase
         {
             cellStatus = CellStatus.SpecialAbility;
             targetEnemy.GetComponent<EnemyMotion>().TargetPoint = eatTrans.position;
-            SetDamageToEnemy(EnemyStatus.Engulfed);
+            SetDamageToEnemy(attackType);
             cellAnimator.CleanFrameData();
             eatTimes--;
             if (eatTimes <= 0) EatTooMuch();

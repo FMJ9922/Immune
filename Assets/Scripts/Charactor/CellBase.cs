@@ -28,6 +28,7 @@ public class CellBase : MonoBehaviour
     public CellType cellType;
     public Vector2Int gridPos;
     protected RangePicManage rangePicManage;
+    protected AttackType attackType;
 
 
     public virtual void InitCell() {  }

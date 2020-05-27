@@ -35,25 +35,35 @@ public class EnemyHealth : MonoBehaviour
         Invoke("TakeDamage", time);
         this.damage = damage; 
     }*/
-    public void TakeDamage(float damage, EnemyStatus _enemyStatus)
+    public void TakeDamage(float damage, bool swallow)
     {
-        if (Hp <= 0) return;
+        //if (Hp <= 0) return;
         Hp -= damage;
         hpSlider.value = (float)Hp / InitHealth;
-
+        
         if (Hp <= 0)
         {
-            //Debug.Log(_enemyStatus);
+            EnemyStatus _enemyStatus = swallow ? EnemyStatus.Engulfed : EnemyStatus.Die;
             enemyAnimator.OnChangeEnemyStatus(_enemyStatus);
             transform.GetComponent<EnemyMotion>().enemyStatus = _enemyStatus;
+            hpSlider.gameObject.SetActive(false);
+            //Destroy(hpSlider.gameObject);
             if (_enemyStatus == EnemyStatus.Engulfed)
             {
                 StartCoroutine(MyTool.DoRotate(transform, true, -50f, 1f));
                 StartCoroutine(MyTool.DoScale(transform, 0.12f, 1.0f));
+                Die();
+
+            }
+            else
+            {
+                transform.GetComponent<EnemyMotion>().StopAllCoroutines();
+                //Debug.Log("die");
+                transform.GetComponent<EnemyMotion>().GetSlowDown(0.5f, Mathf.Infinity);
             }
             
-            Destroy(hpSlider.gameObject);
-            Die();
+            
+           
         }
     }
     void Die()

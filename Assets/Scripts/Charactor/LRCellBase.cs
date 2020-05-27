@@ -127,7 +127,7 @@ public class LRCellBase :  CellBase,LongRangeAttack
         for (int i = 0; i < enemyInRange.Count; i++)
         {
             Transform trans = (Transform)enemyInRange[i];
-            if (trans == null || trans.GetComponent<EnemyHealth>().Hp <= 0) continue;
+            if (trans == null || trans.GetComponent<EnemyHealth>().Hp<=0) continue;
 
             float distance = Vector3.Distance(trans.position, transform.position);
             //Debug.Log(distance);

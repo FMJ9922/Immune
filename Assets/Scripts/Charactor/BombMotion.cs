@@ -136,9 +136,9 @@ public class BombMotion : MonoBehaviour
             
             Transform trans = (Transform)enemyInRange[i];
             //Debug.Log(trans.name);
-            if (trans != null)
+            if (trans != null&&trans.GetComponent<EnemyHealth>().Hp>0)
             {
-                trans.GetComponent<EnemyHealth>().TakeDamage(damage, EnemyStatus.Die);
+                trans.GetComponent<EnemyHealth>().TakeDamage(damage, false);
                 trans.GetComponent<EnemyMotion>().GetSlowDown(0.5f, 3f);
             }
         }

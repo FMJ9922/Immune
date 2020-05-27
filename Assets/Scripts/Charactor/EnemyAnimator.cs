@@ -56,7 +56,7 @@ public class EnemyAnimator : MonoBehaviour
                 PlayAnimation(IdleSprite, 3, PlayAnimaType.Loop);
                 break;
             case EnemyStatus.Die:
-                PlayAnimation(DieSprite, 2, false);
+                PlayAnimation(DieSprite, 2, PlayAnimaType.Loop);
                 break;
             case EnemyStatus.Engulfed:
                 PlayAnimation(DieSprite, 2, false);

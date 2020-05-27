@@ -9,7 +9,8 @@ public class JSCellControl : SRCellBase
     private void Start()
     {
         InitCell();
-        eatTimes = 10;
+        //eatTimes = 10;
+        attackType = AttackType.Swallow;
     }
 
     public override void AttackOneTime()
@@ -24,7 +25,7 @@ public class JSCellControl : SRCellBase
         {
             cellStatus = CellStatus.SpecialAbility;
             targetEnemy.GetComponent<EnemyMotion>().TargetPoint = eatTrans.position;
-            SetDamageToEnemy(EnemyStatus.Engulfed);
+            SetDamageToEnemy(attackType);
             cellAnimator.CleanFrameData();
         }
         else

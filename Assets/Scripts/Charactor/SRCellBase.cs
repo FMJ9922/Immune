@@ -114,7 +114,9 @@ public class SRCellBase : CellBase, ShortRangeAttack
         for (int i = 0; i < enemyInRange.Count; i++)
         {
             Transform trans = (Transform)enemyInRange[i];
-            if (trans == null || trans.GetComponent<EnemyHealth>().Hp <= 0) continue;
+            if (trans == null) continue;
+            else if (trans.GetComponent<EnemyMotion>().enemyStatus == EnemyStatus.Engulfed) continue;
+            else if (trans.GetComponent<EnemyMotion>().enemyStatus == EnemyStatus.Die && attackType != AttackType.Swallow) continue;
             CheckLeftOrRight(p);
             p = trans;
             return p;
@@ -128,7 +130,9 @@ public class SRCellBase : CellBase, ShortRangeAttack
         for (int i = 0; i < enemyInRange.Count; i++)
         {
             Transform trans = (Transform)enemyInRange[i];
-            if (trans == null || trans.GetComponent<EnemyHealth>().Hp <= 0) continue;
+            if (trans == null) continue;
+            else if (trans.GetComponent<EnemyMotion>().enemyStatus == EnemyStatus.Engulfed) continue;
+            else if (trans.GetComponent<EnemyMotion>().enemyStatus == EnemyStatus.Die && attackType != AttackType.Swallow) continue;
 
             float distance = Vector3.Distance(trans.position, transform.position);
             //Debug.Log(distance);
@@ -150,7 +154,9 @@ public class SRCellBase : CellBase, ShortRangeAttack
         for (int i = 0; i < enemyInRange.Count; i++)
         {
             Transform trans = (Transform)enemyInRange[i];
-            if (trans == null || trans.GetComponent<EnemyHealth>().Hp <= 0) continue;
+            if (trans == null) continue;
+            else if (trans.GetComponent<EnemyMotion>().enemyStatus == EnemyStatus.Engulfed) continue;
+            else if (trans.GetComponent<EnemyMotion>().enemyStatus == EnemyStatus.Die && attackType != AttackType.Swallow) continue;
 
             float hp = trans.GetComponent<EnemyHealth>().Hp;
             if (hp < minHp)
@@ -174,7 +180,7 @@ public class SRCellBase : CellBase, ShortRangeAttack
     }
     public IEnumerator StartAttackEnemy()
     {
-        while (true)
+        while (cellStatus!=CellStatus.Die)
         {
             AttackOneTime();
             yield return new WaitForSeconds(atkDuration);
@@ -195,14 +201,14 @@ public class SRCellBase : CellBase, ShortRangeAttack
     {
         if (targetEnemy != null)
         {
-            targetEnemy.GetComponent<EnemyHealth>().TakeDamage(atkDamage, EnemyStatus.Die);
+            targetEnemy.GetComponent<EnemyHealth>().TakeDamage(atkDamage, false);
         }
     }
-    public void SetDamageToEnemy(EnemyStatus enemyStatus)
+    public void SetDamageToEnemy(AttackType attackType)
     {
-        if (targetEnemy != null)
+        if (targetEnemy != null&&attackType==AttackType.Swallow)
         {
-            targetEnemy.GetComponent<EnemyHealth>().TakeDamage(atkDamage, enemyStatus);
+            targetEnemy.GetComponent<EnemyHealth>().TakeDamage(atkDamage, true);
         }
     }
     public void OnCellStatusChange(CellStatus cellStatus)
