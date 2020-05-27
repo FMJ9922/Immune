@@ -25,6 +25,7 @@ public class Information : MonoBehaviour
     // public Image image;
 
     public GameObject ImagePrefab;
+    public Image ImageCell;
     /*private TMP_Text Name;
     private TMP_Text Data;
     private TMP_Text Type;
@@ -54,12 +55,13 @@ public class Information : MonoBehaviour
 
     private void InitData()
     {
-        GameObject image = Instantiate(ImagePrefab, transform);
+        //GameObject image = Instantiate(ImagePrefab, transform);
         string path = "";
         if ((int)actorType < 15)
         {
             path = "Cell";
-            image.GetComponent<Image>().sprite = Resources.Load<Sprite>(path + "/" + ((int)actorType).ToString() + actorType.ToString() + "/" + actorType.ToString());
+            //image.GetComponent<Image>().sprite = null;
+            ImageCell.GetComponent<Image>().sprite = Resources.Load<Sprite>(path + "/" + ((int)actorType).ToString() + actorType.ToString() + "/" + actorType.ToString());
             
             Name.text = JsonIO.GetCellData((CellType)(int)actorType).name.ToString();
             this.Type.text = JsonIO.GetCellData((CellType)(int)actorType).type;
@@ -67,7 +69,7 @@ public class Information : MonoBehaviour
                         "范围:" + JsonIO.GetCellData((CellType)(int)actorType).atkRange.ToString() + "\n" +
                         "冷却:" + JsonIO.GetCellData((CellType)(int)actorType).atkDuration.ToString() + "秒" + "   " +
                         "花费:" + JsonIO.GetCellData((CellType)(int)actorType).initCost.ToString() + "\n" +
-                        "技能:" + JsonIO.GetCellData((CellType)(int)actorType).ability + ToString();
+                        "技能:" + JsonIO.GetCellData((CellType)(int)actorType).ability.ToString();
             Introduce.text = "简介:" + JsonIO.GetCellData((CellType)(int)actorType).introduce;
 
         }

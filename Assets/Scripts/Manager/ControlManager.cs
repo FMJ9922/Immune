@@ -262,7 +262,7 @@ public class ControlManager : MonoBehaviour
             {
                 lastCell = targetNode.transform.GetChild(0).GetComponent<CellBase>();
                 lastCell.ShowRangePic();
-                Debug.Log("StartShow");
+                //Debug.Log("StartShow");
             }
             
 

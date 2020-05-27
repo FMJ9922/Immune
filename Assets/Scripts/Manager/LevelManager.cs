@@ -19,7 +19,7 @@ public class LevelManager : MonoBehaviour
     public Transform drawRoute;
     public int curWave = 0;
     public float DeployPoints { get; private set; }
-
+    public Transform CountDown;
 
 
     void Awake()
@@ -41,8 +41,13 @@ public class LevelManager : MonoBehaviour
         EnemyGroup = transform.Find("EnemyGroup").gameObject;
         Map = transform.Find("Map").gameObject;
         GenerateTileNode();
-        StartCoroutine(CreateEnemy());
+        
         DeployPoints = 100;
+
+        CountDown.GetComponent<CountDownUI>().StartCountDown(4);
+        CountDown.position = new Vector2(waves[0].startX+0.5f, waves[0].startY+0.5f);
+        DrawDefaultRoute(0);
+        Invoke("StartDeployEnemy", 4f);
     }
     private void Update()
     {
@@ -63,9 +68,13 @@ public class LevelManager : MonoBehaviour
     public void AddPoints(float points)
     {
         DeployPoints += points;
-
     }
 
+    public void StartDeployEnemy()
+    {
+        
+        StartCoroutine(CreateEnemy());
+    }
     private void GenerateTileNode()//初始化寻路节点
     {
         Debug.Log("GenerateTileNode");
@@ -131,7 +140,7 @@ public class LevelManager : MonoBehaviour
     }
     private IEnumerator CreateEnemy()
     {
-        DrawDefaultRoute(0);
+        
         for (int i = 0; i < waves.Length; i++)
         {
             curWave = i;

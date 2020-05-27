@@ -57,7 +57,9 @@ public class EnemyMotion : MonoBehaviour
         {
             //Debug.Log("success");
             agent.SetPath(transform.position, endPos);
-            wayPointList = agent.wayPointList;
+            List<Vector3> tempList = agent.wayPointList;
+            tempList.Remove(tempList[0]);
+            wayPointList = tempList;
             index = 0;
         }
         else
