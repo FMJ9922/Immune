@@ -27,6 +27,10 @@ public class LevelSceneUI : MonoBehaviour
         GameManager.Instance.LoadLevelScene(GameManager.Instance.iLevel);
     }
 
+    public void LoadNextLevel()
+    {
+        GameManager.Instance.LoadLevelScene(GameManager.Instance.iLevel+1);
+    }
     public void OpenMenuScene()
     {
         GameManager.Instance.LoadMenuScene();

@@ -28,6 +28,7 @@ public class ControlManager : MonoBehaviour
     public delegate void TakeAction(bool doing);
     public static event TakeAction OnMoveToPlant;
     public static event TakeAction OnClickTile;
+
     public Text text;
 
     public AStarNode lastNode = null;
@@ -171,7 +172,7 @@ public class ControlManager : MonoBehaviour
                     cell.name = cellType.ToString();
                     cell.GetComponent<CellBase>().gridPos = new Vector2Int(targetNode.posX, targetNode.posY);
                     LevelManager.Instance.DrawDefaultRoute(LevelManager.Instance.curWave);
-
+                    LevelManager.Instance.OnScoreEvent(ScoreType.CellDeployNum, 1);
                     //To Do 放置正确音效，粒子效果
                 }
                 else

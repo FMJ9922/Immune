@@ -85,4 +85,52 @@ public class MyTool : MonoBehaviour
         return path;
 
     }
+    public static string PraseRequest(ScoreType scoreType, int num)
+    {
+        string str;
+
+        switch (scoreType)
+        {
+            case ScoreType.EnemyEscapeNum:
+                str = "逃脱的病原体不超过" + num.ToString() + "个(0/" + num.ToString() + ")";
+                break;
+            case ScoreType.CellDeployNum:
+                str = "放置免疫细胞不超过" + num.ToString() + "个(0/" + num.ToString() + ")";
+                break;
+            case ScoreType.EnemyRouteLength:
+                str = "病原体行进路径达到" + num.ToString() + "格(0/" + num.ToString() + ")";
+                break;
+            case ScoreType.NormalCellSurviveNum:
+                str = "健康细胞存活不小于" + num.ToString() + "个(" + num.ToString() + "/" + num.ToString() + ")";
+                break;
+            default:
+                str = "";
+                break;
+        }
+        return str;
+    }
+    public static string PraseRequest(ScoreType scoreType, int num,int actualNum)
+    {
+        string str;
+
+        switch (scoreType)
+        {
+            case ScoreType.EnemyEscapeNum:
+                str = "逃脱的病原体不超过" + num.ToString() + "个("+ actualNum.ToString() + "/" + num.ToString() + ")";
+                break;
+            case ScoreType.CellDeployNum:
+                str = "放置免疫细胞不超过" + num.ToString() + "个("+ actualNum.ToString() + "/" + num.ToString() + ")";
+                break;
+            case ScoreType.EnemyRouteLength:
+                str = "病原体行进路径达到" + num.ToString() + "格("+ actualNum.ToString() + "/" + num.ToString() + ")";
+                break;
+            case ScoreType.NormalCellSurviveNum:
+                str = "健康细胞存活不小于" + num.ToString() + "个(" + actualNum.ToString() + "/" + num.ToString() + ")";
+                break;
+            default:
+                str = "";
+                break;
+        }
+        return str;
+    }
 }

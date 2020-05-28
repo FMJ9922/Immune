@@ -96,3 +96,12 @@ public enum AttackType
     Swallow = 0,//吞噬
     Other = 1,//其它
 }
+
+public enum ScoreType
+{
+    EnemyEscapeNum = 0,//敌人的逃离数量 小于
+    CellDeployNum = 1,//细胞的放置数量 小于
+    EnemyRouteLength = 2,//敌人行进距离 大于
+    NormalCellSurviveNum = 3,//健康细胞存活数量 大于
+
+}

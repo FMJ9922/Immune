@@ -17,9 +17,12 @@ public class EnemyMotion : MonoBehaviour
     public Vector3 TargetPoint { private get; set; }
     private IEnumerator SlowDown;
     /*public bool draw;*/
+    public delegate void EnemyEscape(ScoreType scoreType, int deltaNum);
+    public event EnemyEscape OnEnemyEscape;
 
     void Start()
     {
+        OnEnemyEscape += LevelManager.Instance.OnScoreEvent;
         speed = originSpeed;
         enemyStatus = EnemyStatus.Idle;
         agent = transform.GetComponent<AStarAgent>();
@@ -37,6 +40,7 @@ public class EnemyMotion : MonoBehaviour
     private void OnDestroy()
     {
         ControlManager.OnPlantCell -= ChangeWayPoint;
+        OnEnemyEscape-= LevelManager.Instance.OnScoreEvent;
         StopAllCoroutines();
     }
     void InitWayPoint()
@@ -112,6 +116,8 @@ public class EnemyMotion : MonoBehaviour
             index++;//增加索引，也就获取到下个节点坐标
             if (index > wayPointList.Count - 1)//如果大于最后一个节点时执行
             {
+                OnEnemyEscape(ScoreType.EnemyEscapeNum, 1);
+                Debug.Log("有一个敌人逃脱了");
                 Destroy(this.gameObject);//销毁物体
             }
         }

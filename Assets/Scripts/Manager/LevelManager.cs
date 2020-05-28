@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class LevelManager : MonoBehaviour
 {
     public static LevelManager Instance { get; private set; } = null;
@@ -20,7 +21,13 @@ public class LevelManager : MonoBehaviour
     public int curWave = 0;
     public float DeployPoints { get; private set; }
     public Transform CountDown;
+    private ScoreRequest[] levelRequest = new ScoreRequest[3];
+    public delegate void ScoreChange(ScoreType scoreType, int deltaNum);
+    public static event ScoreChange OnScoreChange;
 
+    public GameObject StartCanvas;
+    public GameObject WinCanvas;
+    public GameObject FailCanvas;
 
     void Awake()
     {
@@ -38,17 +45,25 @@ public class LevelManager : MonoBehaviour
     {
         waves = JsonIO.GetWaves();
         mapType = JsonIO.GetMap();
+        levelRequest = JsonIO.GetScoreRequest();
         EnemyGroup = transform.Find("EnemyGroup").gameObject;
         Map = transform.Find("Map").gameObject;
         GenerateTileNode();
-        
-        DeployPoints = 100;
 
+        DeployPoints = 100;
+        StartCanvas.SetActive(true);
+        WinCanvas.SetActive(false);
+        FailCanvas.SetActive(false);
+        StartCanvas.GetComponent<StartIntroduceUI>().InitText();
+    }
+    public void StartLevel()
+    {
         CountDown.GetComponent<CountDownUI>().StartCountDown(4);
-        CountDown.position = new Vector2(waves[0].startX+0.5f, waves[0].startY+0.5f);
+        CountDown.position = new Vector2(waves[0].startX + 0.5f, waves[0].startY + 0.5f);
         DrawDefaultRoute(0);
         Invoke("StartDeployEnemy", 4f);
-    }
+        StartCanvas.SetActive(false);
+    } 
     private void Update()
     {
         DeployPoints += Time.deltaTime / 5;
@@ -69,10 +84,66 @@ public class LevelManager : MonoBehaviour
     {
         DeployPoints += points;
     }
+    public void ShowWinOrFailCanvas(bool win)
+    {
+        string str ="" + MyTool.PraseRequest(levelRequest[0].scoreType, levelRequest[0].requestNum, levelRequest[0].actualNum) + "\n"
+                       + MyTool.PraseRequest(levelRequest[1].scoreType, levelRequest[1].requestNum, levelRequest[1].actualNum) + "\n"
+                       + MyTool.PraseRequest(levelRequest[2].scoreType, levelRequest[2].requestNum, levelRequest[2].actualNum);
+        if (win)
+        {
+            WinCanvas.SetActive(true);
+            WinCanvas.GetComponent<StartIntroduceUI>().content.text = str;
+        }
+        else
+        {
+            FailCanvas.SetActive(true);
+            FailCanvas.GetComponent<StartIntroduceUI>().content.text = str;
+        }
+
+    }
+    public void OnScoreEvent(ScoreType scoreType, int deltaNum)
+    {
+        for (int i = 0; i < levelRequest.Length; i++)//对于每一个得分条件
+        {
+            if (scoreType == levelRequest[i].scoreType)//如果得分事件类型匹配
+            {
+                switch (scoreType)
+                {
+                    case ScoreType.EnemyEscapeNum:
+                        levelRequest[i].actualNum += deltaNum;
+                        break;
+                    case ScoreType.CellDeployNum:
+                        levelRequest[i].actualNum += deltaNum;
+                        break;
+                    case ScoreType.EnemyRouteLength:
+                        {
+                            int num = levelRequest[i].actualNum;
+                            levelRequest[i].actualNum = num < deltaNum ? deltaNum : num;
+                            break;
+                        }
+                    case ScoreType.NormalCellSurviveNum:
+                        {
+                            int num = levelRequest[i].actualNum;
+                            levelRequest[i].actualNum = num < deltaNum ? deltaNum : num;
+                            break;
+                        } 
+                }
+
+                if (OnScoreChange != null)
+                {
+                    OnScoreChange(scoreType, levelRequest[i].actualNum);
+                }
+                return;
+            }
+            else continue;
+        }
+    }
+
+
 
     public void StartDeployEnemy()
     {
-        
+
         StartCoroutine(CreateEnemy());
     }
     private void GenerateTileNode()//初始化寻路节点
@@ -140,7 +211,7 @@ public class LevelManager : MonoBehaviour
     }
     private IEnumerator CreateEnemy()
     {
-        
+
         for (int i = 0; i < waves.Length; i++)
         {
             curWave = i;
@@ -184,6 +255,7 @@ public class LevelManager : MonoBehaviour
         {
             agent.SetPath(new Vector2(vectors[wave].x, vectors[wave].y), new Vector2(vectors[wave].z, vectors[wave].w));
             StartCoroutine(DrawRoute.Drawarrow(drawRoute, agent.wayPointList, 0.05f));
+            OnScoreEvent(ScoreType.EnemyRouteLength, agent.wayPointList.Count);
         }
     }
 }

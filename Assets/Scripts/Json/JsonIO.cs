@@ -19,6 +19,7 @@ public class LevelData
     /*public WayPoint[] wayPoints;*/
     public int[] allowCellType;
     public int[,] mapType;
+    public ScoreRequest[] scoreRequests;
 }
 
 [System.Serializable]
@@ -34,7 +35,13 @@ public class Wave
     public float speed;
 
 }
-
+[System.Serializable]
+public class ScoreRequest
+{
+    public ScoreType scoreType;//得分类型
+    public int requestNum;//得分要求
+    public int actualNum = 0;//实际数量
+}
 [System.Serializable]
 public class CellData
 {
@@ -135,7 +142,10 @@ public class JsonIO : MonoBehaviour
         gameData = new GameData();
         gameData.levelDatas = levelDatas;
     }
-
+    public static ScoreRequest[] GetScoreRequest()
+    {
+        return levelData.scoreRequests;
+    }
     public static LevelData GetLevelData(int index, List<System.Object> levelDataList)
     {
 
@@ -153,14 +163,43 @@ public class JsonIO : MonoBehaviour
         var waveList = (List<object>)dict2["waves"];
         var allowCellList = (List<object>)dict2["allowCell"];
         var mapTypeList = (List<object>)dict2["mapType"];
-
+        var ScoreRequest = (List<object>)dict2["scoreRequests"];
+        /*Debug.Log(mapTypeList.ToString());
+        Debug.Log(ScoreRequest.ToString());*/
         levelData.levelName = levelName;
         levelData.waves = PraseWave(waveList);
         levelData.allowCellType = PraseInt(allowCellList);
         levelData.mapType = PraseMap(mapTypeList);
+        levelData.scoreRequests = PraseScoreRequest(ScoreRequest);
 
        
         return levelData;
+    }
+
+    private static ScoreRequest[] PraseScoreRequest(List<object> scoreRequest)
+    {
+        ScoreRequest[] _scoreRequests = new ScoreRequest[3];
+        for(int i = 0; i < 3; i++)
+        {
+            _scoreRequests[i] = new ScoreRequest();
+            
+            var singleRequest = (List<System.Object>)scoreRequest[i];
+            for (int j = 0; j < 2; j++)
+            {
+                switch (j)
+                {
+                    case 0:
+                        int scoretype = Convert.ToInt16(singleRequest[j]);
+                        _scoreRequests[i].scoreType = (ScoreType)scoretype;
+                        break;
+                    case 1:
+                        _scoreRequests[i].requestNum = Convert.ToInt32(singleRequest[j]);
+                        break;
+                }
+            }
+            _scoreRequests[i].actualNum = 0;
+        }
+        return _scoreRequests;
     }
 
     private static int[,] PraseMap(List<object> mapTypeList)
