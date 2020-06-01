@@ -133,4 +133,8 @@ public class MyTool : MonoBehaviour
         }
         return str;
     }
+    public static void DoFade(in GameObject gameObject)
+    {
+        //TODO
+    }
 }

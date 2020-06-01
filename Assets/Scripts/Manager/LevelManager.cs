@@ -55,6 +55,7 @@ public class LevelManager : MonoBehaviour
         WinCanvas.SetActive(false);
         FailCanvas.SetActive(false);
         StartCanvas.GetComponent<StartIntroduceUI>().InitText();
+        PauseBgUI.Instance.ShowWhiteBg();
     }
     public void StartLevel()
     {
@@ -62,7 +63,8 @@ public class LevelManager : MonoBehaviour
         CountDown.position = new Vector2(waves[0].startX + 0.5f, waves[0].startY + 0.5f);
         DrawDefaultRoute(0);
         Invoke("StartDeployEnemy", 4f);
-        StartCanvas.SetActive(false);
+        PauseBgUI.Instance.HideWhiteBg();
+        //StartCanvas.SetActive(false);
     } 
     private void Update()
     {

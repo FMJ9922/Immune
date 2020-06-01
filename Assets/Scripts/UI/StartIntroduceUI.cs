@@ -7,6 +7,7 @@ public class StartIntroduceUI : MonoBehaviour
 {
     public TMP_Text levelName;
     public TMP_Text content;
+    public Animation animation;
    
 
     public void InitText()
@@ -18,5 +19,11 @@ public class StartIntroduceUI : MonoBehaviour
                          + MyTool.PraseRequest(scoreRequests[2].scoreType, scoreRequests[2].requestNum);
     }
 
+    public void OnStartPlayLevelButtonClick()
+    {
+        
+        LevelManager.Instance.StartLevel();
+        animation.Play();
+    }
 
 }
