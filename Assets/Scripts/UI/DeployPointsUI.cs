@@ -5,13 +5,17 @@ using UnityEngine.UI;
 
 public class DeployPointsUI : MonoBehaviour
 {
-    public Text text;
+    public Text Deploytext;
+    public Text Linbatext;
+    public Text KangYuantext;
     private void Start()
     {
-        text = transform.GetComponent<Text>();
+        //text = transform.GetComponent<Text>();
     }
     private void Update()
     {
-        text.text = ""+Mathf.FloorToInt(LevelManager.Instance.DeployPoints);
+        Deploytext.text = ""+Mathf.FloorToInt(LevelManager.Instance.DeployPoints);
+        Linbatext.text = ""+Mathf.FloorToInt(LevelManager.Instance.LinbaPoints);
+        KangYuantext.text = ""+Mathf.FloorToInt(LevelManager.Instance.KangYuanPoints);
     }
 }

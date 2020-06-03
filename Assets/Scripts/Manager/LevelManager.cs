@@ -19,15 +19,20 @@ public class LevelManager : MonoBehaviour
     public GameObject Node;
     public Transform drawRoute;
     public int curWave = 0;
+    private bool finishCreate;
     public float DeployPoints { get; private set; }
+    public float LinbaPoints { get; private set; }
+    public float KangYuanPoints { get; private set; }
     public Transform CountDown;
     private ScoreRequest[] levelRequest = new ScoreRequest[3];
-    public delegate void ScoreChange(ScoreType scoreType, int deltaNum);
+    public delegate void ScoreChange(ScoreRequest[] levelRequest);
     public static event ScoreChange OnScoreChange;
 
     public GameObject StartCanvas;
     public GameObject WinCanvas;
     public GameObject FailCanvas;
+
+    
 
     void Awake()
     {
@@ -50,19 +55,22 @@ public class LevelManager : MonoBehaviour
         Map = transform.Find("Map").gameObject;
         GenerateTileNode();
 
-        DeployPoints = 100;
+        DeployPoints = 10;
+        finishCreate = false;
         StartCanvas.SetActive(true);
         WinCanvas.SetActive(false);
         FailCanvas.SetActive(false);
         StartCanvas.GetComponent<StartIntroduceUI>().InitText();
         PauseBgUI.Instance.ShowWhiteBg();
+        GameManager.Instance.Set1xTimeScale();
+        Debug.Log(GetLevelTime());
     }
     public void StartLevel()
     {
-        CountDown.GetComponent<CountDownUI>().StartCountDown(4);
+        CountDown.GetComponent<CountDownUI>().StartCountDown(6,1);
         CountDown.position = new Vector2(waves[0].startX + 0.5f, waves[0].startY + 0.5f);
-        DrawDefaultRoute(0);
-        Invoke("StartDeployEnemy", 4f);
+        StartCoroutine(DrawAllRoute(1));
+        Invoke("StartDeployEnemy", 6f);
         PauseBgUI.Instance.HideWhiteBg();
         //StartCanvas.SetActive(false);
     } 
@@ -94,13 +102,18 @@ public class LevelManager : MonoBehaviour
         if (win)
         {
             WinCanvas.SetActive(true);
-            WinCanvas.GetComponent<StartIntroduceUI>().content.text = str;
+            WinCanvas.GetComponent<WinUI>().content.text = str;
+            WinCanvas.GetComponent<WinUI>().InitWinUI(levelRequest);
+            FailCanvas.SetActive(false);
         }
         else
         {
+            Debug.Log("LoadFail");
+            WinCanvas.SetActive(false);
             FailCanvas.SetActive(true);
             FailCanvas.GetComponent<StartIntroduceUI>().content.text = str;
         }
+        GameManager.Instance.Set0xTimeScale();
 
     }
     public void OnScoreEvent(ScoreType scoreType, int deltaNum)
@@ -133,9 +146,9 @@ public class LevelManager : MonoBehaviour
 
                 if (OnScoreChange != null)
                 {
-                    OnScoreChange(scoreType, levelRequest[i].actualNum);
+                    OnScoreChange(levelRequest);
                 }
-                return;
+               
             }
             else continue;
         }
@@ -194,12 +207,12 @@ public class LevelManager : MonoBehaviour
     {
         int x = Mathf.FloorToInt(pos.x);
         int y = Mathf.FloorToInt(pos.y);
-        if (x < 0 && y >= 0) return AllNodeGroup[0, y];
-        else if (x > 15 && y <= 8) return AllNodeGroup[15, y];
-        else if (y > 8 && x >= 0) return AllNodeGroup[x, 8];
-        else if (y < 0 && x <= 15) return AllNodeGroup[x, 0];
-        else if (x >= 0 && y >= 0 && y <= 8 && x <= 15) return AllNodeGroup[x, y];
-        else return null;
+        if (x <= 0 && y >= 0) return AllNodeGroup[0, y];
+        if (x >= 15 && y <= 8) return AllNodeGroup[15, y];
+        if (y >= 8 && x >= 0&&x<=15) return AllNodeGroup[x, 8];
+        if (y <= 0 && x <= 15) return AllNodeGroup[x, 0];
+        if (x >= 0 && y >= 0 && y <= 8 && x <= 15) return AllNodeGroup[x, y];
+        return null;
 
     }
     public AStarNode GetNodeByPos(int x, int y)//根据位置返回寻路节点
@@ -216,6 +229,7 @@ public class LevelManager : MonoBehaviour
 
         for (int i = 0; i < waves.Length; i++)
         {
+            DrawDefaultRoute(i);
             curWave = i;
             for (int j = 0; j < waves[i].enemyNum; j++)
             {
@@ -232,9 +246,16 @@ public class LevelManager : MonoBehaviour
 
                 yield return new WaitForSeconds(waves[i].initDuration);
             }
+            if (i + 2 < waves.Length)
+            {
+                CountDown.GetComponent<CountDownUI>().StartCountDown((int)waves[i].nextWaveDuration + 1, i + 2);
+                CountDown.position = new Vector2(waves[i + 1].startX + 0.5f, waves[i + 1].startY + 0.5f);
 
+            }
             yield return new WaitForSeconds(waves[i].nextWaveDuration);
         }
+        finishCreate = true;
+        InvokeRepeating("CheckSuccess", 0f,1f);
     }
     public void CreateOneEnemy()
     {
@@ -260,4 +281,49 @@ public class LevelManager : MonoBehaviour
             OnScoreEvent(ScoreType.EnemyRouteLength, agent.wayPointList.Count);
         }
     }
+
+    public IEnumerator DrawAllRoute(float time)
+    {
+        yield return new WaitForSeconds(time);
+        Vector4[] vectors = JsonIO.GetDefaultPath();
+        List<Vector4> vector4s = new List<Vector4>();
+
+        for (int i = 0; i < vectors.Length; i++)
+        {
+            if (!vector4s.Contains(vectors[i]))
+            {
+                vector4s.Add(vectors[i]);
+                DrawDefaultRoute(i);
+                yield return new WaitForSeconds(1);
+            }
+            
+        }
+    }
+
+    public void CheckSuccess()
+    {
+        if (!finishCreate || EnemyManager.Instance.GetEnemyNum() > 0) return;
+        ShowWinOrFailCanvas(true);
+
+
+    }
+    public void CheckFail()
+    {
+        if (levelRequest[0].requestNum < levelRequest[0].actualNum)
+        {
+            ShowWinOrFailCanvas(false);
+        }
+    }
+    public float GetLevelTime() 
+    {
+        Wave[] waves = JsonIO.GetWaves();
+        float time = 0;
+
+        for(int i = 0; i < waves.Length; i++)
+        {
+            time += waves[i].initDuration * waves[i].enemyNum + waves[i].nextWaveDuration;
+        }
+        return time;
+    }
+
 }

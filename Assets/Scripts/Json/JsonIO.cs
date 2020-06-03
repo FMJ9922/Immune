@@ -23,7 +23,7 @@ public class LevelData
 }
 
 [System.Serializable]
-public class Wave
+public class Wave//敌人种类，数量，生成时间间隔，下一波时间间隔，寻路机制，起点x，y,终点x,y,速度
 {
     public int enemyType;
     public int enemyNum;

@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Enemy
   - Cell
+  - Map
+  - RoleSelectUI
+  - OtherUI
   layers:
   - Default
   - TransparentFX

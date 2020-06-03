@@ -80,9 +80,24 @@ public class ControlManager : MonoBehaviour
     }
     public void OnPlantButtonClick(Transform trans)
     {
-        SelectGlow.gameObject.SetActive(true);
+        if (!SelectGlow.gameObject.activeInHierarchy)
+        {
+            SelectGlow.gameObject.SetActive(true);
+            RoleSelectInfo.Instance.transform.GetComponent<Animation>().Play("ShowCellInfo");
+
+        }
         SelectGlow.SetParent(trans.parent);
         SelectGlow.localPosition = new Vector3(2, 2.6F, 0);
+       
+    }
+    public void HideSelectAndCellInfo()
+    {
+        if (SelectGlow.gameObject.activeInHierarchy)
+        {
+            SelectGlow.gameObject.SetActive(false);
+            RoleSelectInfo.Instance.transform.GetComponent<Animation>().Play("HideCellInfo");
+
+        }
     }
     public void OnRemoveButtonDown()
     {
@@ -144,13 +159,7 @@ public class ControlManager : MonoBehaviour
             {
                 OnMoveToPlant(false);
             }
-            /*if (targetNode == null)
-            {
-                Debug.Log("NULL");
-                placeType = PlaceType.Null;
-                Destroy(CellOnMove);
-                CellOnMove = null;
-            }*/
+            isSelect = false;
             if (targetNode != null && targetNode.tileType == TileType.Empty && placeType == PlaceType.Selected)
             {
                 
@@ -222,6 +231,7 @@ public class ControlManager : MonoBehaviour
         }
 
         targetNode = LevelManager.Instance.GetNodeByPos(transform.position);
+
        
         if (placeType ==PlaceType.Remove)//如果是铲除
         {
@@ -268,20 +278,17 @@ public class ControlManager : MonoBehaviour
             
 
         }
-        
 
-        /*Ray ray = Camera.main.ScreenPointToRay(transform.position);
-        RaycastHit[] touches = Physics.RaycastAll(ray, Mathf.Infinity);
-        if (touches.Length == 0)
+
+        RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
+        if (hit.collider != null)
         {
-            Debug.Log("null touch");
-            return;
+            //Debug.Log(hit.collider.transform.name);
+            if (hit.collider.tag != "RoleSelectUI")
+            {
+                HideSelectAndCellInfo();
+            }
         }
-
-        var hit = touches[0];
-        for (int i = 0; i < touches.Length; i++)
-        {
-            Debug.Log((touches[i].collider.name));
-        }*/
+       
     }
 }

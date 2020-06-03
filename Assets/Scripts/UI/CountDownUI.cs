@@ -7,12 +7,12 @@ public class CountDownUI : MonoBehaviour
 {
     public TMP_Text _Text;
 
-    public void StartCountDown(int howlong)
+    public void StartCountDown(int howlong,int wave)
     {
         StopAllCoroutines();
-        StartCoroutine(CountDown(howlong));
+        StartCoroutine(CountDown(howlong,wave));
     }
-    public IEnumerator CountDown(int howlong)
+    public IEnumerator CountDown(int howlong,int wave)
     {
         int dur = howlong;
         yield return new WaitForSeconds(1);
@@ -25,8 +25,8 @@ public class CountDownUI : MonoBehaviour
             //Debug.Log(dur);
             yield return new WaitForSeconds(1);
         }
-        _Text.text = "Go!";
-        yield return new WaitForSeconds(1);
+        _Text.text = "第"+wave+"波";
+        yield return new WaitForSeconds(2);
         _Text.text = "";
     }
 }

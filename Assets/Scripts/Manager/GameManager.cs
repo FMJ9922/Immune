@@ -6,7 +6,7 @@ using System;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager Instance { get; private set; } = null;
+    public static GameManager Instance { get; private set; }
     public string playerName;
     private FadeScene fadeScene;
     public int iLevel //当前关卡，如果不是关卡值为0，否则为关卡序号，从1开始
@@ -107,6 +107,7 @@ public class GameManager : MonoBehaviour
         if (GameObject.Find("FadeImage"))
         {
             fadeScene = GameObject.Find("FadeImage").GetComponent<FadeScene>();
+            //Debug.Log("FindFadeImage");
         }
         else
         {
@@ -121,16 +122,19 @@ public class GameManager : MonoBehaviour
         action();
     }
 
-    public  void Set2xTimeScale()//二倍速
+    public void Set2xTimeScale()//二倍速
     {
+        Debug.Log("Time*2");
         Time.timeScale = 2.0f;
     }
-    public  void Set1xTimeScale()//一倍速
+    public void Set1xTimeScale()//一倍速
     {
+        Debug.Log("Time*1");
         Time.timeScale = 1.0f;
     }
-    public  void Set0xTimeScale()//暂停
+    public void Set0xTimeScale()//暂停
     {
+        Debug.Log("Time*0");
         Time.timeScale = 0.0f;
     }
 

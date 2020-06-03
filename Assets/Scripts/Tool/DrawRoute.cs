@@ -16,7 +16,7 @@ public class DrawRoute : MonoBehaviour
 
     public static IEnumerator Drawarrow(Transform parentNode,List<Vector3> vector3s,float duration)
     {
-        //Debug.Log(vector3s.Count);
+        //Debug.Log("???");
         if (vector3s.Count == 0) yield break;
         GameObject[] gameObjects = new GameObject[2*vector3s.Count - 2];
         int i = 0;

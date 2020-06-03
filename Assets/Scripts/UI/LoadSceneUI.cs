@@ -17,11 +17,15 @@ public class LoadSceneUI : MonoBehaviour
     {
         loadImage = transform.Find("Image").GetComponent<Image>();
         //loadImage.fillAmount = progressValue;
-        StartCoroutine("LoadScene");
+       
         fadeScene = transform.Find("FadeImage").GetComponent<FadeScene>();
         progressText = transform.Find("Image").Find("LoadText").GetComponent<TMP_Text>();
+        Invoke("StartLoadLevel",0.5f);
     }
-
+    void StartLoadLevel()
+    {
+        StartCoroutine("LoadScene");
+    }
     IEnumerator LoadScene()//异步加载场景
     {
         async = SceneManager.LoadSceneAsync("LevelScene");
@@ -48,7 +52,7 @@ public class LoadSceneUI : MonoBehaviour
                 }
             }
 
-            yield return null;
+            yield return 0;
         }
 
     }

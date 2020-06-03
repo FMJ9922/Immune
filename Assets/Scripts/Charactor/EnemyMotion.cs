@@ -118,6 +118,7 @@ public class EnemyMotion : MonoBehaviour
             {
                 OnEnemyEscape(ScoreType.EnemyEscapeNum, 1);
                 Debug.Log("有一个敌人逃脱了");
+                LevelManager.Instance.CheckFail();
                 Destroy(this.gameObject);//销毁物体
             }
         }
