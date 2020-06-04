@@ -54,6 +54,7 @@ public class CellData
     public string introduce;
     public string type;
     public string ability;
+    public float[] coefficient;
 }
 
 public class JsonIO : MonoBehaviour
@@ -65,7 +66,7 @@ public class JsonIO : MonoBehaviour
 
     public static void InitLevelData(int index)
     {
-        levelData = gameData.levelDatas[index - 1];
+        levelData = gameData.levelDatas[index-1];
         Debug.Log("Load Level " + index);
     }
 
@@ -122,7 +123,7 @@ public class JsonIO : MonoBehaviour
             cellDatas[i].introduce = (string)dict2["Introduce"];
             cellDatas[i].type = (string)dict2["Type"];
             cellDatas[i].ability = (string)dict2["Ability"];
-
+            cellDatas[i].coefficient = PraseFloat((List<object>)dict2["Coefficient"]);
         }
     }
     public static void InitGameData()
@@ -274,6 +275,19 @@ public class JsonIO : MonoBehaviour
             ret[i] = Convert.ToInt16(intList[i]);
         }
         return ret;
+    }
+    private static float[] PraseFloat(List<object> floatList)
+    {
+        float[] ret = new float[floatList.Count];
+        for (int i = 0; i < floatList.Count; i++)
+        {
+            ret[i] = (float)(double)(floatList[i]);
+        }
+        return ret;
+    }
+    public static float GetCoefficiet(CellType cellType,EnemyType enemyType)
+    {
+        return GetCellData(cellType).coefficient[(int)enemyType];
     }
     /*private static WayPoint[] PraseWayPoint(List<object> waypointlist)
     {

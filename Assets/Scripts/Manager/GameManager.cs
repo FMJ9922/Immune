@@ -26,12 +26,17 @@ public class GameManager : MonoBehaviour
     [SerializeField] private int currentLevel = 0;
     private void Awake()
     {
+
+        JsonIO.InitGameData();//加载游戏数据
+        JsonIO.InitCellData();//加载细胞数据
         if (Instance != null && Instance != this)//检测Instance是否存在且只有一个
         {
             Destroy(this.gameObject);
         }
-        else
+        else if(Instance == null)
         {
+            if(iLevel>0)
+                JsonIO.InitLevelData(iLevel);
             Instance = this;
             Debug.Log("Change Instance");
         }
@@ -46,12 +51,8 @@ public class GameManager : MonoBehaviour
         {
             playerName = "";
         }
-        JsonIO.InitGameData();//加载游戏数据
-        JsonIO.InitCellData();//加载细胞数据
         //Debug.Log(iLevel + " " + currentLevel);
-        if(iLevel!=0)
-            JsonIO.InitLevelData(currentLevel);
-        
+        Set1xTimeScale();
 
     }
 
@@ -72,6 +73,7 @@ public class GameManager : MonoBehaviour
         fadeScene.Fade(1f, 0.5f);
         ClearLevelData();
         iLevel = levelNum;
+        //JsonIO.InitLevelData(iLevel);
         StartCoroutine(DelayToInvokeDo(() => { SceneManager.LoadScene("LoadScene", LoadSceneMode.Single); }, 1f));
         //JsonIO.InitLevelData(ilevel);//更新关卡数据
     }
@@ -89,6 +91,7 @@ public class GameManager : MonoBehaviour
 
     public void LoadLevelScene(int levelNum)
     {
+        Set1xTimeScale();
         LoadScene(levelNum);
     }
 
@@ -135,7 +138,7 @@ public class GameManager : MonoBehaviour
     public void Set0xTimeScale()//暂停
     {
         Debug.Log("Time*0");
-        Time.timeScale = 0.0f;
+        Time.timeScale = 0.1f;
     }
 
 }

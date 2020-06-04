@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SRCellBase : CellBase, ShortRangeAttack
 {
@@ -16,7 +17,9 @@ public class SRCellBase : CellBase, ShortRangeAttack
     public Vector3 revisePosRight = new Vector3(0.22f, 0.4f, 0);
     protected FireMode fireMode;
     protected IEnumerator enumerator;
-
+    public Slider AtkSlider;
+    private float reloadTime;
+    private bool reload;
 
     public override void InitCell()
     {
@@ -34,12 +37,29 @@ public class SRCellBase : CellBase, ShortRangeAttack
         fireMode = FireMode.Nearest;
         enumerator = null;
         cellStatus = CellStatus.Idle;
+        AtkSlider = transform.Find("Canvas").Find("AtkSlider").GetComponent<Slider>();
+        AtkSlider.value = 1;
+        reloadTime = atkDuration;
+        reload = false;
     }
     private void Start()
     {
         InitCell();
     }
-
+    void Update()
+    {
+        AtkSlider.value = Mathf.Clamp(reloadTime/ atkDuration,0,1);
+        if (reloadTime <atkDuration)
+        {
+            reloadTime += Time.deltaTime;
+            reload = true;
+        }
+        else
+        {
+            reload = false;
+        }
+        
+    }
     protected void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Enemy"))
@@ -47,19 +67,31 @@ public class SRCellBase : CellBase, ShortRangeAttack
             if (enemyInRange.Count == 0)
             {
                 CheckLeftOrRight(collision.transform);
+                
             }
             enemyInRange.Add(collision.transform);
             EnemyHealth enemyHealth = collision.transform.GetComponent<EnemyHealth>();
             enemyHealth.cellInRange.Add(this.transform);
             enemyHealth.OnEnemyDie += OnInRangeEnemyDie;
 
-
+            //OnCellStatusChange(CellStatus.Attack);
             if (enumerator == null)
             {
-                enumerator = StartAttackEnemy();
-                StartCoroutine(enumerator);
+
+                if (AtkSlider.value > 0.99f)
+                {
+                    enumerator = StartAttackEnemy();
+                    StartCoroutine(enumerator);
+                }
+                else
+                {
+                    enumerator = StartAttackEnemy((1f - AtkSlider.value) * atkDuration);
+                    StartCoroutine(enumerator);
+                }
+
             }
         }
+        
 
     }
     protected void OnInRangeEnemyDie(Transform enemyTrans)
@@ -72,15 +104,17 @@ public class SRCellBase : CellBase, ShortRangeAttack
     }
     protected void OnTriggerExit2D(Collider2D collision)
     {
-        if(collision.CompareTag("Enemy")){
+        if (collision.CompareTag("Enemy")){
             enemyInRange.Remove(collision.transform);
             EnemyHealth enemyHealth = collision.transform.GetComponent<EnemyHealth>();
             enemyHealth.cellInRange.Remove(this.transform);
             enemyHealth.OnEnemyDie -= OnInRangeEnemyDie;
             if (enemyInRange.Count == 0)
             {
+                
                 if (enumerator != null)
                 {
+                    
                     StopCoroutine(enumerator);
                     enumerator = null;
                 }
@@ -182,10 +216,57 @@ public class SRCellBase : CellBase, ShortRangeAttack
     {
         while (cellStatus!=CellStatus.Die)
         {
-            AttackOneTime();
+            if (enemyInRange.Count == 0)
+            {
+                if (enumerator != null)
+                {
+                    Debug.Log("stopAttack");
+                    StopCoroutine(enumerator);
+                    enumerator = null;
+                }
+            }
+            else
+            {
+                AttackOneTime();
+                reloadTime = 0;
+            }
+            
             yield return new WaitForSeconds(atkDuration);
+            
+            
         }
     }
+    public IEnumerator StartAttackEnemy(float time)
+    {
+        yield return new WaitForSeconds(time);
+        while (cellStatus != CellStatus.Die)
+        {
+            if (enemyInRange.Count == 0)
+            {
+                if (enumerator != null)
+                {
+                    Debug.Log("stop");
+                    StopCoroutine(enumerator);
+                    enumerator = null;
+                }
+            }
+            AttackOneTime();
+            reloadTime = 0;
+            yield return new WaitForSeconds(atkDuration);
+
+
+        }
+    }
+    /*public IEnumerator FillUpAtkSlider()
+    {
+        float time = atkDuration;
+        while (time > 0)
+        {
+            AtkSlider.value = (atkDuration - time) / atkDuration;
+            time -= Time.deltaTime;
+            yield return new WaitForFixedUpdate();
+        }
+    }*/
     public virtual void AttackOneTime()
     {
         targetEnemy = ChooseTargetEnemey();
@@ -194,21 +275,23 @@ public class SRCellBase : CellBase, ShortRangeAttack
             cellStatus = CellStatus.Idle;
             return;
         }
-        cellStatus = CellStatus.Attack;
+        
         Invoke("SetDamageToEnemy", atkTime);
     }
     public void SetDamageToEnemy()
     {
         if (targetEnemy != null)
         {
-            targetEnemy.GetComponent<EnemyHealth>().TakeDamage(atkDamage, false);
+            float coefficient = JsonIO.GetCoefficiet(cellType, targetEnemy.GetComponent<EnemyMotion>().enemyType);
+            targetEnemy.GetComponent<EnemyHealth>().TakeDamage(atkDamage* coefficient, false);
         }
     }
     public void SetDamageToEnemy(AttackType attackType)
     {
         if (targetEnemy != null&&attackType==AttackType.Swallow)
         {
-            targetEnemy.GetComponent<EnemyHealth>().TakeDamage(atkDamage, true);
+            float coefficient = JsonIO.GetCoefficiet(cellType, targetEnemy.GetComponent<EnemyMotion>().enemyType);
+            targetEnemy.GetComponent<EnemyHealth>().TakeDamage(atkDamage* coefficient, true);
         }
     }
     public void OnCellStatusChange(CellStatus cellStatus)

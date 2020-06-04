@@ -417,11 +417,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fa2c519770fa8c4d87591dc4421d66e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 3
+  originSpeed: 0
   startPos: {x: 0, y: 0}
   endPos: {x: 0, y: 0}
   FindPathType: 0
   enemyStatus: 0
+  enemyType: 0
 --- !u!114 &4491490845861707162
 MonoBehaviour:
   m_ObjectHideFlags: 0

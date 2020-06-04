@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class LRCellBase :  CellBase,LongRangeAttack
 {
@@ -16,6 +17,7 @@ public class LRCellBase :  CellBase,LongRangeAttack
     public Vector3 revisePosRight = new Vector3(0f, 0f, 0f);
     protected FireMode fireMode;
     protected IEnumerator enumerator;
+    public Slider AtkSlider;
 
     public override void InitCell() 
     {
@@ -54,8 +56,18 @@ public class LRCellBase :  CellBase,LongRangeAttack
 
             if (enumerator == null)
             {
-                enumerator = StartAttackEnemy();
-                StartCoroutine(enumerator);
+
+                if (AtkSlider.value > 0.99f)
+                {
+                    enumerator = StartAttackEnemy();
+                    StartCoroutine(enumerator);
+                }
+                else
+                {
+                    enumerator = StartAttackEnemy((1f - AtkSlider.value) * atkDuration);
+                    StartCoroutine(enumerator);
+                }
+
             }
         }
 
@@ -175,11 +187,55 @@ public class LRCellBase :  CellBase,LongRangeAttack
     {
         while (true)
         {
+            if (enemyInRange.Count == 0)
+            {
+                if (enumerator != null)
+                {
+                    Debug.Log("stop");
+                    StopCoroutine(enumerator);
+                    enumerator = null;
+                }
+            }
             AttackOneTime();
+            StartCoroutine(FillUpAtkSlider());
             yield return new WaitForSeconds(atkDuration);
         }
     }
+    public IEnumerator StartAttackEnemy(float time)
+    {
+        yield return new WaitForSeconds(time);
+        while (cellStatus != CellStatus.Die)
+        {
+            if (enemyInRange.Count == 0)
+            {
+                if (enumerator != null)
+                {
+                    Debug.Log("stopAttack");
+                    StopCoroutine(enumerator);
+                    enumerator = null;
+                }
+            }
+            else
+            {
+                AttackOneTime();
+                StartCoroutine(FillUpAtkSlider());
+            }
+            
+            yield return new WaitForSeconds(atkDuration);
 
+
+        }
+    }
+    public IEnumerator FillUpAtkSlider()
+    {
+        float time = atkDuration;
+        while (time > 0)
+        {
+            AtkSlider.value = (atkDuration - time) / atkDuration;
+            time -= Time.deltaTime;
+            yield return new WaitForFixedUpdate();
+        }
+    }
     public Transform ChooseTargetEnemeys()
     {
         if (enemyInRange.Count == 0)

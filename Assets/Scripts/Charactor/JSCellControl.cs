@@ -21,7 +21,7 @@ public class JSCellControl : SRCellBase
             cellStatus = CellStatus.Idle;
             return;
         }
-        if (targetEnemy.GetComponent<EnemyHealth>().Hp <= atkDamage)
+        if (targetEnemy.GetComponent<EnemyHealth>().Hp <= atkDamage* JsonIO.GetCoefficiet(cellType, targetEnemy.GetComponent<EnemyMotion>().enemyType))
         {
             cellStatus = CellStatus.SpecialAbility;
             targetEnemy.GetComponent<EnemyMotion>().TargetPoint = eatTrans.position;

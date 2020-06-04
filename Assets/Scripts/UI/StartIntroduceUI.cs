@@ -8,8 +8,12 @@ public class StartIntroduceUI : MonoBehaviour
     public TMP_Text levelName;
     public TMP_Text content;
     public Animation animation;
-   
 
+
+    private void Start()
+    {
+        InitText();
+    }
     public void InitText()
     {
         levelName.text = JsonIO.GetLevelName();

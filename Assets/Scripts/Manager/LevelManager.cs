@@ -241,7 +241,8 @@ public class LevelManager : MonoBehaviour
                 enemy.GetComponent<EnemyMotion>().FindPathType = (FindPathType)waves[i].findPathType;
                 enemy.GetComponent<EnemyMotion>().originSpeed = waves[i].speed;
                 enemy.GetComponentInChildren<EnemyAnimator>().enemyType = (EnemyType)waves[i].enemyType;
-
+                enemy.GetComponent<EnemyHealth>().InitHealth *= 1 + ((float)i / 10); 
+                enemy.SetActive(true);
                 /*enemy.GetComponent<EnemyMotion>().draw = j==0?true:false;*/
 
                 yield return new WaitForSeconds(waves[i].initDuration);

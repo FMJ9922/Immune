@@ -9,7 +9,8 @@
 			"AtkDuration":3.0,
 			"Introduce":"有效杀伤多种病原体，寿命较短",
 			"Type":"近战",
-			"Ability":"吞噬"
+			"Ability":"吞噬",
+			"Coefficient":[1.2,1.0,0.2,0.5,0.5,1.0,0.8],
 		},
 		{
 			"Name":"嗜酸性粒细胞",
@@ -20,7 +21,8 @@
 			"AtkDuration":5.0,
 			"Introduce":"释放杀伤物质造成范围伤害",
 			"Type":"远程",
-			"Ability":"减速"
+			"Ability":"减速",
+			"Coefficient":[1.0,2.0,0.8,1.0,2.0,1.0,1.0],
 
 		},
 		{
@@ -32,19 +34,21 @@
 			"AtkDuration":6.0,
 			"Introduce":"加快部署，鉴别不明病原体",
 			"Type":"辅助",
-			"Ability":"鉴别,生产"
+			"Ability":"鉴别,生产",
+			"Coefficient":[0.0,0.0,0.0,0.0,0.0,0.0,0.0],
 
 		},
 		{
 			"Name":"巨噬细胞",
 			"InitCost":18.0,
 			"AtkRange":1.0,
-			"AtkDamage":100.0,
+			"AtkDamage":10.0,
 			"AtkTime":0.5,
-			"AtkDuration":1.0,
+			"AtkDuration":2.0,
 			"Introduce":"吞噬病原体，寿命较长，低效提呈抗原",
 			"Type":"近战",
-			"Ability":"吞噬,提呈"
+			"Ability":"吞噬,提呈",
+			"Coefficient":[2.0,0.2,0.5,0.3,2.0,2.0,2.0],
 		},
 		{
 			"Name":"树突细胞",
@@ -55,7 +59,8 @@
 			"AtkDuration":1.0,
 			"Introduce":"高效提呈抗原",
 			"Type":"辅助",
-			"Ability":"提呈"
+			"Ability":"提呈",
+			"Coefficient":[0.0,0.0,0.0,0.0,0.0,0.0,0.0],
 		},
 		{
 			"Name":"NK细胞",
@@ -66,7 +71,8 @@
 			"AtkDuration":5.0,
 			"Introduce":"能杀伤恶性细胞，且不需要抗原刺激",
 			"Type":"远程",
-			"Ability":"裂解"
+			"Ability":"裂解",
+			"Coefficient":[0.8,1.5,1.2,1.5,1.0,1.0,1.0],
 
 		},
 		{
@@ -78,7 +84,8 @@
 			"AtkDuration":1.0,
 			"Introduce":"分化细胞",
 			"Type":"辅助",
-			"Ability":"分化"
+			"Ability":"分化",
+			"Coefficient":[0.0,0.0,0.0,0.0,0.0,0.0,0.0],
 		},
 		{
 			"Name":"效应T细胞",
@@ -89,7 +96,8 @@
 			"AtkDuration":3.0,
 			"Introduce":"高效杀伤恶性细胞",
 			"Type":"近战",
-			"Ability":"裂解"
+			"Ability":"裂解",
+			"Coefficient":[0.5,0.5,2.0,2.0,1.0,1.0,1.0],
 		},
 		{
 			"Name":"辅助T细胞",
@@ -100,7 +108,8 @@
 			"AtkDuration":1.0,
 			"Introduce":"接受抗原，生产淋巴因子",
 			"Type":"辅助",
-			"Ability":"提呈"
+			"Ability":"提呈",
+			"Coefficient":[0.0,0.0,0.0,0.0,0.0,0.0,0.0],
 		},
 		{
 			"Name":"抑制性T细胞",
@@ -111,7 +120,8 @@
 			"AtkDuration":1.0,
 			"Introduce":"123465781245",
 			"Type":"辅助",
-			"Ability":""
+			"Ability":"抑制",
+			"Coefficient":[0.0,0.0,0.0,0.0,0.0,0.0,0.0],
 		},
 		{
 			"Name":"记忆T细胞",
@@ -122,7 +132,8 @@
 			"AtkDuration":1.0,
 			"Introduce":"",
 			"Type":"辅助",
-			"Ability":""
+			"Ability":"记忆",
+			"Coefficient":[0.0,0.0,0.0,0.0,0.0,0.0,0.0],
 		},
 		{
 			"Name":"B淋巴细胞",
@@ -133,7 +144,8 @@
 			"AtkDuration":1.0,
 			"Introduce":"接受淋巴因子后可分化为浆细胞和记忆B细胞",
 			"Type":"辅助",
-			"Ability":"分化"
+			"Ability":"分化",
+			"Coefficient":[0.0,0.0,0.0,0.0,0.0,0.0,0.0],
 		},
 		{
 			"Name":"记忆B细胞",
@@ -144,7 +156,8 @@
 			"AtkDuration":1.0,
 			"Introduce":"识别抗原，分化为浆细胞",
 			"Type":"辅助",
-			"Ability":"分化，记忆"
+			"Ability":"分化，记忆",
+			"Coefficient":[0.0,0.0,0.0,0.0,0.0,0.0,0.0],
 		},
 		{
 			"Name":"浆细胞",
@@ -155,8 +168,9 @@
 			"AtkDuration":1.0,
 			"Introduce":"分泌大量抗体，使范围内病原体减速",
 			"Type":"远程",
-			"Ability":"减速
-"
+			"Ability":"减速",
+			"Coefficient":[2.0,0.2,1.0,1.0,2.0,2.0,2.0],
+
 		},
 	]
 }

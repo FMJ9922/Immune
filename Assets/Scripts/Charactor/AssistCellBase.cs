@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class AssistCellBase : CellBase,Produce
 {
@@ -14,6 +15,10 @@ public class AssistCellBase : CellBase,Produce
     public Vector3 revisePosRight;
     protected IEnumerator enumerator;
     protected CellAnimator cellAnimator;
+
+    public Slider ProduceSlider;
+    private float reloadTime;
+    private bool reload;
 
     public override void InitCell()
     {
@@ -29,10 +34,30 @@ public class AssistCellBase : CellBase,Produce
         cellAnimator.OnStatusChange += OnCellStatusChange;
         enumerator = null;
         cellStatus = CellStatus.Idle;
+        ProduceSlider = transform.Find("Canvas").Find("AtkSlider").GetComponent<Slider>();
+        ProduceSlider.value = 1;
+        reloadTime = atkDuration;
+        reload = false;
     }
     void Start()
     {
         InitCell();
+    }
+    void Update()
+    {
+        ProduceSlider.value = Mathf.Clamp(reloadTime / atkDuration, 0, 1);
+        if (reloadTime < atkDuration&&cellStatus ==CellStatus.Produce)
+        {
+            reloadTime += Time.deltaTime;
+            reload = true;
+        }
+        else if(reloadTime>= atkDuration && cellStatus == CellStatus.Produce)
+        {
+            Produce();
+            reloadTime = 0;
+            reload = false;
+        }
+
     }
     protected void CheckLeftOrRight(Transform targetTransfrom)
     {
@@ -68,13 +93,13 @@ public class AssistCellBase : CellBase,Produce
             enemyHealth.cellInRange.Add(this.transform);
             enemyHealth.OnEnemyDie += OnInRangeEnemyDie;
 
-
-            OnCellStatusChange(CellStatus.Produce);
-            if (enumerator == null)
+            cellAnimator.reverse = false;
+            OnCellStatusChange(CellStatus.Change);
+            /*if (enumerator == null)
             {
                 enumerator = StartProduce();
                 StartCoroutine(enumerator);
-            }
+            }*/
         }
 
     }
@@ -95,6 +120,11 @@ public class AssistCellBase : CellBase,Produce
         {
             enemyInRange.Remove(enemyTrans);
         }
+        /*if(enemyInRange.Count == 0)
+        {
+            OnCellStatusChange(CellStatus.Idle);
+        }*/
+        
     }
     protected virtual void OnTriggerExit2D(Collider2D collision)
     {
@@ -106,12 +136,13 @@ public class AssistCellBase : CellBase,Produce
             enemyHealth.OnEnemyDie -= OnInRangeEnemyDie;
             if (enemyInRange.Count == 0)
             {
-                OnCellStatusChange(CellStatus.Idle);
-                if (enumerator != null)
+                OnCellStatusChange(CellStatus.Change);
+                cellAnimator.reverse = true;
+                /*if (enumerator != null)
                 {
                     StopCoroutine(enumerator);
                     enumerator = null;
-                }
+                }*/
             }
         }
     }

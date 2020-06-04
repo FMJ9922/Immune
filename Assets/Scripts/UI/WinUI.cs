@@ -15,6 +15,7 @@ public class WinUI : MonoBehaviour
 
     public void InitWinUI(ScoreRequest[] scoreRequests)
     {
+        levelName.text = JsonIO.GetLevelName();
         int achieveNum = 0;
         for(int i = 0; i < scoreRequests.Length; i++)
         {

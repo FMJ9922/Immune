@@ -14,11 +14,13 @@ public class EnemyMotion : MonoBehaviour
     private AStarAgent agent;
     public FindPathType FindPathType;
     public EnemyStatus enemyStatus;
+    public EnemyType enemyType;
     public Vector3 TargetPoint { private get; set; }
     private IEnumerator SlowDown;
     /*public bool draw;*/
     public delegate void EnemyEscape(ScoreType scoreType, int deltaNum);
     public event EnemyEscape OnEnemyEscape;
+    
 
     void Start()
     {

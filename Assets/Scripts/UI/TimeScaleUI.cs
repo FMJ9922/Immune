@@ -13,7 +13,7 @@ public class TimeScaleUI : MonoBehaviour
     {
         GetComponent<Button>().onClick.AddListener(() => { SetTimeScale(); });
     }
-    public void SetTimeScale()
+    private void SetTimeScale()
     {
         if (Time.timeScale == 1)
         {
@@ -26,5 +26,12 @@ public class TimeScaleUI : MonoBehaviour
             GetComponent<Image>().overrideSprite = scale1;
         }
         
+    }
+    public void SetTime1xScale()
+    {
+            GameManager.Instance.Set1xTimeScale();
+            GetComponent<Image>().overrideSprite = scale1;
+        
+
     }
 }

@@ -40,7 +40,8 @@ public class SSCellControl : LRCellBase
         Vector3 control = (start + end)/2 + new Vector3(0, 0.5f, 0);
         bomb.SetActive(true);
         bomb.transform.position = start;
-        bomb.GetComponent<BombMotion>().damage = atkDamage;
+        float coefficient = JsonIO.GetCoefficiet(cellType, targetEnemy.GetComponent<EnemyMotion>().enemyType);
+        bomb.GetComponent<BombMotion>().damage = atkDamage*coefficient;
         bomb.GetComponent<BombMotion>().wayPoints =
             MyTool.GetBeizerList(start, control, end, 20);
 

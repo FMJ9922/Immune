@@ -44,7 +44,13 @@ public enum CellType
 
 public enum EnemyType
 {
-    TH = 0//天花病毒
+    BD = 0,//病毒
+    JSC = 1,//寄生虫
+    XJ = 2,//细菌
+    SZ = 3,//宿主细胞
+    LXT = 4,//螺旋体
+    ZYT = 5,//支原体
+    GMY = 6,//过敏原
 }
 public enum ActorType
 {
