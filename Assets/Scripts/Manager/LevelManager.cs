@@ -113,7 +113,7 @@ public class LevelManager : MonoBehaviour
             FailCanvas.SetActive(true);
             FailCanvas.GetComponent<StartIntroduceUI>().content.text = str;
         }
-        GameManager.Instance.Set0xTimeScale();
+        //GameManager.Instance.Set0xTimeScale();
 
     }
     public void OnScoreEvent(ScoreType scoreType, int deltaNum)
@@ -208,7 +208,7 @@ public class LevelManager : MonoBehaviour
         int x = Mathf.FloorToInt(pos.x);
         int y = Mathf.FloorToInt(pos.y);
         if (x <= 0 && y >= 0) return AllNodeGroup[0, y];
-        if (x >= 15 && y <= 8) return AllNodeGroup[15, y];
+        if (x >= 15 && y <= 8&&y>=0) return AllNodeGroup[15, y];
         if (y >= 8 && x >= 0&&x<=15) return AllNodeGroup[x, 8];
         if (y <= 0 && x <= 15) return AllNodeGroup[x, 0];
         if (x >= 0 && y >= 0 && y <= 8 && x <= 15) return AllNodeGroup[x, y];

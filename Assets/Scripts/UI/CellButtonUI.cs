@@ -13,7 +13,7 @@ public class CellButtonUI : MonoBehaviour
     private void Start()
     {
         InitButtonSlot();
-        GetComponent<VerticalLayoutGroup>().spacing = -460 + 78F * num;
+        GetComponent<VerticalLayoutGroup>().spacing = 7.6f;
     }
     private void InitButtonSlot()
     {

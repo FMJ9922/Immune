@@ -220,7 +220,7 @@ public class SRCellBase : CellBase, ShortRangeAttack
             {
                 if (enumerator != null)
                 {
-                    Debug.Log("stopAttack");
+                    //Debug.Log("stopAttack");
                     StopCoroutine(enumerator);
                     enumerator = null;
                 }
