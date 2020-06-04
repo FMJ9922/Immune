@@ -162,7 +162,7 @@
 		{
 			"Name":"浆细胞",
 			"InitCost":5.0,
-			"AtkRange":2.0,
+			"AtkRange":2.5,
 			"AtkDamage":50.0,
 			"AtkTime":0.5,
 			"AtkDuration":1.0,

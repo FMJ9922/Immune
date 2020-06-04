@@ -95,6 +95,7 @@ public enum FireMode
     First = 0,
     Weakest = 1,
     Nearest = 2,
+    strongest = 3,
 }
 
 public enum AttackType

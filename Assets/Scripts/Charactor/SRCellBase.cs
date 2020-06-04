@@ -223,6 +223,7 @@ public class SRCellBase : CellBase, ShortRangeAttack
                     //Debug.Log("stopAttack");
                     StopCoroutine(enumerator);
                     enumerator = null;
+                    break;
                 }
             }
             else
