@@ -55,12 +55,13 @@ public class Information : MonoBehaviour
 
     private void InitData()
     {
-        //GameObject image = Instantiate(ImagePrefab, transform);
+      //  GameObject image = Instantiate(ImagePrefab, transform);
         string path = "";
         if ((int)actorType < 15)
         {
             path = "Cell";
-            //image.GetComponent<Image>().sprite = null;
+           
+            //image.GetComponent<Image>().sprite = Resources.Load<Sprite>(path + "/" + ((int)actorType).ToString() + actorType.ToString() + "/" + actorType.ToString()); ;
             ImageCell.GetComponent<Image>().sprite = Resources.Load<Sprite>(path + "/" + ((int)actorType).ToString() + actorType.ToString() + "/" + actorType.ToString());
             
             Name.text = JsonIO.GetCellData((CellType)(int)actorType).name.ToString();
