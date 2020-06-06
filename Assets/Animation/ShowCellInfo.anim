@@ -22,26 +22,26 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 317.5
-        inSlope: -576.7901
-        outSlope: -576.7901
+        value: 235
+        inSlope: -2029.0337
+        outSlope: -2029.0337
         tangentMode: 0
         weightedMode: 0
         inWeight: 0.33333334
-        outWeight: 0.10422535
+        outWeight: 0.08932279
       - serializedVersion: 3
-        time: 0.5
-        value: 215.77
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
+        time: 1
+        value: -500
+        inSlope: -147.35567
+        outSlope: -147.35567
+        tangentMode: 0
         weightedMode: 0
-        inWeight: 0.33333334
+        inWeight: 0.1894784
         outWeight: 0.33333334
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    attribute: m_AnchoredPosition.y
+    attribute: m_AnchoredPosition.x
     path: 
     classID: 224
     script: {fileID: 0}
@@ -59,7 +59,7 @@ AnimationClip:
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.5
+    m_StopTime: 1
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -80,26 +80,26 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 317.5
-        inSlope: -576.7901
-        outSlope: -576.7901
+        value: 235
+        inSlope: -2029.0337
+        outSlope: -2029.0337
         tangentMode: 0
         weightedMode: 0
         inWeight: 0.33333334
-        outWeight: 0.10422535
+        outWeight: 0.08932279
       - serializedVersion: 3
-        time: 0.5
-        value: 215.77
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
+        time: 1
+        value: -500
+        inSlope: -147.35567
+        outSlope: -147.35567
+        tangentMode: 0
         weightedMode: 0
-        inWeight: 0.33333334
+        inWeight: 0.1894784
         outWeight: 0.33333334
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    attribute: m_AnchoredPosition.y
+    attribute: m_AnchoredPosition.x
     path: 
     classID: 224
     script: {fileID: 0}

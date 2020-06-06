@@ -137,4 +137,16 @@ public class MyTool : MonoBehaviour
     {
         //TODO
     }
+    public static IEnumerator DoMoveY(float y,Transform trans)
+    {
+        float speed = 0.1f;
+        while (!Mathf.Approximately(y, trans.position.y))
+        {
+            Debug.Log(trans.position.y);
+            float deltaY = Mathf.SmoothDamp(trans.position.y, y, ref speed, 0.1f);
+            trans.position += new Vector3(0, deltaY, 0);
+            yield return new WaitForFixedUpdate();
+        }
+        
+    }
 }

@@ -27,7 +27,7 @@ public class CellButtonInfo : MonoBehaviour
     }
     public void OnClick()
     {
-        RoleSelectInfo.Instance.InvalidateInfo(cellType);
-        ControlManager.Instance.OnPlantButtonClick(transform);
+        
+        ControlManager.Instance.OnPlantButtonClick(transform,cellType);
     }
 }

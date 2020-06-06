@@ -29,6 +29,7 @@ public class CameraMoveAndZoom : MonoBehaviour
     {
         transform.GetComponentInChildren<CanvasScaler>().scaleFactor = (float)UnityEngine.Screen.width / 192;
         ControlManager.OnMoveToPlant += OnMovingLock;
+        Camera.main.transform.position = new Vector3(8* ((float)Screen.width / Screen.height)/(16f/9f), 4.5f, 0);
     }
 
     void OnMovingLock(bool doing)
@@ -60,11 +61,11 @@ public class CameraMoveAndZoom : MonoBehaviour
                 OnCameraZoom(GetComponent<Camera>().orthographicSize);
             }
 
-            /*maxXAndY = new Vector2(16, 9f) - (GetComponent<Camera>().orthographicSize / 4.5f) * new Vector2(8, 4.5f);
-            minXAndY = new Vector2(0, 0f) + (GetComponent<Camera>().orthographicSize / 4.5f) * new Vector2(8, 4.5f);*/
+            maxXAndY = new Vector2(16*Screen.width/1920, 9f) - (GetComponent<Camera>().orthographicSize / 4.5f) * new Vector2(8, 4.5f);
+            minXAndY = new Vector2(0, 0f) + (GetComponent<Camera>().orthographicSize / 4.5f) * new Vector2(8, 4.5f);
 
-            maxXAndY = (new Vector2(16, 9f) - (GetComponent<Camera>().orthographicSize / 5.2f) * new Vector2(8, 4.5f))+ GetComponent<Camera>().orthographicSize/5.2f*new Vector2(1.244f,0.7f);
-            minXAndY = (new Vector2(0, 0f) + (GetComponent<Camera>().orthographicSize / 5.2f) * new Vector2(8, 4.5f)) + GetComponent<Camera>().orthographicSize / 5.2f * new Vector2(1.244f, 0.7f);
+            //maxXAndY = (new Vector2(16, 9f) - (GetComponent<Camera>().orthographicSize / 5.2f) * new Vector2(8, 4.5f))+ GetComponent<Camera>().orthographicSize/5.2f*new Vector2(1.244f,0.7f);
+            //minXAndY = (new Vector2(0, 0f) + (GetComponent<Camera>().orthographicSize / 5.2f) * new Vector2(8, 4.5f)) + GetComponent<Camera>().orthographicSize / 5.2f * new Vector2(1.244f, 0.7f);
 
             float x = Input.GetAxis("Horizontal");
             float y = Input.GetAxis("Vertical");
@@ -89,8 +90,10 @@ public class CameraMoveAndZoom : MonoBehaviour
             {
                 return;
             }
-            maxXAndY = (new Vector2(16, 9f) - (GetComponent<Camera>().orthographicSize / 5.2f) * new Vector2(8, 4.5f))+ GetComponent<Camera>().orthographicSize/5.2f*new Vector2(1.244f,0.7f);
-            minXAndY = (new Vector2(0, 0f) + (GetComponent<Camera>().orthographicSize / 5.2f) * new Vector2(8, 4.5f)) + GetComponent<Camera>().orthographicSize / 5.2f * new Vector2(1.244f, 0.7f);
+            maxXAndY = new Vector2(16*Screen.width/1920, 9f) - (GetComponent<Camera>().orthographicSize / 4.5f) * new Vector2(8*Screen.width/1920, 4.5f);
+            minXAndY = new Vector2(0, 0f) + (GetComponent<Camera>().orthographicSize / 4.5f) * new Vector2(8*Screen.width/1920, 4.5f);
+            //maxXAndY = (new Vector2(16, 9f) - (GetComponent<Camera>().orthographicSize / 5.2f) * new Vector2(8, 4.5f))+ GetComponent<Camera>().orthographicSize/5.2f*new Vector2(1.244f,0.7f);
+            //minXAndY = (new Vector2(0, 0f) + (GetComponent<Camera>().orthographicSize / 5.2f) * new Vector2(8, 4.5f)) + GetComponent<Camera>().orthographicSize / 5.2f * new Vector2(1.244f, 0.7f);
             Camera camera = Camera.main;
 
             // If there are two touches on the device...
@@ -125,7 +128,7 @@ public class CameraMoveAndZoom : MonoBehaviour
                     camera.orthographicSize = Mathf.Min(camera.orthographicSize, MaxOrthograhicSize);
                     float targetX = transform.position.x;
                     float targetY = transform.position.y;
-                    maxXAndY = new Vector2(16, 9f) - (GetComponent<Camera>().orthographicSize / 4.5f) * new Vector2(8, 4.5f);
+                    maxXAndY = new Vector2(16*Screen.width/1920, 9f) - (GetComponent<Camera>().orthographicSize / 4.5f) * new Vector2(8, 4.5f);
                     minXAndY = new Vector2(0, 0f) + (GetComponent<Camera>().orthographicSize / 4.5f) * new Vector2(8, 4.5f);
                     targetX = Mathf.Clamp(targetX, minXAndY.x, maxXAndY.x);
                     targetY = Mathf.Clamp(targetY, minXAndY.y, maxXAndY.y);

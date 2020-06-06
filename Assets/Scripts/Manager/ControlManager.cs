@@ -61,7 +61,7 @@ public class ControlManager : MonoBehaviour
     }
     public void OnPlantButtonSelect(CellType cellType)
     {
-        if (placeType == PlaceType.Null && isSelect&&transform.position.x<16.3f)
+        if (placeType == PlaceType.Null && isSelect)
         {
 
             //Debug.Log(transform.position.x);
@@ -75,17 +75,31 @@ public class ControlManager : MonoBehaviour
             this.cellType = cellType;
             isSelect = false;
             CellOnMove.GetComponentInChildren<RangePicManage>().ChangeLocalScale(JsonIO.GetCellData(cellType).atkRange*3.3f);
+
+            
+            if (RightCanvasShowAndHide.Instance.regular)
+            {
+                RightCanvasShowAndHide.Instance.HideCanvas();
+            }
         }
 
     }
-    public void OnPlantButtonClick(Transform trans)
+    public void OnPlantButtonClick(Transform trans,CellType cellType)
     {
         if (!SelectGlow.gameObject.activeInHierarchy)
         {
             SelectGlow.gameObject.SetActive(true);
+            RoleSelectInfo.Instance.transform.position = trans.position;
             RoleSelectInfo.Instance.transform.GetComponent<Animation>().Play("ShowCellInfo");
-
+            RoleSelectInfo.Instance.InvalidateInfo(cellType);
+            Debug.Log("1");
         }
+        else
+        {
+            RoleSelectInfo.Instance.ChangeInstance(trans,cellType);
+            Debug.Log("2");
+        }
+        
         SelectGlow.SetParent(trans.parent);
         SelectGlow.localPosition = new Vector3(2, 2.6F, 0);
        
@@ -160,6 +174,7 @@ public class ControlManager : MonoBehaviour
                 OnMoveToPlant(false);
             }
             isSelect = false;
+            
             if (targetNode != null && targetNode.tileType == TileType.Empty && placeType == PlaceType.Selected)
             {
                 
@@ -189,6 +204,11 @@ public class ControlManager : MonoBehaviour
                     targetNode.tileType = TileType.Empty;
                     PathAvaliable = true;
                     //To Do 放置错误：路径无效音效
+                }
+
+                if (RightCanvasShowAndHide.Instance.regular)
+                {
+                    RightCanvasShowAndHide.Instance.ShowCanvas();
                 }
             }
 
