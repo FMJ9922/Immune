@@ -165,7 +165,7 @@
 			"AtkRange":2.5,
 			"AtkDamage":50.0,
 			"AtkTime":0.5,
-			"AtkDuration":1.0,
+			"AtkDuration":3.0,
 			"Introduce":"分泌大量抗体，使范围内病原体减速",
 			"Type":"远程",
 			"Ability":"减速",

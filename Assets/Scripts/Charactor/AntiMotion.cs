@@ -21,9 +21,10 @@ public class AntiMotion : MonoBehaviour
         spriteRenderer = transform.GetComponent<SpriteRenderer>();
       //  explosion = false;
         enemyInRange = new ArrayList();
+        //enemyHealth.OnEnemyDie += OnTargetEnemyDie;
     }
 
-        protected void OnTriggerEnter2D(Collider2D collision)
+    protected void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Enemy"))
         {
@@ -31,14 +32,14 @@ public class AntiMotion : MonoBehaviour
             //collision.transform.localScale *= 2;
             EnemyHealth enemyHealth = collision.transform.GetComponent<EnemyHealth>();
             enemyHealth.cellInRange.Add(this.transform);
-            enemyHealth.OnEnemyDie += OnInRangeEnemyDie;
+            
 
         }
 
     }
-    protected void OnInRangeEnemyDie(Transform enemyTrans)
+    protected void OnTargetEnemyDie(Transform enemyTrans)
     {
-        enemyTrans.GetComponent<EnemyHealth>().OnEnemyDie -= OnInRangeEnemyDie;
+        //enemyTrans.GetComponent<EnemyHealth>().OnEnemyDie -= OnInRangeEnemyDie;
         if (enemyInRange.Contains(enemyTrans))
         {
             enemyInRange.Remove(enemyTrans);
@@ -52,7 +53,7 @@ public class AntiMotion : MonoBehaviour
             enemyInRange.Remove(collision.transform);
             EnemyHealth enemyHealth = collision.transform.GetComponent<EnemyHealth>();
             enemyHealth.cellInRange.Remove(this.transform);
-            enemyHealth.OnEnemyDie -= OnInRangeEnemyDie;
+            //enemyHealth.OnEnemyDie -= OnInRangeEnemyDie;
         }
     }
     public void PlayAnimation(Sprite[] sprites, int deltaFrame, PlayAnimaType type)

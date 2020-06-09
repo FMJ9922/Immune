@@ -32,7 +32,7 @@ public class LevelManager : MonoBehaviour
     public GameObject WinCanvas;
     public GameObject FailCanvas;
 
-    
+    public MapManager mapManager;
 
     void Awake()
     {
@@ -54,7 +54,7 @@ public class LevelManager : MonoBehaviour
         EnemyGroup = transform.Find("EnemyGroup").gameObject;
         Map = transform.Find("Map").gameObject;
         GenerateTileNode();
-
+        mapManager.ShowBg(GameManager.Instance.iLevel);
         DeployPoints = 10;
         finishCreate = false;
         StartCanvas.SetActive(true);
@@ -64,6 +64,8 @@ public class LevelManager : MonoBehaviour
         PauseBgUI.Instance.ShowWhiteBg();
         GameManager.Instance.Set1xTimeScale();
         Debug.Log(GetLevelTime());
+
+
     }
     public void StartLevel()
     {
@@ -87,6 +89,7 @@ public class LevelManager : MonoBehaviour
         }
         else
         {
+            LoggerManager.Instance.ShowOneLog("点数不足！无法放置");
             return false;
         }
     }
@@ -138,8 +141,9 @@ public class LevelManager : MonoBehaviour
                         }
                     case ScoreType.NormalCellSurviveNum:
                         {
-                            int num = levelRequest[i].actualNum;
-                            levelRequest[i].actualNum = num < deltaNum ? deltaNum : num;
+                            levelRequest[i].actualNum += deltaNum;
+                            //int num = levelRequest[i].actualNum;
+                            //levelRequest[i].actualNum = num < deltaNum ? deltaNum : num;
                             break;
                         } 
                 }

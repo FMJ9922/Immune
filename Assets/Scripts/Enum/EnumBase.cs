@@ -108,7 +108,13 @@ public enum ScoreType
 {
     EnemyEscapeNum = 0,//敌人的逃离数量 小于
     CellDeployNum = 1,//细胞的放置数量 小于
-    EnemyRouteLength = 2,//敌人行进距离 大于
-    NormalCellSurviveNum = 3,//健康细胞存活数量 大于
+    EnemyRouteLength = 3,//敌人行进距离 大于
+    NormalCellSurviveNum = 2,//健康细胞存活数量 小于
 
+}
+public enum SceneMap
+{
+    JD=0,//结缔组织
+    LB=1,//淋巴
+    XG=2,//血管
 }

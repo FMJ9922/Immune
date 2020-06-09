@@ -129,12 +129,12 @@ public class ControlManager : MonoBehaviour
         {
             if (targetNode == null)
             {
-                Debug.Log("null");
+                //LoggerManager.Instance.ShowOneLog("此处无法放置！");
                 return false;
             }
             else if (targetNode == LevelManager.Instance.GetNodeByPos(new Vector2(vectors[i].x, vectors[i].y)))
             {
-                //Debug.Log("atInitPos");
+                LoggerManager.Instance.ShowOneLog("此处无法放置！");
                 return false;
             }
             else
@@ -144,6 +144,7 @@ public class ControlManager : MonoBehaviour
 
                 if (!issuccess)
                 {
+                    LoggerManager.Instance.ShowOneLog("此处无法放置！");
                     isAvaliable = false;
                 }
             }
@@ -152,7 +153,7 @@ public class ControlManager : MonoBehaviour
         }
         return isAvaliable;
     }
-    void Update()
+    void FixedUpdate()
     {
         /*if (PauseHandler.IsGamePause)
         {
@@ -174,7 +175,12 @@ public class ControlManager : MonoBehaviour
                 OnMoveToPlant(false);
             }
             isSelect = false;
-            
+
+            if (RightCanvasShowAndHide.Instance.regular&& placeType == PlaceType.Selected)
+            {
+                RightCanvasShowAndHide.Instance.ShowCanvas();
+            }
+
             if (targetNode != null && targetNode.tileType == TileType.Empty && placeType == PlaceType.Selected)
             {
                 
@@ -201,15 +207,16 @@ public class ControlManager : MonoBehaviour
                 }
                 else
                 {
+                    if (!PathAvaliable)
+                    {
+                        LoggerManager.Instance.ShowOneLog("此处无法放置！");
+                    }
                     targetNode.tileType = TileType.Empty;
                     PathAvaliable = true;
                     //To Do 放置错误：路径无效音效
                 }
 
-                if (RightCanvasShowAndHide.Instance.regular)
-                {
-                    RightCanvasShowAndHide.Instance.ShowCanvas();
-                }
+                
             }
 
             if (placeType == PlaceType.Selected)
@@ -258,9 +265,13 @@ public class ControlManager : MonoBehaviour
             placeType = PlaceType.Null;
             if (targetNode.tileType == TileType.Occupy)
             {
+                string name = targetNode.transform.GetChild(0).gameObject.name;
                 Destroy(targetNode.transform.GetChild(0).gameObject);
+
                 targetNode.tileType = TileType.Empty;
+                LoggerManager.Instance.ShowOneLog("已铲除"+ name);
             }
+            ShovelManager.Instance.OnCancelClose();
         }
         else if (targetNode == lastNode || targetNode==null)//如果目标结点和上帧结点相同或为空
         {
