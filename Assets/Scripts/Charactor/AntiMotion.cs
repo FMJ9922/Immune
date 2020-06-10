@@ -4,125 +4,78 @@ using UnityEngine;
 
 public class AntiMotion : MonoBehaviour
 {
-    private int index = 0;
-    private float speed = 2;
-    public Vector3[] wayPoints;
-    public Sprite[] IdleSprite;
-    public Sprite[] ExplosionSprite;
-    protected ArrayList enemyInRange;
-    private SpriteRenderer spriteRenderer;
-    int frameP = 0;
-    int indexP = 0;
-    public float damage;
-   // bool explosion;
 
+    private float speed = 2;
+    protected ArrayList enemyInRange;
+    public float damage;
+    private Transform target;//目标
+    //public new Vector3 transform;
+
+ //   private float distanceArriveTarget = 1;
+    
+
+    public void SetTarget(Transform _target)
+    {
+        this.target = _target;
+    }
+
+    void Update()
+    {
+        if (target == null)
+        {
+            gameObject.SetActive(false);
+            Destroy(gameObject);
+            return;
+        }
+
+        transform.LookAt(target.position);//面向目标位置
+        Vector2 dir = target.position - transform.position;
+        transform.Translate(dir * speed * Time.deltaTime);//移动
+      //  SetDamageToEnemy();
+    }
     void Start()
     {
-        spriteRenderer = transform.GetComponent<SpriteRenderer>();
-      //  explosion = false;
+
         enemyInRange = new ArrayList();
-        //enemyHealth.OnEnemyDie += OnTargetEnemyDie;
     }
+
 
     protected void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Enemy"))
         {
+            // Destroy(this.gameObject);
             enemyInRange.Add(collision.transform);
             //collision.transform.localScale *= 2;
             EnemyHealth enemyHealth = collision.transform.GetComponent<EnemyHealth>();
             enemyHealth.cellInRange.Add(this.transform);
-            
+            enemyHealth.OnEnemyDie += OnTriggerEnemyDie;
+            SetDamageToEnemy();
+           
 
         }
 
     }
-    protected void OnTargetEnemyDie(Transform enemyTrans)
+    protected void OnTriggerEnemyDie(Transform enemyTrans)
     {
-        //enemyTrans.GetComponent<EnemyHealth>().OnEnemyDie -= OnInRangeEnemyDie;
+        enemyTrans.GetComponent<EnemyHealth>().OnEnemyDie -= OnTriggerEnemyDie;
         if (enemyInRange.Contains(enemyTrans))
         {
             enemyInRange.Remove(enemyTrans);
         }
     }
-    protected void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Enemy"))
-        {
-            //collision.transform.localScale /= 2;
-            enemyInRange.Remove(collision.transform);
-            EnemyHealth enemyHealth = collision.transform.GetComponent<EnemyHealth>();
-            enemyHealth.cellInRange.Remove(this.transform);
-            //enemyHealth.OnEnemyDie -= OnInRangeEnemyDie;
-        }
-    }
-    public void PlayAnimation(Sprite[] sprites, int deltaFrame, PlayAnimaType type)
-    {
-        frameP++;
-        if (frameP >= deltaFrame)
-        {
-            frameP = 0;
-            indexP++;
-            if (indexP >= sprites.Length - 1)
-            {
-                indexP = 0;
-                if (type == PlayAnimaType.Once)
-                {
-                    index = 0;
-                    indexP = 0;
-                    frameP = 0;
-                   // explosion = false;
-                    transform.localScale /= 2;
-                    transform.GetComponent<CircleCollider2D>().radius *= 2;
-                    transform.position += new Vector3(0, 0.4f);
-                    //SetDamageToEnemys();
-                    gameObject.SetActive(false);
-                    return;
-                }
-            }
-            spriteRenderer.sprite = sprites[indexP];
-        }
-        else return;
 
-    }
-    private void Move(Vector3[] wayPointList)
-    {
-        if (wayPointList.Length == 0)
-        {
-            Destroy(gameObject);
-        }
-        if (index >= wayPointList.Length) return;
-        transform.Translate((wayPointList[index] - transform.position).normalized * Time.deltaTime * speed);//移动，节点到当前位置的向量差的单位差*完成上一帧的时间*速度
-        if (Vector3.Distance(wayPointList[index], transform.position) < 0.03f)//三维坐标，距离（节点，当前位置）小于0.2f的时候执行
-        {
-            index++;//增加索引，也就获取到下个节点坐标
-            if (index > wayPointList.Length - 1)//如果大于最后一个节点时执行
-            {
-               // explosion = true;
-                wayPoints = null;
-                indexP = 0;
-                frameP = 0;
-                spriteRenderer.sprite = null;
-                transform.localScale *= 2;
-                transform.GetComponent<CircleCollider2D>().radius /= 2;
-                transform.position -= new Vector3(0, 0.4f);
-                Invoke("SetDamageToEnemys", 0.7f);
-            }
-        }
-    }
-    public void SetDamageToEnemys()
+    public void SetDamageToEnemy()
     {
 
-        for (int i = 0; i < enemyInRange.Count; i++)
-        {
 
-            Transform trans = (Transform)enemyInRange[i];
-            //Debug.Log(trans.name);
-            if (trans != null && trans.GetComponent<EnemyHealth>().Hp > 0)
-            {
-                trans.GetComponent<EnemyHealth>().TakeDamage(damage, false);
-                //trans.GetComponent<EnemyMotion>().GetSlowDown(0.5f, 3f);
-            }
+        //Debug.Log(trans.name);
+        if (target != null && target.GetComponent<EnemyHealth>().Hp > 0)
+        {
+            target.GetComponent<EnemyHealth>().TakeDamage(damage, false);
+            target.GetComponent<EnemyMotion>().GetSlowDown(0.5f, 3f);
+            gameObject.SetActive(false);
         }
+
     }
 }
