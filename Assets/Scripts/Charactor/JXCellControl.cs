@@ -5,7 +5,9 @@ using UnityEngine;
 public class JXCellControl : LRCellBase
 {
     public GameObject Anti;
- 
+   
+    // Start is called before the first frame update
+    
 
     public override void AttackOneTime()
     {
@@ -18,7 +20,7 @@ public class JXCellControl : LRCellBase
         }
         cellAnimator.CleanFrameData();
         cellStatus = CellStatus.Attack;
-        Invoke("FireWeapon", 1);
+        Invoke("FireWeapon", 0.7f);
 
     }
     public override void FireWeapon()
@@ -29,6 +31,7 @@ public class JXCellControl : LRCellBase
             cellAnimator.CleanFrameData();
             return;
         }
+       
         CheckLeftOrRight(targetEnemy);
         Vector3 start = transform.position;
         Vector3 end = targetEnemy.position;
@@ -38,5 +41,7 @@ public class JXCellControl : LRCellBase
         Anti.transform.position = start;
         float coefficient = JsonIO.GetCoefficiet(cellType, targetEnemy.GetComponent<EnemyMotion>().enemyType);
         Anti.GetComponent<AntiMotion>().damage = atkDamage * coefficient;
+        Anti.GetComponent<AntiMotion>().SetTarget(targetEnemy.transform) ;
+           
     }
 }
