@@ -54,7 +54,7 @@ public class LevelManager : MonoBehaviour
         EnemyGroup = transform.Find("EnemyGroup").gameObject;
         Map = transform.Find("Map").gameObject;
         GenerateTileNode();
-        mapManager.ShowBg(GameManager.Instance.iLevel);
+        
         DeployPoints = 10;
         finishCreate = false;
         StartCanvas.SetActive(true);

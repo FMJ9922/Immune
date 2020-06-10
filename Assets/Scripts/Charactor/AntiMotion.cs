@@ -24,7 +24,7 @@ public class AntiMotion : MonoBehaviour
         if (target == null)
         {
             gameObject.SetActive(false);
-            Destroy(gameObject);
+            //Destroy(gameObject);
             return;
         }
 
@@ -38,7 +38,10 @@ public class AntiMotion : MonoBehaviour
 
         enemyInRange = new ArrayList();
     }
-
+    private void OnDestroy()
+    {
+        Debug.Log("?");
+    }
 
     protected void OnTriggerEnter2D(Collider2D collision)
     {
