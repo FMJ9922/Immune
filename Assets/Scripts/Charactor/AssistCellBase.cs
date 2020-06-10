@@ -19,7 +19,10 @@ public class AssistCellBase : CellBase,Produce
     public Slider ProduceSlider;
     private float reloadTime;
     private bool reload;
-
+    void Awake()
+    {
+        InitCell();
+    }
     public override void InitCell()
     {
         cellData = JsonIO.GetCellData(cellType);
@@ -38,10 +41,6 @@ public class AssistCellBase : CellBase,Produce
         ProduceSlider.value = 1;
         reloadTime = atkDuration;
         reload = false;
-    }
-    void Start()
-    {
-        InitCell();
     }
     void Update()
     {

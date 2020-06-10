@@ -101,7 +101,7 @@ public class MyTool : MonoBehaviour
                 str = "病原体行进路径达到" + num.ToString() + "格(0/" + num.ToString() + ")";
                 break;
             case ScoreType.NormalCellSurviveNum:
-                str = "健康细胞存活不小于" + num.ToString() + "个(" + num.ToString() + "/" + num.ToString() + ")";
+                str = "健康细胞死亡不超过" + num.ToString() + "个(0 /" + num.ToString() + ")";
                 break;
             default:
                 str = "";
@@ -125,7 +125,7 @@ public class MyTool : MonoBehaviour
                 str = "病原体行进路径达到" + num.ToString() + "格("+ actualNum.ToString() + "/" + num.ToString() + ")";
                 break;
             case ScoreType.NormalCellSurviveNum:
-                str = "健康细胞存活不小于" + num.ToString() + "个(" + actualNum.ToString() + "/" + num.ToString() + ")";
+                str = "健康细胞死亡不超过" + num.ToString() + "个(" + actualNum.ToString() + "/" + num.ToString() + ")";
                 break;
             default:
                 str = "";
