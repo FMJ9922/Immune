@@ -2,7 +2,76 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public class Points
+{
+    public float DeployPoints;
+    public float LinbaPoints;
+    public float KangYuanPoints;
+    public Points(float value1,float value2,float value3)
+    {
+        DeployPoints = value1;
+        LinbaPoints = value2;
+        KangYuanPoints = value3;
+    }
+    public void AddPoint(PointsType pointsType,float value)
+    {
 
+        switch(pointsType)
+        {
+            case PointsType.Deploy:
+                {
+                    DeployPoints += value;
+                    break;
+                }
+            case PointsType.LinBa:
+                {
+                    LinbaPoints += value;
+                    break;
+                }
+            case PointsType.KangYuan :
+                {
+                    KangYuanPoints += value;
+                    break;
+                }
+
+        }
+    }
+
+    public bool SpendPoint(PointsType pointsType, float value)
+    {
+
+        switch (pointsType)
+        {
+            case PointsType.Deploy:
+                {
+                    return CheckLowerThanMin(ref DeployPoints,value);
+                }
+            case PointsType.LinBa:
+                {
+                    return CheckLowerThanMin(ref LinbaPoints, value);
+                }
+            case PointsType.KangYuan:
+                {
+                    return CheckLowerThanMin(ref KangYuanPoints, value);
+                }
+
+        }
+        return false;
+    }
+    private bool CheckLowerThanMin(ref float point,float value)
+    {
+        if (value <= point)
+        {
+            point -= value;
+            return true;
+        }
+        else
+        {
+            LoggerManager.Instance.ShowOneLog("点数不足！无法放置");
+            return false;
+        }
+    }
+}
 public class LevelManager : MonoBehaviour
 {
     public static LevelManager Instance { get; private set; } = null;
@@ -20,9 +89,7 @@ public class LevelManager : MonoBehaviour
     public Transform drawRoute;
     public int curWave = 0;
     private bool finishCreate;
-    public float DeployPoints { get; private set; }
-    public float LinbaPoints { get; private set; }
-    public float KangYuanPoints { get; private set; }
+    public Points levelPoints;
     public Transform CountDown;
     private ScoreRequest[] levelRequest = new ScoreRequest[3];
     public delegate void ScoreChange(ScoreRequest[] levelRequest);
@@ -33,6 +100,7 @@ public class LevelManager : MonoBehaviour
     public GameObject FailCanvas;
 
     public MapManager mapManager;
+
 
     void Awake()
     {
@@ -54,16 +122,17 @@ public class LevelManager : MonoBehaviour
         EnemyGroup = transform.Find("EnemyGroup").gameObject;
         Map = transform.Find("Map").gameObject;
         GenerateTileNode();
-        
-        DeployPoints = 10;
+
+        levelPoints = new Points(100, 0, 0);
         finishCreate = false;
+        
         StartCanvas.SetActive(true);
         WinCanvas.SetActive(false);
         FailCanvas.SetActive(false);
         StartCanvas.GetComponent<StartIntroduceUI>().InitText();
         PauseBgUI.Instance.ShowWhiteBg();
         GameManager.Instance.Set1xTimeScale();
-        Debug.Log(GetLevelTime());
+        Debug.Log("LevelSpan:" + GetLevelTime());
 
 
     }
@@ -78,24 +147,16 @@ public class LevelManager : MonoBehaviour
     } 
     private void Update()
     {
-        DeployPoints += Time.deltaTime / 5;
+        levelPoints.DeployPoints += Time.deltaTime / 5;
     }
-    public bool SpendPoints(float points)
+    public bool SpendPoints(PointsType pointsType,float points)
     {
-        if (points <= DeployPoints)
-        {
-            DeployPoints -= points;
-            return true;
-        }
-        else
-        {
-            LoggerManager.Instance.ShowOneLog("点数不足！无法放置");
-            return false;
-        }
+        return levelPoints.SpendPoint(pointsType, points);
+        
     }
-    public void AddPoints(float points)
+    public void AddPoints(PointsType pointsType, float points)
     {
-        DeployPoints += points;
+        levelPoints.AddPoint(pointsType, points);
     }
     public void ShowWinOrFailCanvas(bool win)
     {
@@ -158,6 +219,7 @@ public class LevelManager : MonoBehaviour
         }
     }
 
+    
 
 
     public void StartDeployEnemy()

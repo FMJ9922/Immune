@@ -55,11 +55,12 @@ public class EnemyHealth : MonoBehaviour
                 Die();
 
             }
-            else
+            else if(_enemyStatus ==EnemyStatus.Die)
             {
+                //transform.GetComponent<CircleCollider2D>().enabled = false;
                 transform.GetComponent<EnemyMotion>().StopAllCoroutines();
                 //Debug.Log("die");
-                transform.GetComponent<EnemyMotion>().GetSlowDown(0.5f, Mathf.Infinity);
+                transform.GetComponent<EnemyMotion>().GetSlowDown(0.5f, 10000f);
             }
             
             

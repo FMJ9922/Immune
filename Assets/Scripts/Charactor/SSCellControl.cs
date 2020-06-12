@@ -10,23 +10,24 @@ public class SSCellControl : LRCellBase
 
     public override void AttackOneTime()
     {
+        attackType = AttackType.Other;
         targetEnemy = ChooseTargetEnemey();
         if (targetEnemy == null)
         {
-            cellStatus = CellStatus.Idle;
+            OnCellStatusChange(CellStatus.Idle);
             cellAnimator.CleanFrameData();
             return;
         }
         cellAnimator.CleanFrameData();
-        cellStatus = CellStatus.Attack;
-        Invoke("FireWeapon", 21 * 0.016667f);
+        OnCellStatusChange(CellStatus.Attack);
+        Invoke("FireWeapon", 0.35f);
 
     }
     public override void FireWeapon()
     {
         if (targetEnemy == null)
         {
-            cellStatus = CellStatus.Idle;
+            OnCellStatusChange(CellStatus.Idle);
             cellAnimator.CleanFrameData();
             return;
         }

@@ -53,6 +53,7 @@ public class CellAnimator : MonoBehaviour
                 index = 0;
                 if (type == PlayAnimaType.Once&&(sprites == AtkSprite||sprites == SBSprite))
                 {
+                    
                     OnStatusChange(CellStatus.Idle);
                     return;
                 }

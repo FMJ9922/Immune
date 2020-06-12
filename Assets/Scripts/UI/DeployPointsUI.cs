@@ -14,8 +14,8 @@ public class DeployPointsUI : MonoBehaviour
     }
     private void Update()
     {
-        Deploytext.text = ""+Mathf.FloorToInt(LevelManager.Instance.DeployPoints);
-        Linbatext.text = ""+Mathf.FloorToInt(LevelManager.Instance.LinbaPoints);
-        KangYuantext.text = ""+Mathf.FloorToInt(LevelManager.Instance.KangYuanPoints);
+        Deploytext.text = ""+Mathf.FloorToInt(LevelManager.Instance.levelPoints.DeployPoints);
+        Linbatext.text = ""+Mathf.FloorToInt(LevelManager.Instance.levelPoints.LinbaPoints);
+        KangYuantext.text = ""+Mathf.FloorToInt(LevelManager.Instance.levelPoints.KangYuanPoints);
     }
 }

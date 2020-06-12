@@ -144,9 +144,13 @@ public class EnemyMotion : MonoBehaviour
     }
     private IEnumerator SlowDownWithSpeedScaleAndDuration(float scale, float duration)
     {
+        
         speed = scale*originSpeed;
+        //Debug.Log(transform.name + "减速至" + speed);
         yield return new WaitForSeconds(duration);
+        if(enemyStatus != EnemyStatus.Die)
         speed = originSpeed;
+        //Debug.Log(transform.name + "恢复速度至" + speed);
     }
     
 }

@@ -14,12 +14,12 @@ public class JXCellControl : LRCellBase
         targetEnemy = ChooseTargetEnemey();
         if (targetEnemy == null)
         {
-            cellStatus = CellStatus.Idle;
+            OnCellStatusChange(CellStatus.Idle);
             cellAnimator.CleanFrameData();
             return;
         }
         cellAnimator.CleanFrameData();
-        cellStatus = CellStatus.Attack;
+        OnCellStatusChange(CellStatus.Attack);
         FireWeapon();
 
     }
@@ -27,7 +27,7 @@ public class JXCellControl : LRCellBase
     {
         if (targetEnemy == null)
         {
-            cellStatus = CellStatus.Idle;
+            OnCellStatusChange(CellStatus.Idle);
             cellAnimator.CleanFrameData();
             return;
         }

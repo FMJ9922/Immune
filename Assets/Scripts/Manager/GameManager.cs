@@ -38,7 +38,7 @@ public class GameManager : MonoBehaviour
             if(iLevel>0)
                 JsonIO.InitLevelData(iLevel);
             Instance = this;
-            Debug.Log("Change Instance");
+            //Debug.Log("Change Instance");
         }
 
         DontDestroyOnLoad(this.gameObject);//加载关卡时不销毁GameManager

@@ -130,7 +130,7 @@ public class AStarAgent : MonoBehaviour
             while (temp != startNode)
             {
                 nodePath.Add(temp);
-                wayPointList.Add(new Vector3(temp.pos.x,temp.pos.y,0));
+                wayPointList.Add(new Vector3(temp.pos.x,temp.pos.y, GetRenderDepth(temp.pos.x, temp.pos.y)));
                 //Debug.Log(temp.name);
                 temp = temp.parentNode;
                 
@@ -141,5 +141,9 @@ public class AStarAgent : MonoBehaviour
             nodePath.Reverse();
             wayPointList.Reverse();
         }
+    }
+    public float GetRenderDepth(float x, float y)
+    {
+        return (8.5f - y + x - 0.5f)*0.001f;
     }
 }

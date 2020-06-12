@@ -95,7 +95,7 @@ public enum FireMode
     First = 0,
     Weakest = 1,
     Nearest = 2,
-    strongest = 3,
+    Strongest = 3,
 }
 
 public enum AttackType
@@ -117,4 +117,10 @@ public enum SceneMap
     JD=0,//结缔组织
     LB=1,//淋巴
     XG=2,//血管
+}
+public enum PointsType
+{
+    Deploy = 0,
+    LinBa = 1,
+    KangYuan = 2,
 }

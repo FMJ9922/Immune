@@ -17,7 +17,7 @@ public class MapManager : MonoBehaviour
     }
     public void ShowBg(int level)
     {
-        Debug.Log("show" + level);
+        //Debug.Log("show" + level);
         if (level < 5) JDImage.SetActive(true);
         else if(level<9) LBImage.SetActive(true);
         else if(level<13) XGImage.SetActive(true);

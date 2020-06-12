@@ -133,18 +133,32 @@ public class MyTool : MonoBehaviour
         }
         return str;
     }
-    public static void DoFade(in GameObject gameObject)
+    public static void DoFade(GameObject gameObject)
     {
-        //TODO
+        //gameObject.GetComponent<SpriteRenderer>();
     }
-    public static IEnumerator DoMoveY(float y,Transform trans)
+    public IEnumerator DoFade(SpriteRenderer sp, float alpha,float time)
     {
-        float speed = 0.1f;
+        float dur = 0;
+        float startAlpha = sp.color.a;
+        while (dur < time)
+        {
+            dur += Time.deltaTime;
+            alpha = startAlpha > alpha?Mathf.Lerp(alpha, startAlpha,dur/time): Mathf.Lerp(startAlpha, alpha, dur / time);
+            sp.color = new Color(sp.color.r,
+                                    sp.color.g,
+                                    sp.color.b,
+                                    alpha);
+            yield return new WaitForFixedUpdate();
+        }
+         
+    }
+    public static IEnumerator DoMoveY(float y,Transform trans,float time)
+    {
         while (!Mathf.Approximately(y, trans.position.y))
         {
-            Debug.Log(trans.position.y);
-            float deltaY = Mathf.SmoothDamp(trans.position.y, y, ref speed, 0.1f);
-            trans.position += new Vector3(0, deltaY, 0);
+            float deltaY = (trans.position.y - y) / time;
+            trans.position += new Vector3(0, deltaY*0.0166667f, 0);
             yield return new WaitForFixedUpdate();
         }
         

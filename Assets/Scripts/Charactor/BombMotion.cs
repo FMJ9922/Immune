@@ -46,12 +46,15 @@ public class BombMotion : MonoBehaviour
     {
         if (collision.CompareTag("Enemy"))
         {
-            enemyInRange.Add(collision.transform);
-            //collision.transform.localScale *= 2;
             EnemyHealth enemyHealth = collision.transform.GetComponent<EnemyHealth>();
-            enemyHealth.cellInRange.Add(this.transform);
-            enemyHealth.OnEnemyDie += OnInRangeEnemyDie;
-
+            if (enemyHealth.Hp > 0)
+            {
+                enemyInRange.Add(collision.transform);
+                enemyHealth.cellInRange.Add(this.transform);
+                enemyHealth.OnEnemyDie += OnInRangeEnemyDie;
+                //Debug.Log(collision.transform.name + "加入队列");
+            }
+            
         }
 
     }
@@ -61,17 +64,21 @@ public class BombMotion : MonoBehaviour
         if (enemyInRange.Contains(enemyTrans))
         {
             enemyInRange.Remove(enemyTrans);
+            //Debug.Log(enemyTrans.name + "因死亡离开队列");
         }
     }
     protected void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.CompareTag("Enemy"))
         {
-            //collision.transform.localScale /= 2;
-            enemyInRange.Remove(collision.transform);
             EnemyHealth enemyHealth = collision.transform.GetComponent<EnemyHealth>();
-            enemyHealth.cellInRange.Remove(this.transform);
-            enemyHealth.OnEnemyDie -= OnInRangeEnemyDie;
+            if (enemyHealth.Hp > 0)
+            {
+                enemyInRange.Remove(collision.transform);
+                enemyHealth.cellInRange.Remove(this.transform);
+                enemyHealth.OnEnemyDie -= OnInRangeEnemyDie;
+                //Debug.Log(collision.transform.name + "因超出射程离开队列");
+            }
         }
     }
     public void PlayAnimation(Sprite[] sprites, int deltaFrame, PlayAnimaType type)
@@ -139,7 +146,7 @@ public class BombMotion : MonoBehaviour
             if (trans != null&&trans.GetComponent<EnemyHealth>().Hp>0)
             {
                 trans.GetComponent<EnemyHealth>().TakeDamage(damage, false);
-                trans.GetComponent<EnemyMotion>().GetSlowDown(0.5f, 3f);
+                trans.GetComponent<EnemyMotion>().GetSlowDown(0.5f, 7f);
             }
         }
     }

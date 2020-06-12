@@ -104,6 +104,10 @@ public class ControlManager : MonoBehaviour
         SelectGlow.localPosition = new Vector3(2, 2.6F, 0);
        
     }
+    public float GetRenderDepth(float x, float y)
+    {
+        return -(8.5f - y + x - 0.5f) * 0.001f;
+    }
     public void HideSelectAndCellInfo()
     {
         if (SelectGlow.gameObject.activeInHierarchy)
@@ -192,11 +196,11 @@ public class ControlManager : MonoBehaviour
                 CellData cellData;
                 cellData = JsonIO.GetCellData(cellType);
                 //Debug.Log(""+PathAvaliable + CheckPathAvaliable() + LevelManager.Instance.SpendPoints(cellData.initCost));
-                if (PathAvaliable && CheckPathAvaliable()&&LevelManager.Instance.SpendPoints(cellData.initCost))
+                if (PathAvaliable && CheckPathAvaliable()&&LevelManager.Instance.SpendPoints(PointsType.Deploy,cellData.initCost))
                 {
                     //Debug.Log("plan1");
                     GameObject cell = Instantiate(CellPfbs[(int)cellType],
-                    new Vector3(targetNode.pos.x, targetNode.pos.y),
+                    new Vector3(targetNode.pos.x, targetNode.pos.y, GetRenderDepth(targetNode.pos.x, targetNode.pos.y)),
                     Quaternion.identity,
                     targetNode.transform);
                     cell.name = cellType.ToString();
@@ -258,7 +262,8 @@ public class ControlManager : MonoBehaviour
         }
 
         targetNode = LevelManager.Instance.GetNodeByPos(transform.position);
-
+        //Debug.Log(GetRenderDepth(transform.position.x, transform.position.y)*1000f);
+        
        
         if (placeType ==PlaceType.Remove)//如果是铲除
         {

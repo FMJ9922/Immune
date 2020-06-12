@@ -10,7 +10,6 @@ public class SZCellControl : SRCellBase
     public Slider slider;
     private void Start()
     {
-        InitCell();
         eatTimes = 15;
         attackType = AttackType.Swallow;
         slider.value = 1;
@@ -21,12 +20,12 @@ public class SZCellControl : SRCellBase
         targetEnemy = ChooseTargetEnemey();
         if(targetEnemy == null)
         {
-            cellStatus = CellStatus.Idle;
+            OnCellStatusChange(CellStatus.Idle);
             return;
         }
         if (targetEnemy.GetComponent<EnemyHealth>().Hp <= atkDamage* JsonIO.GetCoefficiet(cellType, targetEnemy.GetComponent<EnemyMotion>().enemyType))
         {
-            cellStatus = CellStatus.SpecialAbility;
+            OnCellStatusChange(CellStatus.SpecialAbility);
             targetEnemy.GetComponent<EnemyMotion>().TargetPoint = eatTrans.position;
             SetDamageToEnemy(attackType);
             cellAnimator.CleanFrameData();
@@ -38,20 +37,16 @@ public class SZCellControl : SRCellBase
         else
         {
 
-            cellStatus = CellStatus.Attack;
+            OnCellStatusChange(CellStatus.Attack);
             Invoke("SetDamageToEnemy", atkTime);
         }
     }
 
     public void EatTooMuch()
     {
-        cellStatus = CellStatus.Die;
+        OnCellStatusChange(CellStatus.Die);
         slider.transform.parent.gameObject.SetActive(false);
     }
-    /*public void OnDie()
-    {
-        Destroy(gameObject);
-    }*/
 
 }
     
