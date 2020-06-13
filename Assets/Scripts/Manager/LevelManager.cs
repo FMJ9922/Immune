@@ -125,7 +125,7 @@ public class LevelManager : MonoBehaviour
 
         levelPoints = new Points(100, 0, 0);
         finishCreate = false;
-        
+
         StartCanvas.SetActive(true);
         WinCanvas.SetActive(false);
         FailCanvas.SetActive(false);
@@ -138,21 +138,21 @@ public class LevelManager : MonoBehaviour
     }
     public void StartLevel()
     {
-        CountDown.GetComponent<CountDownUI>().StartCountDown(6,1);
+        CountDown.GetComponent<CountDownUI>().StartCountDown(6, 1);
         CountDown.position = new Vector2(waves[0].startX + 0.5f, waves[0].startY + 0.5f);
         StartCoroutine(DrawAllRoute(1));
         Invoke("StartDeployEnemy", 6f);
         PauseBgUI.Instance.HideWhiteBg();
         //StartCanvas.SetActive(false);
-    } 
+    }
     private void Update()
     {
         levelPoints.DeployPoints += Time.deltaTime / 5;
     }
-    public bool SpendPoints(PointsType pointsType,float points)
+    public bool SpendPoints(PointsType pointsType, float points)
     {
         return levelPoints.SpendPoint(pointsType, points);
-        
+
     }
     public void AddPoints(PointsType pointsType, float points)
     {
@@ -160,7 +160,7 @@ public class LevelManager : MonoBehaviour
     }
     public void ShowWinOrFailCanvas(bool win)
     {
-        string str ="" + MyTool.PraseRequest(levelRequest[0].scoreType, levelRequest[0].requestNum, levelRequest[0].actualNum) + "\n"
+        string str = "" + MyTool.PraseRequest(levelRequest[0].scoreType, levelRequest[0].requestNum, levelRequest[0].actualNum) + "\n"
                        + MyTool.PraseRequest(levelRequest[1].scoreType, levelRequest[1].requestNum, levelRequest[1].actualNum) + "\n"
                        + MyTool.PraseRequest(levelRequest[2].scoreType, levelRequest[2].requestNum, levelRequest[2].actualNum);
         if (win)
@@ -206,21 +206,27 @@ public class LevelManager : MonoBehaviour
                             //int num = levelRequest[i].actualNum;
                             //levelRequest[i].actualNum = num < deltaNum ? deltaNum : num;
                             break;
-                        } 
+                        }
                 }
 
                 if (OnScoreChange != null)
                 {
                     OnScoreChange(levelRequest);
                 }
-               
+
             }
             else continue;
         }
     }
 
-    
 
+    public static bool IsOutOfMapEdge(Transform trans)
+    {
+        float x = trans.position.x;
+        float y = trans.position.y;
+        if (x < 0 || x > 16 || y < 0 || y > 0) return false;
+        else return true;
+    } 
 
     public void StartDeployEnemy()
     {

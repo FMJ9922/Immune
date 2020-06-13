@@ -65,7 +65,7 @@ public abstract class CellBase : MonoBehaviour
     {
         return enemyInRange;
     }
-    public void ShowRangePic()
+    public virtual void ShowRangePic()
     {
         if (rangePicManage == null)
         {
@@ -73,7 +73,7 @@ public abstract class CellBase : MonoBehaviour
         }
         rangePicManage.ChangeLocalScale(JsonIO.GetCellData(cellType).atkRange);
     }
-    public void CloseRangePic()
+    public virtual void CloseRangePic()
     {
         rangePicManage.ChangeLocalScale(0);
     }
@@ -107,9 +107,11 @@ public abstract class CellBase : MonoBehaviour
             CheckLeftOrRight(enemyTrans);
             StartAction();
         }
-
+        if (BagPanel.PraseEnum((int)cellType) != ArticleType.HelpCell)
+        {
+            StartAction();
+        }
         
-
     }
 
     public void OnEnemyExit(Transform enemyTrans)

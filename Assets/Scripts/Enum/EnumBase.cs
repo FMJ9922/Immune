@@ -35,10 +35,9 @@ public enum CellType
     TX = 7,//效应T        近战
     TF = 8,//辅助T        辅助
     TY = 9,//抑制性T      辅助
-    TJ = 10,//记忆T       辅助
-    BL = 11,//B淋巴       辅助
-    BJ = 12,//记忆B       辅助
-    JX = 13,//浆细胞      远程
+    BL = 10,//B淋巴       辅助
+    BJ = 11,//记忆B       辅助
+    JX = 12,//浆细胞      远程
 
 }
 
@@ -64,18 +63,17 @@ public enum ActorType
     TX = 7,//效应T        近战
     TF = 8,//辅助T        辅助
     TY = 9,//抑制性T      辅助
-    TJ = 10,//记忆T       辅助
-    BL = 11,//B淋巴       辅助
-    BJ = 12,//记忆B       辅助
-    JX = 13,//浆细胞      远程
-    TH = 14,//天花病毒
-    EB = 15,//eb
-    BD = 16,//病毒宿主
-    HJ = 17,//黄金葡萄球
-    JXB = 18,//巨细胞病毒
-    MD = 19,//梅毒螺旋体
-    ZC = 20,//正常细胞
-    QT = 21,//其他正常细胞
+    BL = 10,//B淋巴       辅助
+    BJ = 11,//记忆B       辅助
+    JX = 12,//浆细胞      远程
+    TH = 13,//天花病毒
+    EB = 14,//eb
+    BD = 15,//病毒宿主
+    HJ = 16,//黄金葡萄球
+    JXB = 17,//巨细胞病毒
+    MD = 18,//梅毒螺旋体
+    ZC = 19,//正常细胞
+    QT = 20,//其他正常细胞
 
 
 
@@ -93,8 +91,8 @@ public enum PlayAnimaType
 public enum FireMode
 {
     First = 0,
-    Weakest = 1,
-    Nearest = 2,
+    Weakest = 2,
+    Nearest = 1,
     Strongest = 3,
 }
 

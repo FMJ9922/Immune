@@ -1023,7 +1023,7 @@ GameObject:
   - component: {fileID: 5576751352434742627}
   - component: {fileID: 8356280940955193156}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: SliderCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

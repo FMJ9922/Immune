@@ -16,7 +16,7 @@ public class AssistCellBase : CellBase,Produce
         base.InitCell();
         detector = transform.Find("Detector").GetComponent<Detector>();
         detector.GetComponent<CircleCollider2D>().radius = atkRange;
-        ProduceSlider = transform.Find("Canvas").Find("PrdSlider").GetComponent<Slider>();
+        ProduceSlider = transform.Find("SliderCanvas").Find("PrdSlider").GetComponent<Slider>();
         ProduceSlider.value = 0;
         reloadTime = 0;
         allowProduce = false;

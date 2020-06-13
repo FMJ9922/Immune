@@ -10,20 +10,30 @@ public class SRCellBase : CellBase, ShortRangeAttack
     protected bool allowAttack;
     protected Slider AtkSlider;//攻击进度条
     protected  Detector detector;
-
+    public FireModeHandle fireModeHandle;
     public override void InitCell()
     {
         base.InitCell();
         detector = transform.Find("Detector").GetComponent<Detector>();
         detector.GetComponent<CircleCollider2D>().radius = atkRange;
         fireMode = FireMode.First;
-        AtkSlider = transform.Find("Canvas").Find("AtkSlider").GetComponent<Slider>();
+        AtkSlider = transform.Find("SliderCanvas").Find("AtkSlider").GetComponent<Slider>();
         AtkSlider.value = 1;
         reloadTime = atkDuration;
         allowAttack = false;
         attackType = AttackType.Other;
+        fireModeHandle = transform.Find("FireModeCanvas").GetComponent<FireModeHandle>();
+        fireModeHandle.fireMode = fireMode;
+        if (transform.position.y < 1f)
+        {
+            transform.Find("FireModeCanvas").position += new Vector3(0, 1.5f, 0);
+        }
+        fireModeHandle.OnFireModeChange += ChangeFireMode;
     }
-    
+    public void ChangeFireMode(FireMode fireMode)
+    {
+        this.fireMode = fireMode;
+    }
     protected virtual void FixedUpdate()
     {
         if ( cellStatus == CellStatus.Die) { return; }
@@ -63,7 +73,7 @@ public class SRCellBase : CellBase, ShortRangeAttack
         if (targetEnemy == null)
         {
             OnCellStatusChange(CellStatus.Idle);
-            cellAnimator.CleanFrameData();
+            allowAttack = false;
             return;
         }
         cellAnimator.CleanFrameData();
@@ -82,9 +92,19 @@ public class SRCellBase : CellBase, ShortRangeAttack
     {
         if (targetEnemy != null&&attackType==AttackType.Swallow)
         {
-            Debug.Log("eat");
+            //Debug.Log("eat");
             float coefficient = JsonIO.GetCoefficiet(cellType, targetEnemy.GetComponent<EnemyMotion>().enemyType);
             targetEnemy.GetComponent<EnemyHealth>().TakeDamage(atkDamage* coefficient, true);
         }
+    }
+    public override void ShowRangePic()
+    {
+        base.ShowRangePic();
+        fireModeHandle.gameObject.SetActive(true);
+    }
+    public override void CloseRangePic()
+    {
+        base.CloseRangePic();
+        fireModeHandle.gameObject.SetActive(false);
     }
 }

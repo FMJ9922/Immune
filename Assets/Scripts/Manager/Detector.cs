@@ -89,7 +89,14 @@ public class Detector : MonoBehaviour, Detectable
     {
         if (collision.CompareTag("Enemy"))
         {
-            cell.OnEnemyEnter(collision.transform);
+            try
+            {
+                cell.OnEnemyEnter(collision.transform);
+            }
+            catch
+            {
+                Debug.Log("what?"+transform.position);
+            }
         }
     }
 

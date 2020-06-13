@@ -11,6 +11,7 @@ public class JXCellControl : LRCellBase
 
     public override void AttackOneTime()
     {
+        attackType = AttackType.Other;
         targetEnemy = ChooseTargetEnemey();
         if (targetEnemy == null)
         {
@@ -20,7 +21,7 @@ public class JXCellControl : LRCellBase
         }
         cellAnimator.CleanFrameData();
         OnCellStatusChange(CellStatus.Attack);
-        FireWeapon();
+        Invoke("FireWeapon", 28 * 0.0166667f);
 
     }
     public override void FireWeapon()
@@ -33,14 +34,11 @@ public class JXCellControl : LRCellBase
         }
         CheckLeftOrRight(targetEnemy);
         Vector3 start = transform.position;
-        Vector3 end = targetEnemy.position;
-        //Debug.Log(end);
-        Vector3 control = (start + end) / 2 + new Vector3(0, 0.5f, 0);
-        Anti.SetActive(true);
-        Anti.transform.position = start;
+        GameObject AntiBullet = Instantiate(Anti, transform);
+        AntiBullet.transform.position = start;
         float coefficient = JsonIO.GetCoefficiet(cellType, targetEnemy.GetComponent<EnemyMotion>().enemyType);
-        Anti.GetComponent<AntiMotion>().damage = atkDamage * coefficient;
-        Anti.GetComponent<AntiMotion>().SetTarget(targetEnemy.transform);
+        AntiBullet.GetComponent<AntiMotion>().damage = atkDamage * coefficient;
+        AntiBullet.GetComponent<AntiMotion>().SetTarget(targetEnemy.transform);
 
     }
 }

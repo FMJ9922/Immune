@@ -80,7 +80,7 @@ public class BagPanel : ViewBase
 
     }
 
-    public ArticleType PraseEnum(int actorType)
+    public static ArticleType PraseEnum(int actorType)
     {
         ArticleType articleType;
         switch (actorType)

@@ -241,21 +241,23 @@ public class ControlManager : MonoBehaviour
 
         transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-        /*if (EventSystem.current.IsPointerOverGameObject())
+        if (EventSystem.current.IsPointerOverGameObject())
         {
             return;
-        }*/
+        }
 
 
 #elif UNITY_IOS || UNITY_ANDROID
-        {
+    {
         transform.position = Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);
         int pointerID = Input.GetTouch(0).fingerId;
+        if (EventSystem.current.IsPointerOverGameObject(pointerID))
+        {
+            return;
         }
+    }
 #endif
-        //if (EventSystem.current.IsPointerOverGameObject(pointerID)) {
-        //Debug.Log("touch ui");
-        //return;
+
         if (CellOnMove != null)
         {
             CellOnMove.transform.position = transform.position;

@@ -16,7 +16,7 @@ public class NKCellControl : SRCellBase
         if (targetEnemy == null)
         {
             OnCellStatusChange(CellStatus.Idle);
-            cellAnimator.CleanFrameData();
+            allowAttack = false;
             return;
         }
 

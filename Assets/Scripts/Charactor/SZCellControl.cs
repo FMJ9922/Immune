@@ -36,7 +36,7 @@ public class SZCellControl : SRCellBase
         }
         else
         {
-
+            cellAnimator.CleanFrameData();
             OnCellStatusChange(CellStatus.Attack);
             Invoke("SetDamageToEnemy", atkTime);
         }
