@@ -56,6 +56,18 @@ public class CellData
     public string ability;
     public float[] coefficient;
 }
+[System.Serializable]
+public class EnemyData
+{
+    public string name;
+    public string type;
+    public string ability;
+    public float Hp;
+    public float atk;
+    public float rate;
+    public float speed;
+    public string introduce;
+}
 
 public class JsonIO : MonoBehaviour
 {
@@ -63,6 +75,7 @@ public class JsonIO : MonoBehaviour
     private static LevelData levelData;
     public static int lastLevelNum;
     public static CellData[] cellDatas;
+    public static EnemyData[] enemyDatas;
 
     public static void InitLevelData(int index)
     {
@@ -99,6 +112,10 @@ public class JsonIO : MonoBehaviour
     {
         return cellDatas[(int)cellType];
     }
+    public static EnemyData GetEnemyData(ActorType actorType)
+    {
+        return enemyDatas[(int)actorType - 20];
+    }
     public static int[,] GetMap()
     {
         return levelData.mapType;
@@ -124,6 +141,27 @@ public class JsonIO : MonoBehaviour
             cellDatas[i].type = (string)dict2["Type"];
             cellDatas[i].ability = (string)dict2["Ability"];
             cellDatas[i].coefficient = PraseFloat((List<object>)dict2["Coefficient"]);
+        }
+    }
+    public static void InitEnemyData()
+    {
+        TextAsset t = (TextAsset)Resources.Load("Data/EnemyData", typeof(TextAsset));
+        string jsonString = t.ToString();
+        var dict = (Dictionary<string, object>)Json.Deserialize(jsonString);
+        List<System.Object> EnemyDataList = (List<System.Object>)dict["lists"];
+        cellDatas = new CellData[EnemyDataList.Count];
+        for (int i = 0; i < EnemyDataList.Count; i++)
+        {
+            var dict2 = (Dictionary<string, object>)EnemyDataList[i];
+            enemyDatas[i] = new EnemyData();
+            enemyDatas[i].name = (string)dict2["Name"];
+            enemyDatas[i].type = (string)dict2["Type"];
+            enemyDatas[i].ability = (string)dict2["Ability"];
+            enemyDatas[i].Hp = (float)(double)dict2["Hp"];
+            enemyDatas[i].atk = (float)(double)dict2["Atk"];
+            enemyDatas[i].rate = (float)(double)dict2["Rate"];
+            enemyDatas[i].speed = (float)(double)dict2["Speed"];
+            enemyDatas[i].introduce = (string)dict2["Introduce"];
         }
     }
     public static void InitGameData()
@@ -290,5 +328,15 @@ public class JsonIO : MonoBehaviour
         //Debug.Log(GetCellData(cellType).name);
         return GetCellData(cellType).coefficient[(int)enemyType];
     }
-    
+    /*public static ActorType ActorTypeToEnemyType(EnemyType enemyType)
+    {
+        ActorType actorType;
+        switch (enemyType)
+        {
+            case EnemyType.BD:
+            case EnemyType.JSC:
+            case EnemyType.XJ:
+        }
+
+    }*/
 }

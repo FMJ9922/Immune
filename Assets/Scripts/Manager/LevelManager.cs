@@ -330,6 +330,10 @@ public class LevelManager : MonoBehaviour
         finishCreate = true;
         InvokeRepeating("CheckSuccess", 0f,1f);
     }
+    public void CreateOneEnemy(ActorType actorType)
+    {
+
+    }
     public void CreateOneEnemy()
     {
         GameObject enemy = Instantiate(enemys[waves[0].enemyType], transform.position, Quaternion.identity, EnemyGroup.transform);//随机生成

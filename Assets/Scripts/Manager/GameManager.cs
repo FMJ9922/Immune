@@ -29,6 +29,7 @@ public class GameManager : MonoBehaviour
 
         JsonIO.InitGameData();//加载游戏数据
         JsonIO.InitCellData();//加载细胞数据
+        JsonIO.InitEnemyData();
         if (Instance != null && Instance != this)//检测Instance是否存在且只有一个
         {
             Destroy(this.gameObject);

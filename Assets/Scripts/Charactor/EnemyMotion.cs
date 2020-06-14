@@ -15,6 +15,7 @@ public class EnemyMotion : MonoBehaviour
     public FindPathType FindPathType;
     public EnemyStatus enemyStatus;
     public EnemyType enemyType;
+    public ActorType actorType;
     public Vector3 TargetPoint { private get; set; }
     private IEnumerator SlowDown;
     /*public bool draw;*/
