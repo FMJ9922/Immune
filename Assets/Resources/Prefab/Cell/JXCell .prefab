@@ -1089,10 +1089,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cellStatus: 0
-  cellType: 13
+  cellType: 12
   gridPos: {x: 0, y: 0}
-  revisePosLeft: {x: 0, y: 0, z: 0}
-  revisePosRight: {x: 0, y: 0, z: 0}
+  revisePosLeft: {x: 0, y: 0.243, z: 0}
+  revisePosRight: {x: 0, y: 0.243, z: 0}
   AtkSlider: {fileID: 5542150116239364083}
   detector: {fileID: 0}
   fireModeHandle: {fileID: 0}

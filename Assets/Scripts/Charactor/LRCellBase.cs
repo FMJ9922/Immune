@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class LRCellBase :  CellBase,LongRangeAttack
+public class LRCellBase : CellBase, LongRangeAttack
 {
 
     protected FireMode fireMode;
@@ -13,12 +13,12 @@ public class LRCellBase :  CellBase,LongRangeAttack
     public Detector detector;
     public FireModeHandle fireModeHandle;
 
-    public override void InitCell() 
+    public override void InitCell()
     {
         base.InitCell();
         detector = transform.Find("Detector").GetComponent<Detector>();
         detector.GetComponent<CircleCollider2D>().radius = atkRange;
-       fireMode = FireMode.Nearest;
+        fireMode = FireMode.Nearest;
         AtkSlider = transform.Find("SliderCanvas").Find("AtkSlider").GetComponent<Slider>();
         AtkSlider.value = 1;
         reloadTime = atkDuration;
@@ -38,14 +38,14 @@ public class LRCellBase :  CellBase,LongRangeAttack
     }
     void FixedUpdate()
     {
-        if ( cellStatus == CellStatus.Die) { return; }
+        if (cellStatus == CellStatus.Die) { return; }
 
         AtkSlider.value = Mathf.Clamp(reloadTime / atkDuration, 0, 1);
         if (reloadTime < atkDuration)
         {
             reloadTime += Time.deltaTime;
         }
-        else if(allowAttack)
+        else if (allowAttack)
         {
             AttackOneTime();
             reloadTime = 0;
@@ -56,6 +56,7 @@ public class LRCellBase :  CellBase,LongRangeAttack
     public override void StartAction()
     {
         allowAttack = true;
+        //Debug.Log("1");
     }
 
     public override void StopAction()
@@ -66,15 +67,14 @@ public class LRCellBase :  CellBase,LongRangeAttack
     {
         return detector.CheckEnemyArrayList(fireMode, attackType);
     }
-    
+
     public virtual void AttackOneTime()
     {
         targetEnemy = ChooseTargetEnemey();
         if (targetEnemy == null)
         {
-            allowAttack = false;
+            StopAction();
             OnCellStatusChange(CellStatus.Idle);
-            cellAnimator.CleanFrameData();
             return;
         }
         cellAnimator.CleanFrameData();
@@ -96,5 +96,18 @@ public class LRCellBase :  CellBase,LongRangeAttack
         base.CloseRangePic();
         fireModeHandle.gameObject.SetActive(false);
     }
+    public override void OnEnemyEnter(Transform enemyTrans)
+    {
+        base.OnEnemyEnter(enemyTrans);
+        EnemyStatus status = enemyTrans.GetComponent<EnemyMotion>().enemyStatus;
+        if (status == EnemyStatus.Die || status == EnemyStatus.Engulfed)
+        { 
+            return; 
+        }
+        else
+        {
+            StartAction();
+        }
 
+    }
 }

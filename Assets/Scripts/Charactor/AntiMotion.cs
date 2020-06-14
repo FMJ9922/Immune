@@ -62,6 +62,7 @@ public class AntiMotion : MonoBehaviour
     {
         if (target != null && target.GetComponent<EnemyHealth>().Hp > 0)
         {
+            //Debug.Log(damage);
             target.GetComponent<EnemyHealth>().TakeDamage(damage, false);
             target.GetComponent<EnemyMotion>().GetSlowDown(0.5f, 10f);
             Destroy(gameObject);
@@ -69,6 +70,7 @@ public class AntiMotion : MonoBehaviour
         if(target.GetComponent<EnemyMotion>().enemyStatus ==EnemyStatus.Die
             || target.GetComponent<EnemyMotion>().enemyStatus == EnemyStatus.Engulfed)
         {
+            
             Destroy(gameObject);
         }
 

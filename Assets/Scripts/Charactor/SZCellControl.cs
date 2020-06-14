@@ -47,6 +47,20 @@ public class SZCellControl : SRCellBase
         OnCellStatusChange(CellStatus.Die);
         slider.transform.parent.gameObject.SetActive(false);
     }
+    public override void OnEnemyEnter(Transform enemyTrans)
+    {
+        base.OnEnemyEnter(enemyTrans);
+        EnemyStatus status = enemyTrans.GetComponent<EnemyMotion>().enemyStatus;
+        if (status == EnemyStatus.Engulfed)
+        {
+            return;
+        }
+        else
+        {
+            StartAction();
+        }
+
+    }
 
 }
     

@@ -99,7 +99,7 @@ public class BagPanel : ViewBase
             case 1:
                 articleType = ArticleType.LRCell;
                 return articleType;
-            case 13:
+            case 12:
                 articleType = ArticleType.LRCell;
                 return articleType;
             case 5:
@@ -121,11 +121,10 @@ public class BagPanel : ViewBase
             case 9:
                 articleType = ArticleType.HelpCell;
                 return articleType;
-         
-            case 11:
+            case 10:
                 articleType = ArticleType.HelpCell;
                 return articleType;
-            case 12:
+            case 11:
                 articleType = ArticleType.HelpCell;
                 return articleType;
             //病毒细胞

@@ -287,37 +287,8 @@ public class JsonIO : MonoBehaviour
     }
     public static float GetCoefficiet(CellType cellType,EnemyType enemyType)
     {
+        //Debug.Log(GetCellData(cellType).name);
         return GetCellData(cellType).coefficient[(int)enemyType];
     }
-    /*private static WayPoint[] PraseWayPoint(List<object> waypointlist)
-    {
-        WayPoint[] _wayPoints = new WayPoint[waypointlist.Count];
-        for (int i = 0; i < waypointlist.Count; i++)
-        {
-            var aWayPoint = (List<System.Object>)waypointlist[i];
-            _wayPoints[i] = new WayPoint();
-            _wayPoints[i].position = new Vector3(0,0,0);
-            //Debug.Log((double)aWayPoint[0]);
-            double x = 0, y = 0, z = 0;
-            for (int j = 0; j < 2; j++)
-            {
-                switch (j)
-                {
-                    case 0:
-                        x = ((double)aWayPoint[j]);
-                        break;
-                    case 1:
-                        y = ((double)aWayPoint[j]);
-                        break;
-                    case 2:
-                        z = ((double)aWayPoint[j]);
-                        break;
-
-                }
-            }
-            _wayPoints[i].position = new Vector3((float)x, (float)y, (float)z);
-
-        }
-        return _wayPoints;
-    }*/
+    
 }

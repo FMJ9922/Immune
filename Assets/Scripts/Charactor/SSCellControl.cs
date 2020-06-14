@@ -14,6 +14,7 @@ public class SSCellControl : LRCellBase
         targetEnemy = ChooseTargetEnemey();
         if (targetEnemy == null)
         {
+            StopAction();
             OnCellStatusChange(CellStatus.Idle);
             cellAnimator.CleanFrameData();
             return;

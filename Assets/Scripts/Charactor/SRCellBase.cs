@@ -107,4 +107,5 @@ public class SRCellBase : CellBase, ShortRangeAttack
         base.CloseRangePic();
         fireModeHandle.gameObject.SetActive(false);
     }
+   
 }

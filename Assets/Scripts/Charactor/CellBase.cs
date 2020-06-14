@@ -94,7 +94,7 @@ public abstract class CellBase : MonoBehaviour
                                     revisePosRight;
     }
 
-    public void OnEnemyEnter(Transform enemyTrans)
+    public virtual void OnEnemyEnter(Transform enemyTrans)
     {
         if (enemyTrans == null) return;
         enemyInRange.Add(enemyTrans);
@@ -105,10 +105,6 @@ public abstract class CellBase : MonoBehaviour
         if (enemyInRange.Count == 1)
         {
             CheckLeftOrRight(enemyTrans);
-            StartAction();
-        }
-        if (BagPanel.PraseEnum((int)cellType) != ArticleType.HelpCell)
-        {
             StartAction();
         }
         

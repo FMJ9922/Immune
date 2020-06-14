@@ -8,13 +8,17 @@ public class JXCellControl : LRCellBase
     public List<GameObject> enemys = new List<GameObject>();
     // Start is called before the first frame update
 
-
+    private void Start()
+    {
+        cellType = CellType.JX;
+    }
     public override void AttackOneTime()
     {
         attackType = AttackType.Other;
         targetEnemy = ChooseTargetEnemey();
         if (targetEnemy == null)
         {
+            StopAction();
             OnCellStatusChange(CellStatus.Idle);
             cellAnimator.CleanFrameData();
             return;
@@ -28,6 +32,7 @@ public class JXCellControl : LRCellBase
     {
         if (targetEnemy == null)
         {
+            StopAction();
             OnCellStatusChange(CellStatus.Idle);
             cellAnimator.CleanFrameData();
             return;

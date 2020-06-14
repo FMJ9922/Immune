@@ -68,4 +68,18 @@ public class JSCellControl : SRCellBase
         GameObject newproduct = Instantiate(product, transform);
         newproduct.transform.position = InitPos.position;
     }
+    public override void OnEnemyEnter(Transform enemyTrans)
+    {
+        base.OnEnemyEnter(enemyTrans);
+        EnemyStatus status = enemyTrans.GetComponent<EnemyMotion>().enemyStatus;
+        if (status == EnemyStatus.Engulfed)
+        {
+            return;
+        }
+        else
+        {
+            StartAction();
+        }
+
+    }
 }
