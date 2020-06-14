@@ -16,7 +16,7 @@ public class SRCellBase : CellBase, ShortRangeAttack
         base.InitCell();
         detector = transform.Find("Detector").GetComponent<Detector>();
         detector.GetComponent<CircleCollider2D>().radius = atkRange;
-        fireMode = FireMode.First;
+        fireMode = FireMode.Nearest;
         AtkSlider = transform.Find("SliderCanvas").Find("AtkSlider").GetComponent<Slider>();
         AtkSlider.value = 1;
         reloadTime = atkDuration;

@@ -32,7 +32,7 @@ public class ControlManager : MonoBehaviour
     public Text text;
 
     public AStarNode lastNode = null;
-    public CellBase lastCell;
+    public CellBase lastCell = null;
 
     public Transform SelectGlow;
 
@@ -139,6 +139,7 @@ public class ControlManager : MonoBehaviour
             else if (targetNode == LevelManager.Instance.GetNodeByPos(new Vector2(vectors[i].x, vectors[i].y)))
             {
                 LoggerManager.Instance.ShowOneLog("此处无法放置！");
+                //Debug.Log("1");
                 return false;
             }
             else
@@ -148,7 +149,9 @@ public class ControlManager : MonoBehaviour
 
                 if (!issuccess)
                 {
+                    
                     LoggerManager.Instance.ShowOneLog("此处无法放置！");
+                    //Debug.Log("2");
                     isAvaliable = false;
                 }
             }
@@ -157,176 +160,210 @@ public class ControlManager : MonoBehaviour
         }
         return isAvaliable;
     }
-    void FixedUpdate()
+    void Update()
     {
-        /*if (PauseHandler.IsGamePause)
-        {
-            return;
-        }*/
 
 #if UNITY_EDITOR || UNITY_STANDALONE || UNITY_WEBGL
         if (Input.GetMouseButtonUp(0))
         {
 
 #elif UNITY_IOS || UNITY_ANDROID
-        if (Input.touchCount != 1 || Input.GetTouch(0).phase == TouchPhase.Ended) {
+        if (Input.GetTouch(0).phase == TouchPhase.Ended) {
 #endif
-            //text.text = transform.position.x + "," + transform.position.y + "," + transform.position.z;
-            //Debug.Log("!");
-            //Debug.Log(targetNode.name);
-            if (OnMoveToPlant != null)
-            {
-                OnMoveToPlant(false);
-            }
+            
             isSelect = false;
-
-            if (RightCanvasShowAndHide.Instance.regular&& placeType == PlaceType.Selected)
+            if (CellOnMove != null)
             {
-                RightCanvasShowAndHide.Instance.ShowCanvas();
-            }
-
-            if (targetNode != null && targetNode.tileType == TileType.Empty && placeType == PlaceType.Selected)
-            {
-                
-                targetNode.tileType = TileType.Occupy;
-                if (OnPlantCell != null)
-                {
-                    OnPlantCell();
-                }
-                CellData cellData;
-                cellData = JsonIO.GetCellData(cellType);
-                //Debug.Log(""+PathAvaliable + CheckPathAvaliable() + LevelManager.Instance.SpendPoints(cellData.initCost));
-                if (PathAvaliable && CheckPathAvaliable()&&LevelManager.Instance.SpendPoints(PointsType.Deploy,cellData.initCost))
-                {
-                    //Debug.Log("plan1");
-                    GameObject cell = Instantiate(CellPfbs[(int)cellType],
-                    new Vector3(targetNode.pos.x, targetNode.pos.y, GetRenderDepth(targetNode.pos.x, targetNode.pos.y)),
-                    Quaternion.identity,
-                    targetNode.transform);
-                    cell.name = cellType.ToString();
-                    cell.GetComponent<CellBase>().gridPos = new Vector2Int(targetNode.posX, targetNode.posY);
-                    LevelManager.Instance.DrawDefaultRoute(LevelManager.Instance.curWave);
-                    LevelManager.Instance.OnScoreEvent(ScoreType.CellDeployNum, 1);
-                    //To Do 放置正确音效，粒子效果
-                }
-                else
-                {
-                    if (!PathAvaliable)
-                    {
-                        LoggerManager.Instance.ShowOneLog("此处无法放置！");
-                    }
-                    targetNode.tileType = TileType.Empty;
-                    PathAvaliable = true;
-                    //To Do 放置错误：路径无效音效
-                }
-
-                
-            }
-
-            if (placeType == PlaceType.Selected)
-            {
-                placeType = PlaceType.Null;
                 Destroy(CellOnMove);
                 CellOnMove = null;
             }
+            //Debug.Log(placeType.ToString());
+            switch (placeType)
+            {
+                case PlaceType.Selected:
+                    {
+                        if (OnMoveToPlant != null)
+                        {
+                            OnMoveToPlant(false);
+                        }
+                        placeType = PlaceType.Null;
+                        if (RightCanvasShowAndHide.Instance.regular)
+                        {
+                            RightCanvasShowAndHide.Instance.ShowCanvas();
+                        }
+
+                        if(targetNode.tileType == TileType.Empty)
+                        {
+                            
+                            if (OnPlantCell != null)
+                            {
+                                OnPlantCell();
+                            }
+                            CellData cellData;
+                            cellData = JsonIO.GetCellData(cellType);
+                            TileType temp = targetNode.tileType;
+                            targetNode.tileType = TileType.Occupy;
+                            if (PathAvaliable && CheckPathAvaliable() && LevelManager.Instance.SpendPoints(PointsType.Deploy, cellData.initCost))
+                            {
+                               
+                                GameObject cell = Instantiate(CellPfbs[(int)cellType],
+                                new Vector3(targetNode.pos.x, targetNode.pos.y, GetRenderDepth(targetNode.pos.x, targetNode.pos.y)),
+                                Quaternion.identity,
+                                targetNode.transform);
+                                cell.name = cellType.ToString();
+                                cell.GetComponent<CellBase>().gridPos = new Vector2Int(targetNode.posX, targetNode.posY);
+                                LevelManager.Instance.DrawDefaultRoute(LevelManager.Instance.curWave);
+                                LevelManager.Instance.OnScoreEvent(ScoreType.CellDeployNum, 1);
+                                
+                                //To Do 放置成功音效
+                                return;
+                            }
+                            else if(!PathAvaliable|| !CheckPathAvaliable())
+                            {
+                                targetNode.tileType = temp;
+                                LoggerManager.Instance.ShowOneLog("此处无法放置！");
+                                
+                            }
+                            else
+                            {
+                                targetNode.tileType = temp;
+                                LoggerManager.Instance.ShowOneLog("点数不足！");
+                            }
+                            
+                        }
+                        else
+                        {
+                            LoggerManager.Instance.ShowOneLog("此处被占用，无法放置！");
+                        }
+                        PathAvaliable = true;
+                        //To Do 放置错误：路径无效音效
+                        break;
+                    }
+                default:
+                    {
+                        break;
+                    }
+            }
             return;
+            
         }
 
 #if UNITY_EDITOR || UNITY_STANDALONE || UNITY_WEBGL
-        if (!Input.GetMouseButton(0))
+        if (!Input.GetMouseButton(0))//如果没有输入就返回
         {
             return;
         }
-
+        RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
+        if (hit.collider != null)
+        {
+            if (hit.collider.tag != "RoleSelectUI")
+            {
+                HideSelectAndCellInfo();
+            }
+        }
 
         transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
         if (EventSystem.current.IsPointerOverGameObject())
         {
+            LoggerManager.Instance.ShowOneLog("触碰UI");
             return;
         }
 
 
 #elif UNITY_IOS || UNITY_ANDROID
     {
-        transform.position = Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);
-        int pointerID = Input.GetTouch(0).fingerId;
-        if (EventSystem.current.IsPointerOverGameObject(pointerID))
+        if (Input.touchCount<=0)
         {
             return;
         }
-    }
-#endif
-
-        if (CellOnMove != null)
-        {
-            CellOnMove.transform.position = transform.position;
-        }
-
-        targetNode = LevelManager.Instance.GetNodeByPos(transform.position);
-        //Debug.Log(GetRenderDepth(transform.position.x, transform.position.y)*1000f);
-        
-       
-        if (placeType ==PlaceType.Remove)//如果是铲除
-        {
-            placeType = PlaceType.Null;
-            if (targetNode.tileType == TileType.Occupy)
-            {
-                string name = targetNode.transform.GetChild(0).gameObject.name;
-                Destroy(targetNode.transform.GetChild(0).gameObject);
-
-                targetNode.tileType = TileType.Empty;
-                LoggerManager.Instance.ShowOneLog("已铲除"+ name);
-            }
-            ShovelManager.Instance.OnCancelClose();
-        }
-        else if (targetNode == lastNode || targetNode==null)//如果目标结点和上帧结点相同或为空
-        {
-            return;
-        }
-        else if ( placeType == PlaceType.Selected)
-        {
-            if (CellOnMove != null)
-            {
-                if (CheckPathAvaliable()&&targetNode.tileType==TileType.Empty)
-                {
-                    CellOnMove.GetComponentInChildren<RangePicManage>().ChangeSpriteColor(Color.white);
-                    //Debug.Log("White");
-                }
-                else
-                {
-                    CellOnMove.GetComponentInChildren<RangePicManage>().ChangeSpriteColor(Color.red);
-                    //Debug.Log("Red");
-                }
-            }
-        }
-        else 
-        {
-            if(lastCell!=null)
-                lastCell.CloseRangePic();
-            lastNode = targetNode;
-
-            
-            if (targetNode.tileType ==TileType.Occupy)
-            {
-                lastCell = targetNode.transform.GetChild(0).GetComponent<CellBase>();
-                lastCell.ShowRangePic();
-                //Debug.Log("StartShow");
-            }
-            
-
-        }
-
-
-        RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
+        RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position), Vector2.zero);
         if (hit.collider != null)
         {
-            //Debug.Log(hit.collider.transform.name);
             if (hit.collider.tag != "RoleSelectUI")
             {
                 HideSelectAndCellInfo();
             }
         }
+        transform.position = Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);
+        int pointerID = Input.GetTouch(0).fingerId;
+        if (EventSystem.current.IsPointerOverGameObject(pointerID))
+        {
+                //LoggerManager.Instance.ShowOneLog("触碰UI");
+            return;
+        }
+    }
+#endif
+
+        targetNode = LevelManager.Instance.GetNodeByPos(transform.position);
+        switch (placeType)
+        {
+            case PlaceType.Null:
+                {
+                    if (lastCell != null && Vector3.Distance(transform.position, lastCell.transform.position) > 1.5F)
+                    {
+                        lastCell.CloseRangePic();
+                        lastCell = null;
+                    }
+                    if (targetNode!=null&&targetNode.tileType == TileType.Occupy&&lastCell == null)
+                    {
+                        lastCell = targetNode.transform.GetChild(0).GetComponent<CellBase>();
+                        lastCell.ShowRangePic();
+                    }
+                    lastNode = targetNode;
+                    return;
+                }
+            case PlaceType.Remove:
+                {
+                    if (lastCell != null)
+                    {
+                        lastCell.CloseRangePic();
+                        lastCell = null;
+                    }
+                    placeType = PlaceType.Null;
+                    if (targetNode.tileType == TileType.Occupy)
+                    {
+                        string name = targetNode.transform.GetChild(0).gameObject.name;
+                        Destroy(targetNode.transform.GetChild(0).gameObject);
+
+                        targetNode.tileType = TileType.Empty;
+                        LoggerManager.Instance.ShowOneLog("已铲除" + name);
+                    }
+                    ShovelManager.Instance.OnCancelClose();
+                    lastNode = targetNode;
+                    return;
+                }
+            case PlaceType.Selected:
+                {
+                    if (lastCell != null)
+                    {
+                        lastCell.CloseRangePic();
+                        lastCell = null;
+                    }
+                    if (CellOnMove != null)
+                    {
+                        CellOnMove.transform.position = transform.position;
+                        if (lastNode!=targetNode)
+                        {
+                            if (CheckPathAvaliable() && targetNode.tileType == TileType.Empty)
+                            {
+                                CellOnMove.GetComponentInChildren<RangePicManage>().ChangeSpriteColor(Color.white);
+                                //Debug.Log("White");
+                            }
+                            else
+                            {
+                                CellOnMove.GetComponentInChildren<RangePicManage>().ChangeSpriteColor(Color.red);
+                                //Debug.Log("Red");
+                            }
+                        }
+                    }
+
+                    lastNode = targetNode;
+                    return;
+                }
+        }
+
+        
        
     }
 }

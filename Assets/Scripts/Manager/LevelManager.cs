@@ -67,7 +67,7 @@ public class Points
         }
         else
         {
-            LoggerManager.Instance.ShowOneLog("点数不足！无法放置");
+            //LoggerManager.Instance.ShowOneLog("点数不足！无法放置");
             return false;
         }
     }
@@ -172,7 +172,7 @@ public class LevelManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("LoadFail");
+            //Debug.Log("LoadFail");
             WinCanvas.SetActive(false);
             FailCanvas.SetActive(true);
             FailCanvas.GetComponent<StartIntroduceUI>().content.text = str;

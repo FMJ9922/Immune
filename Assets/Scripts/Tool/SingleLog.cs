@@ -5,13 +5,16 @@ using TMPro;
 public class SingleLog : MonoBehaviour
 {
     public TMP_Text logText;
+    public TMP_Text counterText;
     private float counter = 5;
     Color color;
 
-    public void SetLogInfo(string tMP_Text)
+    public void SetLogInfo(string tMP_Text,int n)
     {
         logText.text = tMP_Text;
         color = logText.color;
+        counterText.text = n == 0 ? "" : n.ToString()+ "*";
+            
     }
 
     // Update is called once per frame
