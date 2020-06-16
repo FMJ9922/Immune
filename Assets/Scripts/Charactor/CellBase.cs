@@ -121,7 +121,6 @@ public abstract class CellBase : MonoBehaviour
         {
             StopAction();
         }
-            
     }
     public void OnInRangeEnemyDie(Transform enemyTrans)
     {
@@ -160,5 +159,8 @@ public abstract class CellBase : MonoBehaviour
         cellAnimator.OnStatusChange -= OnCellStatusChange;
         StopAllCoroutines();
     }
-
+    public float GetUpgradeTime()
+    {
+        return atkTime;
+    }
 }

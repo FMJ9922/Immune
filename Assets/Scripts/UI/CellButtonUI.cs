@@ -9,6 +9,10 @@ public class CellButtonUI : MonoBehaviour
     public GameObject cellButtonPrefeb;
     int[] cellTypes;
     int num;
+    public Sprite bushu;
+    public Sprite kangyuan;
+    public Sprite linba;
+
 
     private void Start()
     {
@@ -26,6 +30,19 @@ public class CellButtonUI : MonoBehaviour
             cellButton.GetComponentInChildren<CellButtonInfo>().cellType = (CellType)cellTypes[i];
             string path = "Cell/" + cellTypes[i] + ((CellType)cellTypes[i]).ToString() + "/" + ((CellType)cellTypes[i]).ToString();
             cellButton.transform.GetChild(1).GetComponent<Image>().sprite = Resources.Load<Sprite>(path);
+            if(cellTypes[i]<7|| cellTypes[i] == 10)
+            {
+                cellButton.transform.GetChild(2).GetComponent<Image>().sprite = bushu;
+            }
+            else if (cellTypes[i] < 10)
+            {
+                cellButton.transform.GetChild(2).GetComponent<Image>().sprite = kangyuan;
+            }
+            else
+            {
+                cellButton.transform.GetChild(2).GetComponent<Image>().sprite = linba;
+            }
+            
         }
     }
 }

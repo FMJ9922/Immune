@@ -76,6 +76,8 @@ public class LevelManager : MonoBehaviour
 {
     public static LevelManager Instance { get; private set; } = null;
     public GameObject[] enemys;
+    public GameObject normalCell;
+    public GameObject redCell;
     private Wave[] waves;
 
     public AStarNode[,] AllNodeGroup;
@@ -247,7 +249,11 @@ public class LevelManager : MonoBehaviour
                 node.name = "Node(" + i + "," + j + ")";
                 node.GetComponent<AStarNode>().InitNode((TileType)mapType[i, j], nodePos2, i, j);
                 node.GetComponent<RectTransform>().sizeDelta = new Vector2(1, 1);
-
+                if(mapType[i, j] == 3)
+                {
+                    GameObject norCell = Instantiate(normalCell, nodePos3, Quaternion.identity, node.transform);
+                    norCell.name = "normalCell";
+                }
                 AllNodeGroup[i, j] = node.GetComponent<AStarNode>();
             }
         }

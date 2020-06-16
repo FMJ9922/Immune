@@ -114,6 +114,7 @@ public class JsonIO : MonoBehaviour
     }
     public static EnemyData GetEnemyData(ActorType actorType)
     {
+        //Debug.Log((int)actorType);
         return enemyDatas[(int)actorType - 20];
     }
     public static int[,] GetMap()
@@ -149,7 +150,7 @@ public class JsonIO : MonoBehaviour
         string jsonString = t.ToString();
         var dict = (Dictionary<string, object>)Json.Deserialize(jsonString);
         List<System.Object> EnemyDataList = (List<System.Object>)dict["lists"];
-        cellDatas = new CellData[EnemyDataList.Count];
+        enemyDatas = new EnemyData[EnemyDataList.Count];
         for (int i = 0; i < EnemyDataList.Count; i++)
         {
             var dict2 = (Dictionary<string, object>)EnemyDataList[i];

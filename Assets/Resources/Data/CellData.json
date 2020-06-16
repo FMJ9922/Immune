@@ -80,7 +80,7 @@
 			"InitCost":5.0,
 			"AtkRange":1.0,
 			"AtkDamage":50.0,
-			"AtkTime":0.5,
+			"AtkTime":0.75,
 			"AtkDuration":1.0,
 			"Introduce":"接受抗原后可分化为效应T细胞、辅助性T细胞和抑制性T细胞",
 			"Type":"辅助",

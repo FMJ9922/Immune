@@ -45,7 +45,7 @@ public class AssistCellBase : CellBase,Produce
 
     public override void StartAction()
     {
-        Debug.Log("开始");
+        //Debug.Log("开始");
         allowProduce = true;
         cellAnimator.CleanFrameData();
         cellAnimator.reverse = false;

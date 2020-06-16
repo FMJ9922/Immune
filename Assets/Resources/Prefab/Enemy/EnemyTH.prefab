@@ -423,6 +423,7 @@ MonoBehaviour:
   FindPathType: 0
   enemyStatus: 0
   enemyType: 0
+  actorType: 20
 --- !u!114 &4491490845861707162
 MonoBehaviour:
   m_ObjectHideFlags: 0

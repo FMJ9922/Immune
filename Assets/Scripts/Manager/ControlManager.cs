@@ -70,13 +70,13 @@ public class ControlManager : MonoBehaviour
             CellOnMove.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(path);
             CellOnMove.name = cellType.ToString();
             //text.text = transform.position.x+","+ transform.position.y + "," + transform.position.z ;
-            
+
             placeType = PlaceType.Selected;
             this.cellType = cellType;
             isSelect = false;
-            CellOnMove.GetComponentInChildren<RangePicManage>().ChangeLocalScale(JsonIO.GetCellData(cellType).atkRange*3.3f);
+            CellOnMove.GetComponentInChildren<RangePicManage>().ChangeLocalScale(JsonIO.GetCellData(cellType).atkRange * 3.3f);
 
-            
+
             if (RightCanvasShowAndHide.Instance.regular)
             {
                 RightCanvasShowAndHide.Instance.HideCanvas();
@@ -84,7 +84,7 @@ public class ControlManager : MonoBehaviour
         }
 
     }
-    public void OnPlantButtonClick(Transform trans,CellType cellType)
+    public void OnPlantButtonClick(Transform trans, CellType cellType)
     {
         if (!SelectGlow.gameObject.activeInHierarchy)
         {
@@ -92,17 +92,17 @@ public class ControlManager : MonoBehaviour
             RoleSelectInfo.Instance.transform.position = trans.position;
             RoleSelectInfo.Instance.transform.GetComponent<Animation>().Play("ShowCellInfo");
             RoleSelectInfo.Instance.InvalidateInfo(cellType);
-            Debug.Log("1");
+            //Debug.Log("1");
         }
         else
         {
-            RoleSelectInfo.Instance.ChangeInstance(trans,cellType);
-            Debug.Log("2");
+            RoleSelectInfo.Instance.ChangeInstance(trans, cellType);
+            //Debug.Log("2");
         }
-        
+
         SelectGlow.SetParent(trans.parent);
         SelectGlow.localPosition = new Vector3(2, 2.6F, 0);
-       
+
     }
     public float GetRenderDepth(float x, float y)
     {
@@ -121,14 +121,14 @@ public class ControlManager : MonoBehaviour
     {
         placeType = PlaceType.Remove;
         Instance.isSelect = false;
-        
+
     }
     public bool CheckPathAvaliable()
     {
         bool isAvaliable = true;
         Vector4[] vectors = JsonIO.GetDefaultPath();
         AStarAgent agent = transform.GetComponent<AStarAgent>();
-        
+
         for (int i = 0; i < vectors.Length; i++)
         {
             if (targetNode == null)
@@ -149,16 +149,115 @@ public class ControlManager : MonoBehaviour
 
                 if (!issuccess)
                 {
-                    
+
                     LoggerManager.Instance.ShowOneLog("此处无法放置！");
                     //Debug.Log("2");
                     isAvaliable = false;
                 }
             }
-               
+
 
         }
         return isAvaliable;
+    }
+    public static bool RightPlaceToUpGrade(CellType oldcellType, CellType newcellType)
+    {
+        if (oldcellType == CellType.BL)
+        {
+            if ((int)newcellType > 10 && (int)newcellType < 13) return true;
+            else return false;
+        }
+        else if (oldcellType == CellType.TL)
+        {
+            if ((int)newcellType > 6 && (int)newcellType < 10) return true;
+            else return false;
+        }
+        else return false;
+    }
+    public void InitOneCell()
+    {
+        CellData cellData;
+        cellData = JsonIO.GetCellData(cellType);
+        TileType temp = targetNode.tileType;
+        targetNode.tileType = TileType.Occupy;
+        if (PathAvaliable && CheckPathAvaliable() && LevelManager.Instance.SpendPoints(PointsType.Deploy, cellData.initCost))
+        {
+
+            GameObject cell = Instantiate(CellPfbs[(int)cellType],
+            new Vector3(targetNode.pos.x, targetNode.pos.y, GetRenderDepth(targetNode.pos.x, targetNode.pos.y)),
+            Quaternion.identity,
+            targetNode.transform);
+            cell.name = cellType.ToString();
+            cell.GetComponent<CellBase>().gridPos = new Vector2Int(targetNode.posX, targetNode.posY);
+            LevelManager.Instance.DrawDefaultRoute(LevelManager.Instance.curWave);
+            LevelManager.Instance.OnScoreEvent(ScoreType.CellDeployNum, 1);
+
+            //To Do 放置成功音效
+            return;
+        }
+        else if (!PathAvaliable || !CheckPathAvaliable())
+        {
+            targetNode.tileType = temp;
+            LoggerManager.Instance.ShowOneLog("此处无法放置！");
+
+        }
+        else
+        {
+            targetNode.tileType = temp;
+            LoggerManager.Instance.ShowOneLog("点数不足！");
+        }
+    }
+    public bool CheckCanPlaceCell(CellType _cellType)
+    {
+        CellData cellData;
+        cellData = JsonIO.GetCellData(_cellType);
+        TileType temp = targetNode.tileType;
+        targetNode.tileType = TileType.Occupy;
+        PointsType pointsType = PointsType.Deploy;
+        if ((int)_cellType < 7 || (int)_cellType == 10)
+        {
+            pointsType = PointsType.Deploy;
+        }
+        else if ((int)_cellType < 10)
+        {
+            pointsType = PointsType.KangYuan;
+        }
+        else
+        {
+            pointsType = PointsType.LinBa;
+        }
+        if (PathAvaliable && CheckPathAvaliable() && LevelManager.Instance.SpendPoints(pointsType, cellData.initCost))
+        {
+            return true;
+        }
+        else if (!PathAvaliable || !CheckPathAvaliable())
+        {
+            targetNode.tileType = temp;
+            LoggerManager.Instance.ShowOneLog("此处无法放置！");
+
+        }
+        else
+        {
+            targetNode.tileType = temp;
+            LoggerManager.Instance.ShowOneLog("点数不足！");
+        }
+        return false;
+    }
+    public void InitOneCell(CellType _cellType)
+    {
+        GameObject cell = Instantiate(CellPfbs[(int)_cellType],
+            new Vector3(targetNode.pos.x, targetNode.pos.y, GetRenderDepth(targetNode.pos.x, targetNode.pos.y)),
+            Quaternion.identity,
+            targetNode.transform);
+        cell.name = _cellType.ToString();
+        cell.GetComponent<CellBase>().gridPos = new Vector2Int(targetNode.posX, targetNode.posY);
+        LevelManager.Instance.DrawDefaultRoute(LevelManager.Instance.curWave);
+        LevelManager.Instance.OnScoreEvent(ScoreType.CellDeployNum, 1);
+    }
+    public IEnumerator WaitForTime(System.Action action, float time)
+    {
+        yield return new WaitForSeconds(time);
+        action();
     }
     void Update()
     {
@@ -170,7 +269,7 @@ public class ControlManager : MonoBehaviour
 #elif UNITY_IOS || UNITY_ANDROID
         if (Input.GetTouch(0).phase == TouchPhase.Ended) {
 #endif
-            
+
             isSelect = false;
             if (CellOnMove != null)
             {
@@ -191,45 +290,47 @@ public class ControlManager : MonoBehaviour
                         {
                             RightCanvasShowAndHide.Instance.ShowCanvas();
                         }
-
-                        if(targetNode.tileType == TileType.Empty)
+                        if (targetNode == null)
                         {
-                            
+                            return;
+                        }
+                        if (targetNode.tileType == TileType.Empty)
+                        {
+
                             if (OnPlantCell != null)
                             {
                                 OnPlantCell();
                             }
-                            CellData cellData;
-                            cellData = JsonIO.GetCellData(cellType);
-                            TileType temp = targetNode.tileType;
-                            targetNode.tileType = TileType.Occupy;
-                            if (PathAvaliable && CheckPathAvaliable() && LevelManager.Instance.SpendPoints(PointsType.Deploy, cellData.initCost))
+                            int type = (int)cellType;
+                            if ((type > 6 && type < 10) || (type > 10 && type < 13))
                             {
-                               
-                                GameObject cell = Instantiate(CellPfbs[(int)cellType],
-                                new Vector3(targetNode.pos.x, targetNode.pos.y, GetRenderDepth(targetNode.pos.x, targetNode.pos.y)),
-                                Quaternion.identity,
-                                targetNode.transform);
-                                cell.name = cellType.ToString();
-                                cell.GetComponent<CellBase>().gridPos = new Vector2Int(targetNode.posX, targetNode.posY);
-                                LevelManager.Instance.DrawDefaultRoute(LevelManager.Instance.curWave);
-                                LevelManager.Instance.OnScoreEvent(ScoreType.CellDeployNum, 1);
-                                
-                                //To Do 放置成功音效
-                                return;
+                                LoggerManager.Instance.ShowOneLog("必须放置在前置细胞上");
                             }
-                            else if(!PathAvaliable|| !CheckPathAvaliable())
+                            else 
                             {
-                                targetNode.tileType = temp;
-                                LoggerManager.Instance.ShowOneLog("此处无法放置！");
-                                
+                                InitOneCell();
+                            }
+                        }
+                        else if (targetNode.tileType == TileType.Occupy)
+                        {
+                            if (targetNode.transform.childCount > 0)
+                            {
+                                Transform oldCell = targetNode.transform.GetChild(0);
+                                CellBase cellBase = oldCell.GetComponent<CellBase>();
+                                if (RightPlaceToUpGrade(cellBase.cellType, cellType)&&CheckCanPlaceCell(cellType))
+                                {
+                                    cellBase.StartAction();
+                                    StartCoroutine(WaitForTime(() => InitOneCell(cellType), cellBase.GetUpgradeTime()));
+                                }
+                                else
+                                {
+                                    LoggerManager.Instance.ShowOneLog("放置在了错误的细胞上");
+                                }
                             }
                             else
                             {
-                                targetNode.tileType = temp;
-                                LoggerManager.Instance.ShowOneLog("点数不足！");
+                                LoggerManager.Instance.ShowOneLog("BUG:此处节点状态没有归empty");
                             }
-                            
                         }
                         else
                         {
@@ -245,7 +346,7 @@ public class ControlManager : MonoBehaviour
                     }
             }
             return;
-            
+
         }
 
 #if UNITY_EDITOR || UNITY_STANDALONE || UNITY_WEBGL
@@ -305,7 +406,7 @@ public class ControlManager : MonoBehaviour
                         lastCell.CloseRangePic();
                         lastCell = null;
                     }
-                    if (targetNode!=null&&targetNode.tileType == TileType.Occupy&&lastCell == null)
+                    if (targetNode != null && targetNode.tileType == TileType.Occupy && lastCell == null)
                     {
                         lastCell = targetNode.transform.GetChild(0).GetComponent<CellBase>();
                         lastCell.ShowRangePic();
@@ -340,20 +441,43 @@ public class ControlManager : MonoBehaviour
                         lastCell.CloseRangePic();
                         lastCell = null;
                     }
-                    if (CellOnMove != null)
+                    if (CellOnMove != null)//如果移动的物体不为空
                     {
                         CellOnMove.transform.position = transform.position;
-                        if (lastNode!=targetNode)
+                        if (lastNode != targetNode)//如果移到了其它节点上
                         {
-                            if (CheckPathAvaliable() && targetNode.tileType == TileType.Empty)
+                            int type = (int)cellType;
+                            if ((type > 6 && type < 10) || (type > 10 && type < 13))//如果是需要在其他细胞上放置的细胞
                             {
-                                CellOnMove.GetComponentInChildren<RangePicManage>().ChangeSpriteColor(Color.white);
-                                //Debug.Log("White");
+                                if (targetNode.transform.childCount > 0)
+                                {
+                                    Transform oldCell = targetNode.transform.GetChild(0);
+                                    if (RightPlaceToUpGrade(oldCell.GetComponent<CellBase>().cellType, cellType))
+                                    {
+                                        CellOnMove.GetComponentInChildren<RangePicManage>().ChangeSpriteColor(Color.white);
+                                    }
+                                    else
+                                    {
+                                        CellOnMove.GetComponentInChildren<RangePicManage>().ChangeSpriteColor(Color.red);
+                                    }
+                                }
+                                else
+                                {
+                                    CellOnMove.GetComponentInChildren<RangePicManage>().ChangeSpriteColor(Color.red);
+                                }
                             }
-                            else
+                            else//如果是一般的细胞
                             {
-                                CellOnMove.GetComponentInChildren<RangePicManage>().ChangeSpriteColor(Color.red);
-                                //Debug.Log("Red");
+                                if (CheckPathAvaliable() && targetNode.tileType == TileType.Empty)
+                                {
+                                    CellOnMove.GetComponentInChildren<RangePicManage>().ChangeSpriteColor(Color.white);
+                                    //Debug.Log("White");
+                                }
+                                else
+                                {
+                                    CellOnMove.GetComponentInChildren<RangePicManage>().ChangeSpriteColor(Color.red);
+                                    //Debug.Log("Red");
+                                }
                             }
                         }
                     }
@@ -363,7 +487,7 @@ public class ControlManager : MonoBehaviour
                 }
         }
 
-        
-       
+
+
     }
 }
