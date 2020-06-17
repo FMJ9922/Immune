@@ -71,6 +71,7 @@ public class Points
             return false;
         }
     }
+
 }
 public class LevelManager : MonoBehaviour
 {
@@ -125,7 +126,7 @@ public class LevelManager : MonoBehaviour
         Map = transform.Find("Map").gameObject;
         GenerateTileNode();
 
-        levelPoints = new Points(100, 0, 0);
+        levelPoints = new Points(100, 100, 100);
         finishCreate = false;
 
         StartCanvas.SetActive(true);

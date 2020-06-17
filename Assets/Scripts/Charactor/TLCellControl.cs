@@ -12,7 +12,8 @@ public class TLCellControl : CellBase
 
     public override void InitCell()
     {
-        cellData = JsonIO.GetCellData(CellType.TL);
+        transform.parent.GetComponent<AStarNode>().tileType = TileType.Occupy;
+        cellData = JsonIO.GetCellData(cellType);
         atkDamage = cellData.atkDamage;
         atkDuration = cellData.atkDuration;
         atkRange = cellData.atkRange;
@@ -61,7 +62,7 @@ public class TLCellControl : CellBase
     public void OnUpGrade()
     {
         OnCellStatusChange(CellStatus.Change);
-        Invoke("OnDie", 0.75f);
+        Invoke("OnDie", cellAnimator.ChangeSprite.Length*0.0167f);
 
     }
    

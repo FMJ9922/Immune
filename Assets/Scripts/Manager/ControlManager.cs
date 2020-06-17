@@ -187,11 +187,12 @@ public class ControlManager : MonoBehaviour
             new Vector3(targetNode.pos.x, targetNode.pos.y, GetRenderDepth(targetNode.pos.x, targetNode.pos.y)),
             Quaternion.identity,
             targetNode.transform);
+            //Debug.Log(GetRenderDepth(targetNode.pos.x, targetNode.pos.y));
             cell.name = cellType.ToString();
             cell.GetComponent<CellBase>().gridPos = new Vector2Int(targetNode.posX, targetNode.posY);
             LevelManager.Instance.DrawDefaultRoute(LevelManager.Instance.curWave);
             LevelManager.Instance.OnScoreEvent(ScoreType.CellDeployNum, 1);
-
+            targetNode.tileType = TileType.Occupy;
             //To Do 放置成功音效
             return;
         }
@@ -249,10 +250,12 @@ public class ControlManager : MonoBehaviour
             new Vector3(targetNode.pos.x, targetNode.pos.y, GetRenderDepth(targetNode.pos.x, targetNode.pos.y)),
             Quaternion.identity,
             targetNode.transform);
+        //Debug.Log(GetRenderDepth(targetNode.pos.x, targetNode.pos.y));
         cell.name = _cellType.ToString();
         cell.GetComponent<CellBase>().gridPos = new Vector2Int(targetNode.posX, targetNode.posY);
         LevelManager.Instance.DrawDefaultRoute(LevelManager.Instance.curWave);
         LevelManager.Instance.OnScoreEvent(ScoreType.CellDeployNum, 1);
+        targetNode.tileType = TileType.Occupy;
     }
     public IEnumerator WaitForTime(System.Action action, float time)
     {
@@ -408,7 +411,8 @@ public class ControlManager : MonoBehaviour
                     }
                     if (targetNode != null && targetNode.tileType == TileType.Occupy && lastCell == null)
                     {
-                        lastCell = targetNode.transform.GetChild(0).GetComponent<CellBase>();
+                        lastCell = targetNode.GetComponentInChildren<CellBase>();
+                        Debug.Log(lastCell.transform.name);
                         lastCell.ShowRangePic();
                     }
                     lastNode = targetNode;

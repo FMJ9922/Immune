@@ -7,21 +7,19 @@ using UnityEngine.UI;
 public class AssistCellBase : CellBase,Produce
 {
     public Slider ProduceSlider;
-    private float reloadTime;
-    private bool allowProduce;
-    public Detector detector;
+    protected float reloadTime;
+    protected bool allowProduce;
+   
     
     public override void InitCell()
     {
         base.InitCell();
-        detector = transform.Find("Detector").GetComponent<Detector>();
-        detector.GetComponent<CircleCollider2D>().radius = atkRange;
         ProduceSlider = transform.Find("SliderCanvas").Find("PrdSlider").GetComponent<Slider>();
         ProduceSlider.value = 0;
         reloadTime = 0;
         allowProduce = false;
     }
-    void FixedUpdate()
+    protected virtual void FixedUpdate()
     {
         if (cellStatus == CellStatus.Die||!allowProduce) { return; }
 
@@ -45,7 +43,7 @@ public class AssistCellBase : CellBase,Produce
 
     public override void StartAction()
     {
-        //Debug.Log("开始");
+        //Debug.Log("1");
         allowProduce = true;
         cellAnimator.CleanFrameData();
         cellAnimator.reverse = false;
@@ -54,7 +52,7 @@ public class AssistCellBase : CellBase,Produce
 
     public override void StopAction()
     {
-        Debug.Log("结束");
+        //Debug.Log("结束");
         allowProduce = false;
         cellAnimator.CleanFrameData();
         cellAnimator.reverse = true;

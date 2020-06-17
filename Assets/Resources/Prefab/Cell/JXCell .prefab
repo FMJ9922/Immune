@@ -1094,8 +1094,8 @@ MonoBehaviour:
   revisePosLeft: {x: 0, y: 0.243, z: 0}
   revisePosRight: {x: 0, y: 0.243, z: 0}
   AtkSlider: {fileID: 5542150116239364083}
-  detector: {fileID: 0}
-  fireModeHandle: {fileID: 0}
+  detector: {fileID: 1823658310622353156}
+  fireModeHandle: {fileID: 9072913541624391624}
   Anti: {fileID: 7132249613400636183, guid: 54cb3e9388f82744ea70d2ffb002b7ba, type: 3}
   enemys: []
 --- !u!1 &6220439871331334919

@@ -31,7 +31,7 @@ public class CellAnimator : MonoBehaviour
     void Start()
     {
         
-        transform.localPosition = new Vector3(0, transform.localPosition.y, transform.position.y);
+        //transform.localPosition = new Vector3(0, transform.localPosition.y, 0);
         //FlipPicture.SaveFlipTextures(IdleSpriteR,CellType.TX);
     }
     public void CleanFrameData()
@@ -53,8 +53,15 @@ public class CellAnimator : MonoBehaviour
                 index = 0;
                 if (type == PlayAnimaType.Once&&(sprites == AtkSprite||sprites == SBSprite))
                 {
+                    if (cellBase.cellType == CellType.TF)
+                    {
+                        OnStatusChange(CellStatus.Produce);
+                    }
+                    else
+                    {
+                        OnStatusChange(CellStatus.Idle);
+                    }
                     
-                    OnStatusChange(CellStatus.Idle);
                     return;
                 }
                 else if (type == PlayAnimaType.Once &&sprites == ChangeSprite)
