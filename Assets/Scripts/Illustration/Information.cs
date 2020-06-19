@@ -26,6 +26,8 @@ public class Information : MonoBehaviour
 
     public GameObject ImagePrefab;
     public Image ImageCell;
+    public Image ImageEnemy;
+
     /*private TMP_Text Name;
     private TMP_Text Data;
     private TMP_Text Type;
@@ -60,10 +62,10 @@ public class Information : MonoBehaviour
         if ((int)actorType < 15)
         {
             path = "Cell";
-           
+
             //image.GetComponent<Image>().sprite = Resources.Load<Sprite>(path + "/" + ((int)actorType).ToString() + actorType.ToString() + "/" + actorType.ToString()); ;
             ImageCell.GetComponent<Image>().sprite = Resources.Load<Sprite>(path + "/" + ((int)actorType).ToString() + actorType.ToString() + "/" + actorType.ToString());
-            
+
             Name.text = JsonIO.GetCellData((CellType)(int)actorType).name.ToString();
             this.Type.text = JsonIO.GetCellData((CellType)(int)actorType).type;
             Data.text = "伤害:" + JsonIO.GetCellData((CellType)(int)actorType).atkDamage.ToString() + "   " +
@@ -74,7 +76,21 @@ public class Information : MonoBehaviour
             Introduce.text = "简介:" + JsonIO.GetCellData((CellType)(int)actorType).introduce;
 
         }
-        else if ((int)actorType < 20) path = "Enemy";
+        else if ((int)actorType < 30)
+        {
+            path = "Enemy";
+          /*  ImageEnemy.GetComponent<Image>().sprite = Resources.Load<Sprite>(path + "/" + ((int)actorType).ToString() + actorType.ToString() + "/" + actorType.ToString());
+
+            Name.text = JsonIO.GetEnemyData((EnemyType)(int)actorType).Name.ToString();
+            this.Type.text = JsonIO.GetEnemyData((EnemyType)(int)actorType).Type;
+            Data.text = "生命值:" + JsonIO.GetEnemyData((EnemyType)(int)actorType).HP.ToString() + "   " +
+                        "攻击值:" + JsonIO.GetEnemyData((EnemyType)(int)actorType).Atk.ToString() + "\n" +
+                        "速度:" + JsonIO.GetEnemyData((EnemyType)(int)actorType).Speed.ToString() +  "   " +                      
+                        "技能:" + JsonIO.GetEnemyData((EnemyType)(int)actorType).Ability.ToString();
+            Introduce.text = "简介:" + JsonIO.GetEnemyData((EnemyType)(int)actorType).Introduce;*/
+
+        }
+        
     }
 
     /* public void dateInfo(CellType cellType)
