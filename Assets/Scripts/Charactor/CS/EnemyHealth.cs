@@ -11,6 +11,7 @@ public class EnemyHealth : MonoBehaviour
 
     public delegate void EnemyDie(Transform enmeyTrans);
     public EnemyDie OnEnemyDie;
+    EnemyMotion enemyMotion;
 
     public float Hp
     {
@@ -23,6 +24,7 @@ public class EnemyHealth : MonoBehaviour
                             //public GameObject explosionEffect;
     void Start()
     {
+        enemyMotion = transform.GetComponent<EnemyMotion>();
         cellInRange = new ArrayList();
         Hp = InitHealth;
         hpSlider = GetComponentInChildren<Slider>();
@@ -38,29 +40,30 @@ public class EnemyHealth : MonoBehaviour
     public void TakeDamage(float damage, bool swallow)
     {
         //if (Hp <= 0) return;
-        Hp -= damage;
+        Hp -= damage* enemyMotion.GetCoefficient();
         hpSlider.value = (float)Hp / InitHealth;
         
         if (Hp <= 0)
         {
             EnemyStatus _enemyStatus = swallow ? EnemyStatus.Engulfed : EnemyStatus.Die;
             enemyAnimator.OnChangeEnemyStatus(_enemyStatus);
-            transform.GetComponent<EnemyMotion>().enemyStatus = _enemyStatus;
+            enemyMotion.enemyStatus = _enemyStatus;
             hpSlider.gameObject.SetActive(false);
             //Destroy(hpSlider.gameObject);
             if (_enemyStatus == EnemyStatus.Engulfed)
             {
                 StartCoroutine(MyTool.DoRotate(transform, true, -50f, 1f));
                 StartCoroutine(MyTool.DoScale(transform, 0.12f, 1.0f));
+                Destroy(enemyMotion.AntiTrans.gameObject);
                 Die();
 
             }
             else if(_enemyStatus ==EnemyStatus.Die)
             {
                 //transform.GetComponent<CircleCollider2D>().enabled = false;
-                transform.GetComponent<EnemyMotion>().StopAllCoroutines();
+                enemyMotion.StopAllCoroutines();
                 //Debug.Log("die");
-                transform.GetComponent<EnemyMotion>().GetSlowDown(0.5f, 10000f);
+                enemyMotion.GetSlowDown(0.5f, 10000f);
             }
             
             

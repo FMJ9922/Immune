@@ -35,7 +35,8 @@ public class ControlManager : MonoBehaviour
     public CellBase lastCell = null;
 
     public Transform SelectGlow;
-
+    public bool AllowBJ = false;
+    private bool hasInitBJbtn = false;
     void Awake()
     {
         if (instance != null && instance != this)
@@ -182,7 +183,6 @@ public class ControlManager : MonoBehaviour
         targetNode.tileType = TileType.Occupy;
         if (PathAvaliable && CheckPathAvaliable() && LevelManager.Instance.SpendPoints(PointsType.Deploy, cellData.initCost))
         {
-
             GameObject cell = Instantiate(CellPfbs[(int)cellType],
             new Vector3(targetNode.pos.x, targetNode.pos.y, GetRenderDepth(targetNode.pos.x, targetNode.pos.y)),
             Quaternion.identity,
@@ -193,6 +193,11 @@ public class ControlManager : MonoBehaviour
             LevelManager.Instance.DrawDefaultRoute(LevelManager.Instance.curWave);
             LevelManager.Instance.OnScoreEvent(ScoreType.CellDeployNum, 1);
             targetNode.tileType = TileType.Occupy;
+
+            if (AllowBJ && cellType == CellType.JX)
+            {
+
+            }
             //To Do 放置成功音效
             return;
         }
@@ -244,18 +249,23 @@ public class ControlManager : MonoBehaviour
         }
         return false;
     }
-    public void InitOneCell(CellType _cellType)
+    public IEnumerator DelayInitOneCell(CellType _cellType, AStarNode astarNode,float time)
+    {
+        yield return new WaitForSeconds(time);
+        InitOneCell(_cellType, astarNode);
+    }
+    public void InitOneCell(CellType _cellType,AStarNode astarNode)
     {
         GameObject cell = Instantiate(CellPfbs[(int)_cellType],
-            new Vector3(targetNode.pos.x, targetNode.pos.y, GetRenderDepth(targetNode.pos.x, targetNode.pos.y)),
+            new Vector3(astarNode.pos.x, astarNode.pos.y, GetRenderDepth(astarNode.pos.x, astarNode.pos.y)),
             Quaternion.identity,
-            targetNode.transform);
+            astarNode.transform);
         //Debug.Log(GetRenderDepth(targetNode.pos.x, targetNode.pos.y));
         cell.name = _cellType.ToString();
-        cell.GetComponent<CellBase>().gridPos = new Vector2Int(targetNode.posX, targetNode.posY);
+        cell.GetComponent<CellBase>().gridPos = new Vector2Int(astarNode.posX, astarNode.posY);
         LevelManager.Instance.DrawDefaultRoute(LevelManager.Instance.curWave);
         LevelManager.Instance.OnScoreEvent(ScoreType.CellDeployNum, 1);
-        targetNode.tileType = TileType.Occupy;
+        astarNode.tileType = TileType.Occupy;
     }
     public IEnumerator WaitForTime(System.Action action, float time)
     {
@@ -323,7 +333,12 @@ public class ControlManager : MonoBehaviour
                                 if (RightPlaceToUpGrade(cellBase.cellType, cellType)&&CheckCanPlaceCell(cellType))
                                 {
                                     cellBase.StartAction();
-                                    StartCoroutine(WaitForTime(() => InitOneCell(cellType), cellBase.GetUpgradeTime()));
+                                    if (!hasInitBJbtn)
+                                    {
+                                        CellButtonUI.Instance.InitOneButton(JsonIO.GetAllowCellType().Length - 1);
+                                    }
+                                    Debug.Log(cellType.ToString());
+                                    StartCoroutine(WaitForTime(() => InitOneCell(cellType,targetNode), cellBase.GetUpgradeTime()));
                                 }
                                 else
                                 {

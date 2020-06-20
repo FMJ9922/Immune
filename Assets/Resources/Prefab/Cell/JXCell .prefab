@@ -1089,7 +1089,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cellStatus: 0
-  cellType: 12
+  cellType: 11
   gridPos: {x: 0, y: 0}
   revisePosLeft: {x: 0, y: 0.243, z: 0}
   revisePosRight: {x: 0, y: 0.243, z: 0}

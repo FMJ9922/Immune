@@ -46,7 +46,10 @@ public class JSCellControl : SRCellBase
             OnCellStatusChange(CellStatus.Idle);
             return;
         }
-        if (targetEnemy.GetComponent<EnemyHealth>().Hp <= atkDamage* JsonIO.GetCoefficiet(cellType, targetEnemy.GetComponent<EnemyMotion>().enemyType))
+        EnemyMotion enemyMotion = targetEnemy.GetComponent<EnemyMotion>();
+        if (targetEnemy.GetComponent<EnemyHealth>().Hp <=
+            atkDamage * JsonIO.GetCoefficiet(cellType, enemyMotion.enemyType)
+            * enemyMotion.GetCoefficient())
         {
             cellAnimator.CleanFrameData();
             OnCellStatusChange(CellStatus.SpecialAbility);

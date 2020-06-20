@@ -14,7 +14,7 @@ public class SZCellControl : SRCellBase
         attackType = AttackType.Swallow;
         slider.value = 1;
     }
-
+   
     public override void AttackOneTime()
     {
         targetEnemy = ChooseTargetEnemey();
@@ -23,7 +23,10 @@ public class SZCellControl : SRCellBase
             OnCellStatusChange(CellStatus.Idle);
             return;
         }
-        if (targetEnemy.GetComponent<EnemyHealth>().Hp <= atkDamage* JsonIO.GetCoefficiet(cellType, targetEnemy.GetComponent<EnemyMotion>().enemyType))
+        EnemyMotion enemyMotion = targetEnemy.GetComponent<EnemyMotion>();
+        if (targetEnemy.GetComponent<EnemyHealth>().Hp <= 
+            atkDamage* JsonIO.GetCoefficiet(cellType, enemyMotion.enemyType)
+            * enemyMotion.GetCoefficient())
         {
             OnCellStatusChange(CellStatus.SpecialAbility);
             targetEnemy.GetComponent<EnemyMotion>().TargetPoint = eatTrans.position;
@@ -45,6 +48,7 @@ public class SZCellControl : SRCellBase
     public void EatTooMuch()
     {
         OnCellStatusChange(CellStatus.Die);
+
         slider.transform.parent.gameObject.SetActive(false);
     }
     public override void OnEnemyEnter(Transform enemyTrans)

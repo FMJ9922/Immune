@@ -8306,14 +8306,15 @@ MonoBehaviour:
   - {fileID: 5738167634386209402, guid: e626055ab38656146be3eb6b0b501c0c, type: 3}
   - {fileID: 8943388912797080449, guid: 26d179121c01dca41909b4dbefb522ca, type: 3}
   - {fileID: 4118175110480609564, guid: c2fb977d27e025f4d803beaa63acbe8b, type: 3}
-  - {fileID: 361064071932469307, guid: 20551be5b2aa18549b79eb228ba8ed37, type: 3}
   - {fileID: 5910687904661800787, guid: ce8e42294bce4454786aae13ce9f0eec, type: 3}
+  - {fileID: 361064071932469307, guid: 20551be5b2aa18549b79eb228ba8ed37, type: 3}
   PathAvaliable: 0
   isSelect: 0
   text: {fileID: 0}
   lastNode: {fileID: 0}
   lastCell: {fileID: 0}
   SelectGlow: {fileID: 770403995}
+  AllowBJ: 0
 --- !u!4 &640563771
 Transform:
   m_ObjectHideFlags: 0
@@ -18379,7 +18380,7 @@ PrefabInstance:
     - target: {fileID: 409377898493042853, guid: 20551be5b2aa18549b79eb228ba8ed37,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 409377898493042853, guid: 20551be5b2aa18549b79eb228ba8ed37,
         type: 3}
@@ -18430,11 +18431,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2742451404607263811, guid: 20551be5b2aa18549b79eb228ba8ed37,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 20551be5b2aa18549b79eb228ba8ed37, type: 3}
@@ -27787,11 +27783,6 @@ PrefabInstance:
     - target: {fileID: 5242556776115979967, guid: dbebebbacd8ac6b4580eb99eaa99690a,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5242556777897148914, guid: dbebebbacd8ac6b4580eb99eaa99690a,
-        type: 3}
-      propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5242556777897148915, guid: dbebebbacd8ac6b4580eb99eaa99690a,

@@ -21,8 +21,36 @@ public class EnemyMotion : MonoBehaviour
     /*public bool draw;*/
     public delegate void EnemyEscape(ScoreType scoreType, int deltaNum);
     public event EnemyEscape OnEnemyEscape;
-    
+    private int kangTiNum = 0;
+    public Transform AntiTrans;
 
+    public void AddKangTi()
+    {
+        kangTiNum++;
+        StopAllCoroutines();
+        StartCoroutine(Counter());
+    }
+    IEnumerator Counter()
+    {
+        yield return new WaitForSeconds(5.0f);
+        while (kangTiNum > 0)
+        {
+            if (AntiTrans.childCount > 10)
+            {
+                for(int i = 10; i < AntiTrans.childCount; i++)
+                {
+                    Destroy(AntiTrans.GetChild(i));
+                    kangTiNum = 11;
+                }
+            }
+            kangTiNum--;
+            yield return new WaitForSeconds(5.0f);
+        }
+    }
+    public float GetCoefficient()
+    {
+        return 2.0f - (1.0f / ((float)kangTiNum + 1.0f));
+    }
     void Start()
     {
         OnEnemyEscape += LevelManager.Instance.OnScoreEvent;

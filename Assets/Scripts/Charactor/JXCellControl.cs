@@ -42,9 +42,10 @@ public class JXCellControl : LRCellBase
         GameObject AntiBullet = Instantiate(Anti, transform);
         AntiBullet.transform.position = start;
         float coefficient = JsonIO.GetCoefficiet(cellType, targetEnemy.GetComponent<EnemyMotion>().enemyType);
-        AntiBullet.GetComponent<AntiMotion>().damage = atkDamage * coefficient;
-        AntiBullet.GetComponent<AntiMotion>().SetTarget(targetEnemy.transform);
-
+        AntiMotion antiMotion = AntiBullet.GetComponent<AntiMotion>();
+        antiMotion.damage = atkDamage * coefficient;
+        antiMotion.SetTarget(targetEnemy.transform);
+        antiMotion.control = this;
     }
 }
 

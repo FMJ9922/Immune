@@ -36,8 +36,8 @@ public enum CellType
     TF = 8,//辅助T        辅助
     TY = 9,//抑制性T      辅助
     BL = 10,//B淋巴       辅助
-    BJ = 11,//记忆B       辅助
-    JX = 12,//浆细胞      远程1
+    JX = 11,//浆细胞      远程1
+    BJ = 12,//记忆B       辅助
     Other = 13,
 
 }

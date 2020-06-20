@@ -55,6 +55,7 @@ public class TLCellControl : CellBase
             {
                 //ChangeToEnemy();
                 OnDie();
+
                 //Debug.Log("?");
             }
         }

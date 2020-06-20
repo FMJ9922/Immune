@@ -104,6 +104,7 @@ public class LevelManager : MonoBehaviour
 
     public MapManager mapManager;
 
+   
 
     void Awake()
     {
@@ -163,6 +164,7 @@ public class LevelManager : MonoBehaviour
     }
     public void ShowWinOrFailCanvas(bool win)
     {
+        Debug.Log(win);
         string str = "" + MyTool.PraseRequest(levelRequest[0].scoreType, levelRequest[0].requestNum, levelRequest[0].actualNum) + "\n"
                        + MyTool.PraseRequest(levelRequest[1].scoreType, levelRequest[1].requestNum, levelRequest[1].actualNum) + "\n"
                        + MyTool.PraseRequest(levelRequest[2].scoreType, levelRequest[2].requestNum, levelRequest[2].actualNum);
@@ -386,7 +388,7 @@ public class LevelManager : MonoBehaviour
 
     public void CheckSuccess()
     {
-        if (!finishCreate || EnemyManager.Instance.GetEnemyNum() > 0) return;
+        if (!finishCreate || EnemyManager.Instance.GetEnemyNum() > 0|| levelRequest[0].requestNum < levelRequest[0].actualNum) return;
         ShowWinOrFailCanvas(true);
 
 

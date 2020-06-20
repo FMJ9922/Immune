@@ -135,19 +135,7 @@
 			"Ability":"分化",
 			"Coefficient":[0.0,0.0,0.0,0.0,0.0,0.0,0.0],
 		},
-		{
-			"Name":"记忆B细胞",
-			"InitCost":5.0,
-			"AtkRange":2.0,
-			"AtkDamage":50.0,
-			"AtkTime":0.5,
-			"AtkDuration":1.0,
-			"Introduce":"识别抗原，分化为浆细胞",
-			"Type":"辅助",
-			"Ability":"分化，记忆",
-			"Coefficient":[0.0,0.0,0.0,0.0,0.0,0.0,0.0],
-		},
-		{
+        {
 			"Name":"浆细胞",
 			"InitCost":5.0,
 			"AtkRange":2.5,
@@ -160,5 +148,18 @@
 			"Coefficient":[2.0,0.2,1.0,1.0,2.0,2.0,2.0],
 
 		},
+		{
+			"Name":"记忆B细胞",
+			"InitCost":5.0,
+			"AtkRange":2.0,
+			"AtkDamage":0.0,
+			"AtkTime":0.5,
+			"AtkDuration":1.0,
+			"Introduce":"识别抗原，分化为浆细胞",
+			"Type":"辅助",
+			"Ability":"分化，记忆",
+			"Coefficient":[0.0,0.0,0.0,0.0,0.0,0.0,0.0],
+		},
+		
 	]
 }

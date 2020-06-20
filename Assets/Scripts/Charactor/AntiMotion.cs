@@ -8,6 +8,8 @@ public class AntiMotion : MonoBehaviour
     private float speed = 0.7f;
     public float damage;
     private Transform target;//目标
+    private bool attached = false;
+    public JXCellControl control;
     //public new Vector3 transform;
 
  //   private float distanceArriveTarget = 1;
@@ -20,7 +22,7 @@ public class AntiMotion : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (target == null)
+        if (target == null||Mathf.Approximately((target.position - transform.position).sqrMagnitude,0))
         {
             transform.position += transform.forward * speed * Time.deltaTime;
             if (LevelManager.IsOutOfMapEdge(transform))
@@ -29,11 +31,14 @@ public class AntiMotion : MonoBehaviour
             }
             return;
         }
+        if (!attached)
+        {
+            transform.LookAt(target.position);//面向目标位置
+            Vector3 dir = (target.position - transform.position).normalized;
+            transform.position += new Vector3(dir.x, dir.y, 0) * speed * Time.deltaTime;
+            transform.position = new Vector3(transform.position.x, transform.position.y, GetRenderDepth(transform.position.x, transform.position.y));
 
-        transform.LookAt(target.position);//面向目标位置
-        Vector3 dir = (target.position - transform.position).normalized;
-        transform.position += new Vector3(dir.x, dir.y, 0) * speed * Time.deltaTime;
-        transform.position = new Vector3(transform.position.x, transform.position.y, GetRenderDepth(transform.position.x, transform.position.y));
+        }
 
     }
     public float GetRenderDepth(float x, float y)
@@ -65,13 +70,14 @@ public class AntiMotion : MonoBehaviour
             //Debug.Log(damage);
             target.GetComponent<EnemyHealth>().TakeDamage(damage, false);
             target.GetComponent<EnemyMotion>().GetSlowDown(0.5f, 10f);
-            Destroy(gameObject);
+            transform.SetParent(target.Find("AntiRoot"));
+            attached = true;
         }
         if(target.GetComponent<EnemyMotion>().enemyStatus ==EnemyStatus.Die
             || target.GetComponent<EnemyMotion>().enemyStatus == EnemyStatus.Engulfed)
         {
-            
-            Destroy(gameObject);
+
+            target = control.ChooseTargetEnemey();
         }
 
     }
