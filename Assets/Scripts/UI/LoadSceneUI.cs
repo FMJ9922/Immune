@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
+using System.IO;
 
 public class LoadSceneUI : MonoBehaviour
 {
@@ -12,15 +13,25 @@ public class LoadSceneUI : MonoBehaviour
     private AsyncOperation async = null;//储存异步加载的返回值
     private FadeScene fadeScene;
     public TMP_Text progressText;
-    //bool hasLoad = false;
+    public GameObject Animator;
+    public GameObject[] cellpfb;
+    private SpriteRenderer spriteRenderer;
     void Start()
     {
-        loadImage = transform.Find("Image").GetComponent<Image>();
+        loadImage = transform.Find("Slider").GetComponent<Image>();
         //loadImage.fillAmount = progressValue;
-       
+        spriteRenderer = Animator.GetComponent<SpriteRenderer>();
         fadeScene = transform.Find("FadeImage").GetComponent<FadeScene>();
-        progressText = transform.Find("Image").Find("LoadText").GetComponent<TMP_Text>();
+        progressText = transform.Find("Slider").Find("LoadText").GetComponent<TMP_Text>();
         Invoke("StartLoadLevel",0.5f);
+        Debug.Log(GameManager.Instance.iLevel);
+        GameObject cell = Instantiate(cellpfb[GameManager.Instance.iLevel-1],Animator.transform);
+        cell.transform.localScale = new Vector3(450, 450, 450);
+        for(int i = 1; i < cell.transform.childCount; i++)
+        {
+            cell.transform.GetChild(i).gameObject.SetActive(false);
+        }
+        cell.GetComponentInChildren<CellAnimator>().direction = Direction.Right;
     }
     void StartLoadLevel()
     {
@@ -28,6 +39,7 @@ public class LoadSceneUI : MonoBehaviour
     }
     IEnumerator LoadScene()//异步加载场景
     {
+        yield return new WaitForEndOfFrame();
         async = SceneManager.LoadSceneAsync("LevelScene");
         async.allowSceneActivation = false;
         while (!async.isDone)
@@ -60,4 +72,6 @@ public class LoadSceneUI : MonoBehaviour
     {
         async.allowSceneActivation = true;
     }
+
+    
 }
