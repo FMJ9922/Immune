@@ -180,7 +180,7 @@ public class BagPanel : ViewBase
                 }
                 string path ="";
                 if (i < 14) path = "Cell";
-                else if (i < 20) path = "Enemy";
+                else if (i>13&&i < 20) path = "Enemy";
 
                 //Debug.Log(obj.GetComponent<SpriteRenderer>()==null);
                 obj.GetComponent<Image>().sprite = Resources.Load<Sprite>(path + "/" + i.ToString() + ((ActorType)i).ToString() + "/" + ((ActorType)i).ToString());

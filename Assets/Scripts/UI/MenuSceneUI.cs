@@ -34,7 +34,7 @@ public class MenuSceneUI : MonoBehaviour
     }
     public void OpenSettingCanvas()
     {
-        CloseAllCanvas();
+       CloseAllCanvas();
         menuCanvas[2].gameObject.SetActive(true);
     }
     public void OpenAboutCanvas()

@@ -25,8 +25,8 @@ public class Information : MonoBehaviour
     // public Image image;
 
     public GameObject ImagePrefab;
-    public Image ImageCell;
-    public Image ImageEnemy;
+    public Image Image;
+ //   public Image ImageEnemy;
 
     /*private TMP_Text Name;
     private TMP_Text Data;
@@ -59,12 +59,12 @@ public class Information : MonoBehaviour
     {
       //  GameObject image = Instantiate(ImagePrefab, transform);
         string path = "";
-        if ((int)actorType < 15)
+        if ((int)actorType < 13)
         {
             path = "Cell";
 
             //image.GetComponent<Image>().sprite = Resources.Load<Sprite>(path + "/" + ((int)actorType).ToString() + actorType.ToString() + "/" + actorType.ToString()); ;
-            ImageCell.GetComponent<Image>().sprite = Resources.Load<Sprite>(path + "/" + ((int)actorType).ToString() + actorType.ToString() + "/" + actorType.ToString());
+            Image.GetComponent<Image>().sprite = Resources.Load<Sprite>(path + "/" + ((int)actorType).ToString() + actorType.ToString() + "/" + actorType.ToString());
 
             Name.text = JsonIO.GetCellData((CellType)(int)actorType).name.ToString();
             this.Type.text = JsonIO.GetCellData((CellType)(int)actorType).type;
@@ -76,21 +76,25 @@ public class Information : MonoBehaviour
             Introduce.text = "简介:" + JsonIO.GetCellData((CellType)(int)actorType).introduce;
 
         }
-        else if ((int)actorType < 30)
+        else if ((int)actorType>13 && (int)actorType <19 )
         {
             path = "Enemy";
-          /*  ImageEnemy.GetComponent<Image>().sprite = Resources.Load<Sprite>(path + "/" + ((int)actorType).ToString() + actorType.ToString() + "/" + actorType.ToString());
+            //  ImageEnemy.GetComponent<Image>().sprite = Resources.Load<Sprite>(path + "/" + ((int)actorType).ToString() + actorType.ToString() + "/" + actorType.ToString());
+            Image.GetComponent<Image>().sprite = Resources.Load<Sprite>(path + "/" + ((int)actorType).ToString() + actorType.ToString() + "/" + actorType.ToString());
 
-            Name.text = JsonIO.GetEnemyData((EnemyType)(int)actorType).Name.ToString();
-            this.Type.text = JsonIO.GetEnemyData((EnemyType)(int)actorType).Type;
-            Data.text = "生命值:" + JsonIO.GetEnemyData((EnemyType)(int)actorType).HP.ToString() + "   " +
-                        "攻击值:" + JsonIO.GetEnemyData((EnemyType)(int)actorType).Atk.ToString() + "\n" +
-                        "速度:" + JsonIO.GetEnemyData((EnemyType)(int)actorType).Speed.ToString() +  "   " +                      
-                        "技能:" + JsonIO.GetEnemyData((EnemyType)(int)actorType).Ability.ToString();
-            Introduce.text = "简介:" + JsonIO.GetEnemyData((EnemyType)(int)actorType).Introduce;*/
+            Name.text = JsonIO.GetEnemyData((ActorType)((int)actorType)).name.ToString();
+            this.Type.text = JsonIO.GetEnemyData((ActorType)((int)actorType )).type;
+            Data.text = "生命值:" + JsonIO.GetEnemyData((ActorType)((int)actorType)).Hp.ToString() + "   " +
+                        "攻击值:" + JsonIO.GetEnemyData((ActorType)((int)actorType)).atk.ToString() + "\n" +
+                        "速度:" + JsonIO.GetEnemyData((ActorType)((int)actorType)).speed.ToString() +  "   " +                      
+                        "技能:" + JsonIO.GetEnemyData((ActorType)((int)actorType)).ability.ToString();
+            Introduce.text = "简介:" + "\n"+JsonIO.GetEnemyData((ActorType)((int)actorType)).introduce;
 
         }
-        
+        else if ((int)actorType >20  && (int)actorType < 22)
+        {
+            path = "Cell";
+        }
     }
 
     /* public void dateInfo(CellType cellType)

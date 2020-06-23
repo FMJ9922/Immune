@@ -112,11 +112,16 @@ public class JsonIO : MonoBehaviour
     {
         return cellDatas[(int)cellType];
     }
-    public static EnemyData GetEnemyData(ActorType actorType)
+   /* public static EnemyData GetEnemyData(EnemyType enmeyType)
     {
-        //Debug.Log((int)actorType);
-        return enemyDatas[(int)actorType - 20];
-    }
+        return enemyDatas[(int)enemyType];
+    }*/
+     public static EnemyData GetEnemyData( ActorType actorType)
+      {
+
+          //Debug.Log((int)actorType);
+          return enemyDatas[(int)actorType - 14];
+      }
     public static int[,] GetMap()
     {
         return levelData.mapType;
