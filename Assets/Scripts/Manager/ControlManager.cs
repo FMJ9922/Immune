@@ -15,7 +15,6 @@ public class ControlManager : MonoBehaviour
     }
     private AStarNode targetNode = null;
     public GameObject CellOnMovePfb;
-    public GameObject[] CellPfbs;
     private GameObject CellOnMove;
     private PlaceType placeType = PlaceType.Null;
     private CellType cellType;
@@ -183,7 +182,7 @@ public class ControlManager : MonoBehaviour
         targetNode.tileType = TileType.Occupy;
         if (PathAvaliable && CheckPathAvaliable() && LevelManager.Instance.SpendPoints(PointsType.Deploy, cellData.initCost))
         {
-            GameObject cell = Instantiate(CellPfbs[(int)cellType],
+            GameObject cell = Instantiate(PrefabManager.GetCellPrefab(cellType),
             new Vector3(targetNode.pos.x, targetNode.pos.y, GetRenderDepth(targetNode.pos.x, targetNode.pos.y)),
             Quaternion.identity,
             targetNode.transform);
@@ -256,7 +255,7 @@ public class ControlManager : MonoBehaviour
     }
     public void InitOneCell(CellType _cellType,AStarNode astarNode)
     {
-        GameObject cell = Instantiate(CellPfbs[(int)_cellType],
+        GameObject cell = Instantiate(PrefabManager.GetCellPrefab(cellType),
             new Vector3(astarNode.pos.x, astarNode.pos.y, GetRenderDepth(astarNode.pos.x, astarNode.pos.y)),
             Quaternion.identity,
             astarNode.transform);

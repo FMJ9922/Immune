@@ -76,7 +76,6 @@ public class Points
 public class LevelManager : MonoBehaviour
 {
     public static LevelManager Instance { get; private set; } = null;
-    public GameObject[] enemys;
     public GameObject normalCell;
     public GameObject redCell;
     private Wave[] waves;
@@ -315,7 +314,7 @@ public class LevelManager : MonoBehaviour
             for (int j = 0; j < waves[i].enemyNum; j++)
             {
                 //GameObject enemy = Instantiate(enemys[waves[i].enemyType], new Vector3(waves[i].startX+0.5f, waves[i].startY+0.5f,0), Quaternion.identity,EnemyGroup.transform);//随机生成
-                GameObject enemy = Instantiate(enemys[waves[i].enemyType], new Vector3(-1, -1, 0), Quaternion.identity, EnemyGroup.transform);//随机生成
+                GameObject enemy = Instantiate(PrefabManager.GetEnemyPrefab((ActorType)(waves[i].enemyType)), new Vector3(-1, -1, 0), Quaternion.identity, EnemyGroup.transform);//随机生成
                 enemy.name = "Enemy" + i + "," + j;
                 enemy.GetComponent<EnemyMotion>().startPos = new Vector2(waves[i].startX, waves[i].startY);
                 enemy.GetComponent<EnemyMotion>().endPos = new Vector2(waves[i].endX, waves[i].endY);
@@ -339,14 +338,11 @@ public class LevelManager : MonoBehaviour
         finishCreate = true;
         InvokeRepeating("CheckSuccess", 0f,1f);
     }
+    
     public void CreateOneEnemy(ActorType actorType)
     {
-
-    }
-    public void CreateOneEnemy()
-    {
-        GameObject enemy = Instantiate(enemys[waves[0].enemyType], transform.position, Quaternion.identity, EnemyGroup.transform);//随机生成
-        enemy.name = "Enemy" + 0 + "," + 0;
+        GameObject enemy = Instantiate(PrefabManager.GetEnemyPrefab(actorType), transform.position, Quaternion.identity, EnemyGroup.transform);//随机生成
+        enemy.name = "EnemyInitByDeathCell";
         enemy.GetComponent<EnemyMotion>().startPos = new Vector2(waves[0].startX, waves[0].startY);
         enemy.GetComponent<EnemyMotion>().endPos = new Vector2(waves[0].endX, waves[0].endY);
         enemy.GetComponent<EnemyMotion>().FindPathType = (FindPathType)waves[0].findPathType;

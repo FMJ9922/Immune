@@ -14,7 +14,6 @@ public class LoadSceneUI : MonoBehaviour
     private FadeScene fadeScene;
     public TMP_Text progressText;
     public GameObject Animator;
-    public GameObject[] cellpfb;
     private SpriteRenderer spriteRenderer;
     void Start()
     {
@@ -24,8 +23,9 @@ public class LoadSceneUI : MonoBehaviour
         fadeScene = transform.Find("FadeImage").GetComponent<FadeScene>();
         progressText = transform.Find("Slider").Find("LoadText").GetComponent<TMP_Text>();
         Invoke("StartLoadLevel",0.5f);
-        Debug.Log(GameManager.Instance.iLevel);
-        GameObject cell = Instantiate(cellpfb[GameManager.Instance.iLevel-1],Animator.transform);
+        //Debug.Log(GameManager.Instance.iLevel);
+        int ilevel = GameManager.Instance.iLevel;
+        GameObject cell = Instantiate(PrefabManager.GetCellPrefab((CellType)(ilevel-1)), Animator.transform);
         cell.transform.localScale = new Vector3(450, 450, 450);
         for(int i = 1; i < cell.transform.childCount; i++)
         {

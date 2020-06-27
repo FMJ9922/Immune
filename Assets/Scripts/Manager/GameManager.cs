@@ -26,22 +26,24 @@ public class GameManager : MonoBehaviour
     [SerializeField] private int currentLevel = 0;
     private void Awake()
     {
-
-        JsonIO.InitGameData();//加载游戏数据
-        JsonIO.InitCellData();//加载细胞数据
-        JsonIO.InitEnemyData();
         if (Instance != null && Instance != this)//检测Instance是否存在且只有一个
         {
             Destroy(this.gameObject);
+            return;
         }
         else if(Instance == null)
         {
-            if(iLevel>0)
+            if (iLevel > 0)
+            {
+                JsonIO.InitGameData();
                 JsonIO.InitLevelData(iLevel);
-            Instance = this;
+                Instance = this;
+            }
             //Debug.Log("Change Instance");
         }
-
+        //加载游戏数据
+        JsonIO.InitCellData();//加载细胞数据
+        JsonIO.InitEnemyData();
         DontDestroyOnLoad(this.gameObject);//加载关卡时不销毁GameManager
 
         if (PlayerPrefs.HasKey("PlayerName"))
