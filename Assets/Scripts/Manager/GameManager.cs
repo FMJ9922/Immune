@@ -33,18 +33,17 @@ public class GameManager : MonoBehaviour
         }
         else if(Instance == null)
         {
+            Instance = this;
+            JsonIO.InitGameData();//加载游戏数据
             if (iLevel > 0)
             {
-                JsonIO.InitGameData();
                 JsonIO.InitLevelData(iLevel);
-                Instance = this;
             }
-            //Debug.Log("Change Instance");
+            JsonIO.InitCellData();//加载细胞数据
+            JsonIO.InitEnemyData();
+            DontDestroyOnLoad(this.gameObject);//加载关卡时不销毁GameManager
         }
-        //加载游戏数据
-        JsonIO.InitCellData();//加载细胞数据
-        JsonIO.InitEnemyData();
-        DontDestroyOnLoad(this.gameObject);//加载关卡时不销毁GameManager
+        
 
         if (PlayerPrefs.HasKey("PlayerName"))
         {

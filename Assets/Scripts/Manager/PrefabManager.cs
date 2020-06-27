@@ -26,6 +26,7 @@ public class PrefabManager : MonoBehaviour
             string path = string.Format(cellPath, cellName);
             Debug.Log("加载细胞路径："+path);
             GameObject newCell = Resources.Load(path) as GameObject;
+            Debug.Log(newCell.name);
             CellPfbsDic.Add(cellName, newCell);
             return CellPfbsDic[cellName];
         }

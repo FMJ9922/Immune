@@ -14,12 +14,14 @@ public class LevelLoadButton : MonoBehaviour
         {
             Button btn = gameObject.GetComponentsInChildren<Button>()[i];
             btn.onClick.RemoveAllListeners();
+            
             btn.onClick.AddListener(() =>{ OnClick(int.Parse(btn.name)); });
         }
     }
 
     public void LoadGameLevel(int level)
     {
+        Debug.Log(level);
         GameManager.Instance.LoadLevelScene(level);
     }
 }

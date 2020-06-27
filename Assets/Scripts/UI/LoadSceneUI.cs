@@ -23,7 +23,7 @@ public class LoadSceneUI : MonoBehaviour
         fadeScene = transform.Find("FadeImage").GetComponent<FadeScene>();
         progressText = transform.Find("Slider").Find("LoadText").GetComponent<TMP_Text>();
         Invoke("StartLoadLevel",0.5f);
-        //Debug.Log(GameManager.Instance.iLevel);
+        Debug.Log(GameManager.Instance.iLevel);
         int ilevel = GameManager.Instance.iLevel;
         GameObject cell = Instantiate(PrefabManager.GetCellPrefab((CellType)(ilevel-1)), Animator.transform);
         cell.transform.localScale = new Vector3(450, 450, 450);
