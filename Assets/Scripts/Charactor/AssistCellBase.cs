@@ -15,6 +15,7 @@ public class AssistCellBase : CellBase,Produce
     {
         base.InitCell();
         ProduceSlider = transform.Find("SliderCanvas").Find("PrdSlider").GetComponent<Slider>();
+
         ProduceSlider.value = 0;
         reloadTime = 0;
         allowProduce = false;

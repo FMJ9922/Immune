@@ -320,7 +320,7 @@ public class LevelManager : MonoBehaviour
                 enemy.GetComponent<EnemyMotion>().endPos = new Vector2(waves[i].endX, waves[i].endY);
                 enemy.GetComponent<EnemyMotion>().FindPathType = (FindPathType)waves[i].findPathType;
                 enemy.GetComponent<EnemyMotion>().originSpeed = waves[i].speed;
-                enemy.GetComponentInChildren<EnemyAnimator>().enemyType = (EnemyType)waves[i].enemyType;
+                enemy.GetComponentInChildren<EnemyMotion>().enemyType = (EnemyType)(waves[i].enemyType-14);
                 enemy.GetComponent<EnemyHealth>().InitHealth *= 1 + ((float)i / 10); 
                 enemy.SetActive(true);
                 /*enemy.GetComponent<EnemyMotion>().draw = j==0?true:false;*/

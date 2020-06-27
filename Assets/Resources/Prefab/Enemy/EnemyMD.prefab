@@ -424,7 +424,7 @@ MonoBehaviour:
   FindPathType: 0
   enemyStatus: 0
   enemyType: 4
-  actorType: 25
+  actorType: 19
   AntiTrans: {fileID: 6235426192865740279}
 --- !u!114 &1991668612919030901
 MonoBehaviour:
@@ -550,7 +550,6 @@ MonoBehaviour:
   - {fileID: 21300000, guid: dc1b66b3886ccae409fdb2fb2ab092ec, type: 3}
   - {fileID: 21300000, guid: 887badbec13d0904c9937134d1f81e88, type: 3}
   - {fileID: 21300000, guid: 79d27f2ca596d984fb7634ab840bad33, type: 3}
-  enemyType: 0
 --- !u!212 &5856845628859493324
 SpriteRenderer:
   m_ObjectHideFlags: 0

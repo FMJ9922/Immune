@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1694142280149006369}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -4, y: -12, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7869585913132894227}
@@ -454,7 +454,7 @@ MonoBehaviour:
   FindPathType: 0
   enemyStatus: 0
   enemyType: 0
-  actorType: 20
+  actorType: 14
   AntiTrans: {fileID: 9142360048663988948}
 --- !u!114 &4491490845861707162
 MonoBehaviour:
@@ -603,7 +603,6 @@ MonoBehaviour:
   - {fileID: 21300000, guid: e523e84352fb45349b47ad02a057e163, type: 3}
   - {fileID: 21300000, guid: 12864b4c23270a84c9d5e106f3b8eb7e, type: 3}
   - {fileID: 21300000, guid: 7947973e7f7afae45b48fe01caccca52, type: 3}
-  enemyType: 0
 --- !u!212 &8408393385335595555
 SpriteRenderer:
   m_ObjectHideFlags: 0

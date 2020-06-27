@@ -8,7 +8,6 @@ public class EnemyAnimator : MonoBehaviour
     public Sprite[] DieSprite;
     private EnemyStatus enemyStatus = EnemyStatus.Idle;
     private SpriteRenderer spriteRenderer;
-    public EnemyType enemyType;
     int frameP = 0;
     int index = 0;
     void Start()

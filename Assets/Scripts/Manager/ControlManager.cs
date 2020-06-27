@@ -426,7 +426,7 @@ public class ControlManager : MonoBehaviour
                     if (targetNode != null && targetNode.tileType == TileType.Occupy && lastCell == null)
                     {
                         lastCell = targetNode.GetComponentInChildren<CellBase>();
-                        Debug.Log(lastCell.transform.name);
+                        //Debug.Log(lastCell.transform.name);
                         lastCell.ShowRangePic();
                     }
                     lastNode = targetNode;

@@ -17,6 +17,7 @@ public class Detector : MonoBehaviour, Detectable
     {
         cell = transform.parent.GetComponent<CellBase>();
         transform.localPosition = Vector3.zero;
+        GetComponent<CircleCollider2D>().radius = JsonIO.GetCellData(cell.cellType).atkRange;
     }
    
     public Transform CheckEnemyArrayList(FireMode fireMode, AttackType attackType)

@@ -15,6 +15,9 @@ public class LoadSceneUI : MonoBehaviour
     public TMP_Text progressText;
     public GameObject Animator;
     private SpriteRenderer spriteRenderer;
+    public Image RealPic;
+    public TMP_Text GameIntroText;
+    public TMP_Text RealIntroText;
     void Start()
     {
         loadImage = transform.Find("Slider").GetComponent<Image>();
@@ -25,13 +28,17 @@ public class LoadSceneUI : MonoBehaviour
         Invoke("StartLoadLevel",0.5f);
         Debug.Log(GameManager.Instance.iLevel);
         int ilevel = GameManager.Instance.iLevel;
-        GameObject cell = Instantiate(PrefabManager.GetCellPrefab((CellType)(ilevel-1)), Animator.transform);
+        CellType cellType = (CellType)(ilevel - 1);
+        GameObject cell = Instantiate(PrefabManager.GetCellPrefab(cellType), Animator.transform);
         cell.transform.localScale = new Vector3(450, 450, 450);
         for(int i = 1; i < cell.transform.childCount; i++)
         {
             cell.transform.GetChild(i).gameObject.SetActive(false);
         }
+        GameIntroText.text = JsonIO.GetCellData(cellType).introduce;
+        RealIntroText.text = JsonIO.GetCellData(cellType).reality;
         cell.GetComponentInChildren<CellAnimator>().direction = Direction.Right;
+        RealPic.overrideSprite = Resources.Load("RealPic/" + cellType.ToString()+".jpg") as Sprite;
     }
     void StartLoadLevel()
     {

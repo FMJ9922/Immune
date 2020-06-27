@@ -5,13 +5,13 @@ using UnityEngine;
 public class EnemyMotion : MonoBehaviour
 {
     public float originSpeed = 1;//设置敌人的速度
-    private float speed = 1;
+    protected float speed = 1;
     //private WayPoint[] p;//定义数组
-    private List<Vector3> wayPointList;
+    protected List<Vector3> wayPointList;
     private int index = 0;//坐标点
     public Vector2 startPos;
     public Vector2 endPos;
-    private AStarAgent agent;
+    protected AStarAgent agent;
     public FindPathType FindPathType;
     public EnemyStatus enemyStatus;
     public EnemyType enemyType;
@@ -105,14 +105,8 @@ public class EnemyMotion : MonoBehaviour
 
     }
 
-    public EnemyMotion(Vector2 _startPos, Vector2 _endPos, FindPathType _FindPathType)
-    {
-        this.startPos = _startPos;
-        this.endPos = _endPos;
-        this.FindPathType = _FindPathType;
-    }
 
-    void FixedUpdate()//每一帧执行方法
+    private void FixedUpdate()//每一帧执行方法
     {
         //Debug.Log(enemyStatus+" " + TargetPoint);
         if (enemyStatus == EnemyStatus.Engulfed && TargetPoint != null)

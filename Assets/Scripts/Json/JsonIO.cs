@@ -52,6 +52,7 @@ public class CellData
     public float atkDuration;
     public float initCost;
     public string introduce;
+    public string reality;
     public string type;
     public string ability;
     public float[] coefficient;
@@ -144,6 +145,7 @@ public class JsonIO : MonoBehaviour
             cellDatas[i].atkDuration = (float)(double)dict2["AtkDuration"];
             cellDatas[i].initCost = (float)(double)dict2["InitCost"];
             cellDatas[i].introduce = (string)dict2["Introduce"];
+            cellDatas[i].reality = (string)dict2["Reality"];
             cellDatas[i].type = (string)dict2["Type"];
             cellDatas[i].ability = (string)dict2["Ability"];
             cellDatas[i].coefficient = PraseFloat((List<object>)dict2["Coefficient"]);
@@ -331,7 +333,7 @@ public class JsonIO : MonoBehaviour
     }
     public static float GetCoefficiet(CellType cellType,EnemyType enemyType)
     {
-        //Debug.Log(GetCellData(cellType).name);
+        //Debug.Log((int)enemyType);
         return GetCellData(cellType).coefficient[(int)enemyType];
     }
     /*public static ActorType ActorTypeToEnemyType(EnemyType enemyType)
