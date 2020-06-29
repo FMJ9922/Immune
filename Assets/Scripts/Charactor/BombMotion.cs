@@ -131,6 +131,7 @@ public class BombMotion : MonoBehaviour
                 transform.localScale *= 2;
                 transform.GetComponent<CircleCollider2D>().radius /= 2;
                 transform.position -= new Vector3(0, 0.4f);
+                SoundManager.Instance.PlayBomb();
                 Invoke("SetDamageToEnemys", 0.7f);
             }
         }
@@ -147,6 +148,9 @@ public class BombMotion : MonoBehaviour
             {
                 trans.GetComponent<EnemyHealth>().TakeDamage(damage, false);
                 trans.GetComponent<EnemyMotion>().GetSlowDown(0.5f, 7f);
+               
+              
+                
             }
         }
     }

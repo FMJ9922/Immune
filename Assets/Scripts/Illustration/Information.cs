@@ -76,24 +76,31 @@ public class Information : MonoBehaviour
             Introduce.text = "简介:" + JsonIO.GetCellData((CellType)(int)actorType).introduce;
 
         }
-        else if ((int)actorType>13 && (int)actorType <19 )
+        else if ((int)actorType>13 && (int)actorType <20 )
         {
             path = "Enemy";
             //  ImageEnemy.GetComponent<Image>().sprite = Resources.Load<Sprite>(path + "/" + ((int)actorType).ToString() + actorType.ToString() + "/" + actorType.ToString());
             Image.GetComponent<Image>().sprite = Resources.Load<Sprite>(path + "/" + ((int)actorType).ToString() + actorType.ToString() + "/" + actorType.ToString());
 
-            Name.text = JsonIO.GetEnemyData((ActorType)((int)actorType)).name.ToString();
-            this.Type.text = JsonIO.GetEnemyData((ActorType)((int)actorType )).type;
-            Data.text = "生命值:" + JsonIO.GetEnemyData((ActorType)((int)actorType)).Hp.ToString() + "   " +
-                        "攻击值:" + JsonIO.GetEnemyData((ActorType)((int)actorType)).atk.ToString() + "\n" +
-                        "速度:" + JsonIO.GetEnemyData((ActorType)((int)actorType)).speed.ToString() +  "   " +                      
-                        "技能:" + JsonIO.GetEnemyData((ActorType)((int)actorType)).ability.ToString();
-            Introduce.text = "简介:" + "\n"+JsonIO.GetEnemyData((ActorType)((int)actorType)).introduce;
+            Name.text = JsonIO.GetEnemyData((ActorType)(int)actorType).name.ToString();
+            this.Type.text = JsonIO.GetEnemyData((ActorType)(int)actorType ).type;
+            Data.text = "生命值:" + JsonIO.GetEnemyData((ActorType)(int)actorType).Hp.ToString() + "   " +
+                        "攻击值:" + JsonIO.GetEnemyData((ActorType)(int)actorType).atk.ToString() + "\n" +
+                        "速度:" + JsonIO.GetEnemyData((ActorType)(int)actorType).speed.ToString() +  "   " +                      
+                        "技能:" + JsonIO.GetEnemyData((ActorType)(int)actorType).ability.ToString();
+            Introduce.text = "简介:" + "\n"+JsonIO.GetEnemyData((ActorType)(int)actorType).introduce;
 
         }
-        else if ((int)actorType >20  && (int)actorType < 22)
+        else if ((int)actorType >12  && (int)actorType < 23)
         {
             path = "Cell";
+
+            //image.GetComponent<Image>().sprite = Resources.Load<Sprite>(path + "/" + ((int)actorType).ToString() + actorType.ToString() + "/" + actorType.ToString()); ;
+            Image.GetComponent<Image>().sprite = Resources.Load<Sprite>(path + "/" + ((int)actorType).ToString() + actorType.ToString() + "/" + actorType.ToString());
+
+            Name.text = JsonIO.GetCellData((CellType)(int)actorType).name.ToString();
+            this.Type.text = JsonIO.GetCellData((CellType)(int)actorType).type;
+            Introduce.text = "简介:" + JsonIO.GetCellData((CellType)(int)actorType).introduce;
         }
     }
 

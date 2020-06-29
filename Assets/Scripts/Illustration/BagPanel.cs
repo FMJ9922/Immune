@@ -146,11 +146,12 @@ public class BagPanel : ViewBase
             case 19:
                 articleType = ArticleType.Enemy;
                 return articleType;
+
             //正常细胞
-            case 20:
+            case 13:
                 articleType = ArticleType.Cell;
                 return articleType;
-            case 21:
+            case 20:
                 articleType = ArticleType.Cell;
                 return articleType;
         }
@@ -180,7 +181,8 @@ public class BagPanel : ViewBase
                 }
                 string path ="";
                 if (i < 14) path = "Cell";
-                else if (i>13&&i < 20) path = "Enemy";
+                else if (i>13&&i < 19) path = "Enemy";
+                else if (i > 19 && i < 23) path = "Cell";
 
                 //Debug.Log(obj.GetComponent<SpriteRenderer>()==null);
                 obj.GetComponent<Image>().sprite = Resources.Load<Sprite>(path + "/" + i.ToString() + ((ActorType)i).ToString() + "/" + ((ActorType)i).ToString());

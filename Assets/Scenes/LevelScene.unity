@@ -6303,6 +6303,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbd71a61151b00745a5dda48b167d7ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sfx_btnY: {fileID: 8300000, guid: 2ece3317a5bc8af46a0d4e09ca26d735, type: 3}
+  sfx_btnN: {fileID: 8300000, guid: 723b0ccd58f01184998d46d58d9c22a9, type: 3}
+  sfx_enemy_dead: {fileID: 8300000, guid: 5b967698d91a197418a93311b63f97e0, type: 3}
+  sfx_enemy_escape: {fileID: 8300000, guid: 42580c985e5b3b14dbb6609082facedb, type: 3}
+  sfx_gain_bushu: {fileID: 8300000, guid: db9e68e5846929845b866157b525b426, type: 3}
+  sfx_upgrade: {fileID: 8300000, guid: 34e301827144bcf4e856be5c6a3772a9, type: 3}
+  sfx_bomb: {fileID: 8300000, guid: d0247460b9260fe4e9ffdbe1278227f7, type: 3}
+  sfx_fail: {fileID: 8300000, guid: a8180bc29ead31745b73de8995f494f5, type: 3}
+  sfx_success: {fileID: 8300000, guid: 588d7661ad69c5c4fb882497af2d7009, type: 3}
+  sfxInBuffer: {fileID: 0}
+  overrideClip: {fileID: 0}
 --- !u!4 &642618625
 Transform:
   m_ObjectHideFlags: 0
@@ -20812,7 +20823,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerName: 
-  currentLevel: 5
+  currentLevel: 4
 --- !u!4 &2001124576
 Transform:
   m_ObjectHideFlags: 0
