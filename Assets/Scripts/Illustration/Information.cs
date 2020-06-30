@@ -45,6 +45,7 @@ public class Information : MonoBehaviour
           Data = transform.Find("Data").GetComponent<TMP_Text>();
           Data = transform.Find("Type").GetComponent<TMP_Text>();
           Introduce = transform.Find("Introduce").GetComponent<TMP_Text>();*/
+       
     }
 
     public void SetActorType(int actorType)
@@ -73,7 +74,7 @@ public class Information : MonoBehaviour
                         "冷却:" + JsonIO.GetCellData((CellType)(int)actorType).atkDuration.ToString() + "秒" + "   " +
                         "花费:" + JsonIO.GetCellData((CellType)(int)actorType).initCost.ToString() + "\n" +
                         "技能:" + JsonIO.GetCellData((CellType)(int)actorType).ability.ToString();
-            Introduce.text = "简介:" + JsonIO.GetCellData((CellType)(int)actorType).introduce;
+            Introduce.text = "简介:"+ "\n"+ JsonIO.GetCellData((CellType)(int)actorType).introduce;
 
         }
         else if ((int)actorType>13 && (int)actorType <20 )
@@ -100,7 +101,7 @@ public class Information : MonoBehaviour
 
             Name.text = JsonIO.GetCellData((CellType)(int)actorType).name.ToString();
             this.Type.text = JsonIO.GetCellData((CellType)(int)actorType).type;
-            Introduce.text = "简介:" + JsonIO.GetCellData((CellType)(int)actorType).introduce;
+            Introduce.text = "简介:" + "\n"+ JsonIO.GetCellData((CellType)(int)actorType).introduce;
         }
     }
 
