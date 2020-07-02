@@ -48,7 +48,6 @@ public class SZCellControl : SRCellBase
     public void EatTooMuch()
     {
         OnCellStatusChange(CellStatus.Die);
-
         slider.transform.parent.gameObject.SetActive(false);
     }
     public override void OnEnemyEnter(Transform enemyTrans)

@@ -29,7 +29,6 @@ public class EnemyHealth : MonoBehaviour
         InitHealth = JsonIO.GetEnemyData(enemyMotion.actorType).Hp;
         cellInRange = new ArrayList();
         Hp = InitHealth;
-        Debug.Log(Hp);
         hpSlider = GetComponentInChildren<Slider>();
         enemyAnimator = transform.GetComponentInChildren<EnemyAnimator>();
     }
@@ -59,6 +58,8 @@ public class EnemyHealth : MonoBehaviour
                 StartCoroutine(MyTool.DoScale(transform, 0.12f, 1.0f));
                 Destroy(enemyMotion.AntiTrans.gameObject);
                 Die();
+                SoundManager.Instance.PlaySoundEffect(SoundResource.sfx_enemy_dead);
+                return;
 
             }
             else if(_enemyStatus ==EnemyStatus.Die)
@@ -68,10 +69,8 @@ public class EnemyHealth : MonoBehaviour
                 //Debug.Log("die");
                 enemyMotion.GetSlowDown(0.5f, 10000f);
             }
-            
-            
-           
         }
+        SoundManager.Instance.PlaySoundEffect(SoundResource.sfx_enemy_hit1);
     }
     void Die()
     {

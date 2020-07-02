@@ -140,7 +140,7 @@ public class GameManager : MonoBehaviour
     public void Set0xTimeScale()//暂停
     {
         //Debug.Log("Time*0");
-        Time.timeScale = 0.1f;
+        Time.timeScale = 0.067f;
     }
 
 }

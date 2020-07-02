@@ -142,6 +142,7 @@ public class EnemyMotion : MonoBehaviour
             if (index > wayPointList.Count - 1)//如果大于最后一个节点时执行
             {
                 OnEnemyEscape(ScoreType.EnemyEscapeNum, 1);
+                SoundManager.Instance.PlaySoundEffect(SoundResource.sfx_enemy_escape);
                 Debug.Log("有一个敌人逃脱了");
                 LevelManager.Instance.CheckFail();
                 Destroy(this.gameObject);//销毁物体

@@ -68,6 +68,7 @@ public class EnemyData
     public float rate;
     public float speed;
     public string introduce;
+    public string reality;
 }
 
 public class JsonIO : MonoBehaviour
@@ -170,6 +171,7 @@ public class JsonIO : MonoBehaviour
             enemyDatas[i].rate = (float)(double)dict2["Rate"];
             enemyDatas[i].speed = (float)(double)dict2["Speed"];
             enemyDatas[i].introduce = (string)dict2["Introduce"];
+            enemyDatas[i].reality = (string)dict2["Reality"];
         }
     }
     public static void InitGameData()

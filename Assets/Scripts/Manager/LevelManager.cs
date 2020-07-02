@@ -20,16 +20,19 @@ public class Points
         {
             case PointsType.Deploy:
                 {
+                    SoundManager.Instance.PlaySoundEffect(SoundResource.sfx_gain_bushu);
                     DeployPoints += value;
                     break;
                 }
             case PointsType.LinBa:
                 {
+                    SoundManager.Instance.PlaySoundEffect(SoundResource.sfx_gain_linba);
                     LinbaPoints += value;
                     break;
                 }
             case PointsType.KangYuan :
                 {
+                    SoundManager.Instance.PlaySoundEffect(SoundResource.sfx_gain_kangti);
                     KangYuanPoints += value;
                     break;
                 }
@@ -103,7 +106,7 @@ public class LevelManager : MonoBehaviour
 
     public MapManager mapManager;
 
-   
+    private bool isEnd=false;
 
     void Awake()
     {
@@ -119,6 +122,8 @@ public class LevelManager : MonoBehaviour
     }
     void Start()
     {
+        JsonIO.InitGameData();
+        JsonIO.InitLevelData(GameManager.Instance.iLevel);
         waves = JsonIO.GetWaves();
         mapType = JsonIO.GetMap();
         levelRequest = JsonIO.GetScoreRequest();
@@ -163,7 +168,7 @@ public class LevelManager : MonoBehaviour
     }
     public void ShowWinOrFailCanvas(bool win)
     {
-        Debug.Log(win);
+        if (isEnd) return;
         string str = "" + MyTool.PraseRequest(levelRequest[0].scoreType, levelRequest[0].requestNum, levelRequest[0].actualNum) + "\n"
                        + MyTool.PraseRequest(levelRequest[1].scoreType, levelRequest[1].requestNum, levelRequest[1].actualNum) + "\n"
                        + MyTool.PraseRequest(levelRequest[2].scoreType, levelRequest[2].requestNum, levelRequest[2].actualNum);
@@ -173,6 +178,9 @@ public class LevelManager : MonoBehaviour
             WinCanvas.GetComponent<WinUI>().content.text = str;
             WinCanvas.GetComponent<WinUI>().InitWinUI(levelRequest);
             FailCanvas.SetActive(false);
+            SoundManager.Instance.PlaySoundEffect(SoundResource.sfx_success);
+            GameManager.Instance.Set0xTimeScale();
+            isEnd = true;
         }
         else
         {
@@ -180,6 +188,10 @@ public class LevelManager : MonoBehaviour
             WinCanvas.SetActive(false);
             FailCanvas.SetActive(true);
             FailCanvas.GetComponent<StartIntroduceUI>().content.text = str;
+            SoundManager.Instance.PlaySoundEffect(SoundResource.sfx_fail);
+            PlayerPrefs.SetInt("LevelScore" + GameManager.Instance.iLevel, 0);
+            GameManager.Instance.Set0xTimeScale();
+            isEnd = true;
         }
         //GameManager.Instance.Set0xTimeScale();
 

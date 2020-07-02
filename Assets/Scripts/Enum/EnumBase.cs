@@ -36,8 +36,8 @@ public enum CellType
     TF = 8,//辅助T        辅助
     TY = 9,//抑制性T      辅助
     BL = 10,//B淋巴       辅助
-    BJ = 11,//记忆B       辅助
-    JX = 12,//浆细胞      远程1
+    BJ = 12,//记忆B       辅助
+    JX = 11,//浆细胞      远程1
 
    //Other = 13,
    QT=13,
@@ -77,8 +77,8 @@ public enum ActorType
     TF = 8,//辅助T        辅助
     TY = 9,//抑制性T      辅助
     BL = 10,//B淋巴       辅助
-    BJ = 11,//记忆B       辅助
-    JX = 12,//浆细胞      远程
+    BJ = 12,//记忆B       辅助
+    JX = 11,//浆细胞      远程
     QT=13,
     TH = 14,//天花病毒
     EB = 15,//eb
@@ -137,4 +137,27 @@ public enum PointsType
     Deploy = 0,
     LinBa = 1,
     KangYuan = 2,
+}
+
+public enum SoundResource
+{
+    sfx_bomb = 0,//炸弹
+    sfx_btnN = 1,//取消
+    sfx_btnY = 2,//确认
+    sfx_cell_die = 3,
+    sfx_countdown = 4,//倒计时
+    sfx_enemy_dead = 5,//敌人死亡
+    sfx_enemy_escape = 6,//敌人逃离
+    sfx_enemy_hit1 = 7,//敌人掉血
+    sfx_fail = 8,//失败
+    sfx_gain_bushu = 9,//部署点数
+    sfx_gain_kangti = 10,//部署点数
+    sfx_gain_linba = 11,//部署点数
+    sfx_page_turn = 12,
+    sfx_root_out = 13,
+    sfx_shovel_select = 14,//选中铲子
+    sfx_start = 15,//开始
+    sfx_success = 16,//成功
+    sfx_upgrade = 17,//细胞升级
+
 }

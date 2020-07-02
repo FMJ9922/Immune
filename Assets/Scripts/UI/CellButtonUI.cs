@@ -62,7 +62,7 @@ public class CellButtonUI : MonoBehaviour
             if (cellTypes[i]==12)
             {
                 ControlManager.Instance.AllowBJ = true;
-                return;
+                continue;
             }
             //Debug.Log(i);
             InitOneButton(i);

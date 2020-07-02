@@ -80,6 +80,8 @@ public abstract class CellBase : MonoBehaviour
 
     public void OnDie()
     {
+
+        SoundManager.Instance.PlaySoundEffect(SoundResource.sfx_cell_die);
         LevelManager.Instance.GetNodeByPos(transform.position).tileType = TileType.Empty;
         Destroy(gameObject);
     }

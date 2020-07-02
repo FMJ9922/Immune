@@ -197,6 +197,7 @@ public class ControlManager : MonoBehaviour
             {
 
             }
+            //SoundManager.Instance.PlaySoundEffect(SoundResource.sfx_upgrade);
             //To Do 放置成功音效
             return;
         }
@@ -265,6 +266,7 @@ public class ControlManager : MonoBehaviour
         LevelManager.Instance.DrawDefaultRoute(LevelManager.Instance.curWave);
         LevelManager.Instance.OnScoreEvent(ScoreType.CellDeployNum, 1);
         astarNode.tileType = TileType.Occupy;
+        SoundManager.Instance.PlaySoundEffect(SoundResource.sfx_upgrade);
     }
     public IEnumerator WaitForTime(System.Action action, float time)
     {
@@ -444,7 +446,7 @@ public class ControlManager : MonoBehaviour
                     {
                         string name = targetNode.transform.GetChild(0).gameObject.name;
                         Destroy(targetNode.transform.GetChild(0).gameObject);
-
+                        SoundManager.Instance.PlaySoundEffect(SoundResource.sfx_root_out);
                         targetNode.tileType = TileType.Empty;
                         LoggerManager.Instance.ShowOneLog("已铲除" + name);
                     }

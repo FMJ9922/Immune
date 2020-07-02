@@ -18,6 +18,7 @@ public class LoadSceneUI : MonoBehaviour
     public Image RealPic;
     public TMP_Text GameIntroText;
     public TMP_Text RealIntroText;
+    public TMP_Text CellName;
     void Start()
     {
         loadImage = transform.Find("Slider").GetComponent<Image>();
@@ -26,7 +27,6 @@ public class LoadSceneUI : MonoBehaviour
         fadeScene = transform.Find("FadeImage").GetComponent<FadeScene>();
         progressText = transform.Find("Slider").Find("LoadText").GetComponent<TMP_Text>();
         Invoke("StartLoadLevel",0.5f);
-        Debug.Log(GameManager.Instance.iLevel);
         int ilevel = GameManager.Instance.iLevel;
         CellType cellType = (CellType)(ilevel - 1);
         GameObject cell = Instantiate(PrefabManager.GetCellPrefab(cellType), Animator.transform);
@@ -37,8 +37,10 @@ public class LoadSceneUI : MonoBehaviour
         }
         GameIntroText.text = JsonIO.GetCellData(cellType).introduce;
         RealIntroText.text = JsonIO.GetCellData(cellType).reality;
+        CellName.text = JsonIO.GetCellData(cellType).name;
         cell.GetComponentInChildren<CellAnimator>().direction = Direction.Right;
         RealPic.overrideSprite = Resources.Load("RealPic/" + cellType.ToString()+".jpg") as Sprite;
+        GameManager.Instance.Set1xTimeScale();
     }
     void StartLoadLevel()
     {

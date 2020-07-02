@@ -19,9 +19,12 @@ public class TimeScaleUI : MonoBehaviour
         {
             GameManager.Instance.Set2xTimeScale();
             GetComponent<Image>().overrideSprite = scale2;
+            SoundManager.Instance.PlaySoundEffect(SoundResource.sfx_btnY);
         }
         else
         {
+
+            SoundManager.Instance.PlaySoundEffect(SoundResource.sfx_btnN);
             GameManager.Instance.Set1xTimeScale();
             GetComponent<Image>().overrideSprite = scale1;
         }
@@ -29,7 +32,8 @@ public class TimeScaleUI : MonoBehaviour
     }
     public void SetTime1xScale()
     {
-            GameManager.Instance.Set1xTimeScale();
+        SoundManager.Instance.PlaySoundEffect(SoundResource.sfx_btnN);
+        GameManager.Instance.Set1xTimeScale();
             GetComponent<Image>().overrideSprite = scale1;
         
 

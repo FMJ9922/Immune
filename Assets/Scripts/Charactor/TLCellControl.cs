@@ -48,7 +48,7 @@ public class TLCellControl : CellBase
         if (p < enemyData.rate)
         {
             Hp -= enemyData.atk;
-            damangeCounter[(int)enemyMotion.actorType - 20] += enemyData.atk;
+            //damangeCounter[(int)enemyMotion.actorType - 20] += enemyData.atk;
             HpSlider.value = Hp / 100F;
             Debug.Log("受到了来自" + enemyTrans.name + "的伤害：-" + enemyData.atk);
             if (Hp <= 0)

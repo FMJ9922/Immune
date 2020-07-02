@@ -26,11 +26,13 @@ public class FireModeHandle : MonoBehaviour
     {
         leftBtn.onClick.AddListener(OnLeftButtonClicked);
         rightBtn.onClick.AddListener(OnRightButtonClicked);
+        SoundManager.Instance.PlaySoundEffect(SoundResource.sfx_btnY);
     }
     private void OnDisable()
     {
         leftBtn.onClick.RemoveListener(OnLeftButtonClicked);
         rightBtn.onClick.RemoveListener(OnRightButtonClicked);
+        SoundManager.Instance.PlaySoundEffect(SoundResource.sfx_btnN);
     }
 
     private void OnRightButtonClicked()
@@ -49,10 +51,13 @@ public class FireModeHandle : MonoBehaviour
         fireMode = (FireMode)mode;
         OnFireModeChange(fireMode);
         text.text = "目标：" + FireModeToString(fireMode);
+
     }
 
     public static string FireModeToString(FireMode fireMode)
     {
+
+        SoundManager.Instance.PlaySoundEffect(SoundResource.sfx_btnY);
         string modeString = null;
         switch (fireMode)
         {

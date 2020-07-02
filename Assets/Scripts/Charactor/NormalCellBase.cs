@@ -43,6 +43,7 @@ public class NormalCellBase : CellBase
             Debug.Log("受到了来自"+enemyTrans.name+"的伤害：-"+enemyData.atk);
             if (Hp <= 0)
             {
+
                 //ChangeToEnemy();
                 OnDie();
             }

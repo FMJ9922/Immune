@@ -19,6 +19,7 @@ public class MenuSceneUI : MonoBehaviour
         {
             canvas.gameObject.SetActive(false);
         }
+        PlayBtnNoSound();
     }
 
     
@@ -49,4 +50,19 @@ public class MenuSceneUI : MonoBehaviour
         PlayerPrefs.SetFloat("SoundVolumn", SoundManager.Instance.Volumn);
         CloseAllCanvas();
     }
+
+    public void PlayBtnYesSound()
+    {
+        SoundManager.Instance.PlaySoundEffect(SoundResource.sfx_btnY);
+    }
+    public void PlayBtnNoSound()
+    {
+        SoundManager.Instance.PlaySoundEffect(SoundResource.sfx_btnN);
+    }
+    public void PlayPageTurnSound()
+    {
+        SoundManager.Instance.PlaySoundEffect(SoundResource.sfx_page_turn);
+    }
+
+    
 }

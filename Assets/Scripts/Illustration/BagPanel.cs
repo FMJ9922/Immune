@@ -32,53 +32,19 @@ public class BagPanel : ViewBase
        
         //InitArticleData();
         bagGrids = transform.GetComponentsInChildren<BagGrid>();
-        
     }
 
     private void Start()
     {
         LoadData();
         ActiveButton();
+        SetInformation(0);
     }
 
 
 
     #endregion
 
-
-    // 初始化物品数据
-    public void InitArticleData()
-    {
-       /*
-        // 近战
-        articles.Add(new Article("嗜中性粒细胞", "SRCell/嗜中性粒细胞", ArticleType.SRCell,"属性"));
-        articles.Add(new Article("巨嗜细胞", "SRCell/巨嗜细胞", ArticleType.SRCell, "属性"));
-        articles.Add(new Article("B淋巴细胞", "SRCell/B淋巴细胞", ArticleType.SRCell, "属性"));
-        articles.Add(new Article("效应T细胞", "SRCell/效应T细胞", ArticleType.SRCell, "属性"));
-
-        // 远程
-        articles.Add(new Article("嗜酸性粒细胞", "LRCell/嗜酸性粒细胞", ArticleType.LRCell, "属性"));
-        articles.Add(new Article("浆细胞", "LRCell/浆细胞", ArticleType.LRCell, "属性"));
-        articles.Add(new Article("NK自然杀伤细胞", "LRCell/NK自然杀伤细胞", ArticleType.LRCell, "属性"));
-        articles.Add(new Article("调节性T细胞", "LRCell/调节性T细胞", ArticleType.LRCell, "属性"));
-        // 辅助
-        articles.Add(new Article("嗜碱性粒细胞", "HelpCell/嗜碱性粒细胞", ArticleType.HelpCell, "属性"));
-        articles.Add(new Article("树突细胞", "HelpCell/树突细胞", ArticleType.HelpCell, "属性"));
-        articles.Add(new Article("T淋巴细胞", "HelpCell/T淋巴细胞", ArticleType.HelpCell, "属性"));
-        articles.Add(new Article("辅助性T细胞", "HelpCell/辅助性T细胞", ArticleType.HelpCell, "属性"));
-        articles.Add(new Article("记忆B细胞", "HelpCell/记忆B细胞", ArticleType.HelpCell, "属性"));
-        // 病毒
-        articles.Add(new Article("eb", "EnemyCell/eb", ArticleType.Enemy, "属性"));
-        articles.Add(new Article("病毒宿主", "EnemyCell/病毒宿主", ArticleType.Enemy, "属性"));
-        articles.Add(new Article("黄金葡萄球", "EnemyCell/黄金葡萄球", ArticleType.Enemy, "属性"));
-        articles.Add(new Article("巨细胞病毒", "EnemyCell/巨细胞病毒", ArticleType.Enemy, "属性"));
-        articles.Add(new Article("梅毒螺旋体", "EnemyCell/梅毒螺旋体", ArticleType.Enemy, "属性"));
-        articles.Add(new Article("天花病毒", "EnemyCell/天花病毒", ArticleType.Enemy, "属性"));
-        // 正常细胞
-       // articles.Add(new Article("红细胞", "Sprite/book1", ArticleType.Cell, "属性"));
-       // articles.Add(new Article("其他正常细胞", "Sprite/book2", ArticleType.Cell, "属性"));*/
-
-    }
 
     public static ArticleType PraseEnum(int actorType)
     {
@@ -99,7 +65,7 @@ public class BagPanel : ViewBase
             case 1:
                 articleType = ArticleType.LRCell;
                 return articleType;
-            case 12:
+            case 11:
                 articleType = ArticleType.LRCell;
                 return articleType;
             case 5:
@@ -124,7 +90,7 @@ public class BagPanel : ViewBase
             case 10:
                 articleType = ArticleType.HelpCell;
                 return articleType;
-            case 11:
+            case 12:
                 articleType = ArticleType.HelpCell;
                 return articleType;
             //病毒细胞
@@ -181,7 +147,7 @@ public class BagPanel : ViewBase
                 }
                 string path ="";
                 if (i < 14) path = "Cell";
-                else if (i>13&&i < 19) path = "Enemy";
+                else if (i>13&&i < 20) path = "Enemy";
                 else if (i > 19 && i < 23) path = "Cell";
 
                 //Debug.Log(obj.GetComponent<SpriteRenderer>()==null);
@@ -199,7 +165,11 @@ public class BagPanel : ViewBase
         {
             Button btn = gameObject.GetComponentsInChildren<Button>()[i];
             //Debug.Log(int.Parse(btn.gameObject.name));
-            btn.onClick.AddListener(() => { OnClick(int.Parse(btn.gameObject.name)); });
+            btn.onClick.AddListener(() => 
+            { 
+                OnClick(int.Parse(btn.gameObject.name));
+                SoundManager.Instance.PlaySoundEffect(SoundResource.sfx_page_turn); 
+            });
         }
 
     }

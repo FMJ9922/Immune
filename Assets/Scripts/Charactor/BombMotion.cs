@@ -131,15 +131,15 @@ public class BombMotion : MonoBehaviour
                 transform.localScale *= 2;
                 transform.GetComponent<CircleCollider2D>().radius /= 2;
                 transform.position -= new Vector3(0, 0.4f);
-                SoundManager.Instance.PlayBomb();
                 Invoke("SetDamageToEnemys", 0.7f);
+                SoundManager.Instance.PlaySoundEffect(SoundResource.sfx_bomb);
             }
         }
     }
     public void SetDamageToEnemys()
     {
         
-        for(int i = 0;i<enemyInRange.Count;i++) 
+        for (int i = 0;i<enemyInRange.Count;i++) 
         {
             
             Transform trans = (Transform)enemyInRange[i];

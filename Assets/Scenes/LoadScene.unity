@@ -1337,6 +1337,7 @@ MonoBehaviour:
   RealPic: {fileID: 1077584098}
   GameIntroText: {fileID: 1400639001}
   RealIntroText: {fileID: 758236964}
+  CellName: {fileID: 1182383698}
 --- !u!1 &1351720477
 GameObject:
   m_ObjectHideFlags: 0

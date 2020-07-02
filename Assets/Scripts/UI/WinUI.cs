@@ -33,6 +33,7 @@ public class WinUI : MonoBehaviour
             LevelManager.Instance.ShowWinOrFailCanvas(false);
             return;
         }
+        PlayerPrefs.SetInt("LevelScore" + GameManager.Instance.iLevel,achieveNum);
         //Debug.Log(achieveNum);
         for (int i = 0; i < scoreRequests.Length; i++)
         {

@@ -6,82 +6,38 @@ using UnityEngine.Audio;
 public class SoundManager : MonoBehaviour
 {
     private static SoundManager instance = null;
-
-
     private float soundVolumn;
+    public AudioClip[] audioClips;
 
 
+    public AudioSource[] efxSources;
+    private Coroutine[] coroutines; 
+    private List<AudioClip> clipList;
+    int[] frameCounter;
 
-    public AudioClip
-        sfx_btnY, sfx_btnN,//按键
-        sfx_enemy_dead, sfx_enemy_escape,//敌人死亡，敌人逃离
-        sfx_gain_bushu,//部署点数
-        sfx_upgrade,//细胞升级
-        sfx_bomb,//炸弹
-        sfx_fail, sfx_success;//失败，成功
-
-    int frameBuffer = 5;
-    bool inBuffer = false;
-    [SerializeField] AudioClip sfxInBuffer;
-
-    bool sfxOverride;
-    [SerializeField] AudioClip overrideClip;
-
-    private List<AudioSource> audioSourceList;        //Drag a reference to all the audio source which will play sfx in game
-
-    public enum SoundResource
+    private void Awake()
     {
-        //高
-        sfx_btnY = 0,//确认
-        sfx_btnN = 1,//取消
-        sfx_enemy_dead = 2,//敌人死亡
-        sfx_enemy_escape = 3,//敌人逃离
-        sfx_gain_bushu = 4,//部署点数
-        sfx_upgrade = 5,//细胞升级
-        sfx_bomb = 6,//炸弹
-        sfx_fail = 7,//失败
-        sfx_success = 8,//成功
-        //中
-        sfx_enemy_hit = 9,//敌人掉血
-        sfx_countdown = 10,//倒计时
-        sfx_start = 11,//开始
-        sfx_shovel_select = 12,//选中铲子
-        sfx_root_out = 13,//铲除
-    }
-
-    public void PlaySoundEffect(int soundresource){
-        switch (soundresource)
+        if (instance != null && instance != this)//检测Instance是否存在且只有一个
         {
-            case 0:
-                PlaySingle(sfx_btnY);
-                break;
-            case 1:
-                PlaySingle(sfx_btnN);
-                break;
-            case 2:
-                PlaySingle(sfx_enemy_dead);
-                break;
-            case 3:
-                PlaySingle(sfx_enemy_escape);
-                break;
-            case 4:
-                PlaySingle(sfx_gain_bushu);
-                break;
-            case 5:
-                PlaySingle(sfx_upgrade);
-                break;
-            case 6:
-                PlaySingle(sfx_bomb);
-                break;
-            case 7:
-                PlaySingle(sfx_fail);
-                break;
-            case 8:
-                PlaySingle(sfx_success);
-                break;
+            Destroy(this.gameObject);
+        }
+        else
+        {
+            instance = this;
+        }
 
-        }
-        }
+        DontDestroyOnLoad(this.gameObject);//加载关卡时不销毁GameManager
+        clipList = new List<AudioClip>();
+        coroutines = new Coroutine[7];
+        frameCounter = new int[7] { 0,0,0,0,0,0,0};
+        float soundVolume = PlayerPrefs.GetFloat("SoundVolume", 1f);
+        ValueChangeCheck(soundVolume);
+    }
+    public void PlaySoundEffect(SoundResource soundResource)
+    {
+        AudioClip audioClip = audioClips[(int)soundResource];
+        PlaySingle(audioClip);
+    }
 
     public static SoundManager Instance
     {
@@ -98,185 +54,109 @@ public class SoundManager : MonoBehaviour
         }
         set
         {
-            soundVolumn = Mathf.Clamp(value,0,1);
+            soundVolumn = Mathf.Clamp(value, 0, 1);
+            ValueChangeCheck(soundVolumn);
         }
     }
 
-    private void Awake()
+    void FixedUpdate()
     {
-        if (instance != null && instance != this)//检测Instance是否存在且只有一个
+        for(int i = 0; i < frameCounter.Length; i++)
         {
-            Destroy(this.gameObject);
+            frameCounter[i]+=1;
         }
-        else
-        {
-            instance = this;
-        }
-
-        DontDestroyOnLoad(this.gameObject);//加载关卡时不销毁GameManager
-        audioSourceList = new List<AudioSource>();
-
-        sfxOverride = false;
-        overrideClip = null;
-
-        float soundVolume = PlayerPrefs.GetFloat("SoundVolume", 1f);
-        ValueChangeCheck(soundVolume);
-
-        if (PlayerPrefs.HasKey("SoundVolumn"))
-        {
-            soundVolumn = PlayerPrefs.GetFloat("SoundVolumn");
-            
-        }
-        else
-        {
-            soundVolumn = 1;
-        }
+        
     }
+    
     public void ValueChangeCheck(float vol)
     {
-        //Debug.Log("sound volume changes to:" + vol);
         PlayerPrefs.SetFloat("SoundVolume", vol);
-       
-        foreach (AudioSource audioSource in audioSourceList)
+
+        foreach (AudioSource audioSource in efxSources)
         {
             audioSource.volume = vol;
         }
 
     }
-    public void AddToSoundList(AudioSource[] newSources)
+    public void AddToSoundList(AudioClip clip)
     {
-        float soundVolume = PlayerPrefs.GetFloat("SoundVolume", 1f);
-        //Debug.Log(soundVolume);
-        foreach (AudioSource source in newSources)
-        {
-            if (audioSourceList.Contains(source))
-            {
-                continue;
-            }
-            //Debug.Log("Add sound:" + source.name);
-            source.volume = soundVolume;
-            audioSourceList.Add(source);
-        }
-
+        clipList.Add(clip);
     }
-    public void RemoveFromSoundList(AudioSource[] Sources)
+    public void RemoveFromSoundList(AudioClip clip)
     {
-        foreach (AudioSource source in Sources)
+        if (clipList.Contains(clip))
         {
-            if (audioSourceList.Contains(source))
-            {
-                audioSourceList.Remove(source);
-            }
-            //Debug.Log("Add sound:" + source.name);
-
+            clipList.Remove(clip);
         }
-
     }
     public void pauseAllTheSounds()
     {
-        foreach (AudioSource audioSource in audioSourceList)
+        foreach (AudioSource audioSource in efxSources)
         {
             audioSource.Pause();
+            StopAllCoroutines();
         }
     }
 
     public void unPauseAllTheSounds()
     {
-        
-
-        foreach (AudioSource audioSource in audioSourceList)
+        foreach (AudioSource audioSource in efxSources)
         {
             audioSource.UnPause();
+
         }
     }
-   
-    //音效引用
-    public void PlayButtonYes()
-    {
-        PlaySingle(sfx_btnY);
-    }
-    public void PlayButtonNo()
-    {
-        PlaySingle(sfx_btnN);
-    }
-    public void PlayEnemyDead()
-    {
-        PlaySingle(sfx_enemy_dead);
-    }
-    public void PlayEnemyEscape()
-    {
-        PlaySingle(sfx_enemy_escape);
-    }
-    public void PlayGainBushu()
-    {
-        PlaySingle(sfx_gain_bushu);
-    }
-    public void PlayUpgrade()
-    {
-        PlaySingle(sfx_upgrade);
-    }
-    public void PlayBomb()
-    {
-        PlaySingle(sfx_bomb);
-    }
-    public void PlayFail()
-    {
-        PlaySingle(sfx_fail);
-    }
-    public void PlaySuccess()
-    {
-        PlaySingle(sfx_success);
-    }
 
-
-
-    //--------------------------//
-    //	ALL-PURPOSE FUNCTIONS	//
-    //--------------------------//
-
-    //Used to play single sound clips.
-    public void PlaySingle(AudioClip clip)
-    {
-        //Debug.Log("Audio: PlaySingle " + clip.name);
-
-        //the backup source is a failsafe in case all audio sources are playing.
-        //in this case, we want the new clip to override currently playing sound effects
-
-        if (inBuffer && clip == sfxInBuffer)
-        {
-            //if we're in the buffer window and the clip is assigned as
-            //the buffer clip, then it has just been played and doesn't need 
-            //to be played again
-            // Debug.Log("Audio: Prevented Simultaneous SFX: " + sfxInBuffer.name);
-
-            return;
-        }
-        else if (sfxOverride && clip != overrideClip)
-        {
-            Debug.Log("Audio: Overridden SFX: " + clip.name);
-            return;
-        }
-        else
-        {
-            //otherwise, assign the clip to sfxInBuffer
-            sfxInBuffer = clip;
-        }
-
-        StartCoroutine("SameSoundCooldown");
     
-
-        }
-    public IEnumerator SameSoundCooldown()
+    private void PlaySingle(AudioClip audioClip)
     {
-        inBuffer = true;
-
-        for (int i = 0; i < frameBuffer; i++)
+        for(int i = 0; i < efxSources.Length; i++)
         {
-            yield return null;
+            AudioSource audioSource = efxSources[i];
+            for(int j = 0;j< efxSources.Length; j++)
+            {
+                if(efxSources[j].clip != null && efxSources[j].clip.name == audioClip.name)
+                {
+                    if (frameCounter[j] < 6)
+                    {
+                        return;
+                    }
+                }
+                
+            }
+            if (!audioSource.isPlaying)
+            {
+                frameCounter[i] = 0;
+                audioSource.clip = audioClip;
+                audioSource.PlayOneShot(audioClip);
+                Debug.Log("播放器" + i + "正在播放：" + audioClip.name);
+                float time = audioClip.length;
+                coroutines[i] = StartCoroutine(DoSthAfterClipFinished(time, audioSource));
+                return;
+            }
+
+            
         }
-
-        inBuffer = false;
+        AddToSoundList(audioClip);
     }
+    IEnumerator DoSthAfterClipFinished(float time,AudioSource self)
+    {
+        yield return new WaitForSeconds(time);
+        self.clip = null;
+        CheckWaitClip();
+    }
+    public void CheckWaitClip()
+    {
+        if (clipList.Count > 0)
+        {
 
+            PlaySingle(clipList[0]);
+            RemoveFromSoundList(clipList[0]);
+        }
+    }
+    public void PlayBtnYes()
+    {
+        PlaySoundEffect(SoundResource.sfx_btnY);
+    }
 
 }
