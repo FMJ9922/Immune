@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class EnemyHealth : MonoBehaviour
 {
-    public float InitHealth;//初始生命值
+    public float InitHealth;
     private EnemyAnimator enemyAnimator;
     public ArrayList cellInRange;
 
@@ -26,9 +26,9 @@ public class EnemyHealth : MonoBehaviour
     {
        
         enemyMotion = transform.GetComponent<EnemyMotion>();
-        InitHealth = JsonIO.GetEnemyData(enemyMotion.actorType).Hp;
         cellInRange = new ArrayList();
-        Hp = InitHealth;
+        InitHealth *= JsonIO.GetEnemyData(enemyMotion.actorType).Hp;
+        Hp =InitHealth;
         hpSlider = GetComponentInChildren<Slider>();
         enemyAnimator = transform.GetComponentInChildren<EnemyAnimator>();
     }

@@ -99,6 +99,7 @@ public abstract class CellBase : MonoBehaviour
     public virtual void OnEnemyEnter(Transform enemyTrans)
     {
         if (enemyTrans == null) return;
+        if (enemyTrans.GetComponent<EnemyMotion>().enemyStatus == EnemyStatus.Engulfed) return;
         enemyInRange.Add(enemyTrans);
         EnemyHealth enemyHealth = enemyTrans.GetComponent<EnemyHealth>();
         enemyHealth.cellInRange.Add(this.transform);

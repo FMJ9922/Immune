@@ -38,13 +38,13 @@ public class NormalCellBase : CellBase
         if (p < enemyData.rate)
         {
             Hp -= enemyData.atk;
-            damangeCounter[(int)enemyMotion.actorType - 20] += enemyData.atk;
+            damangeCounter[(int)enemyMotion.actorType - 14] += enemyData.atk;
             HpSlider.value = Hp/100F;
             Debug.Log("受到了来自"+enemyTrans.name+"的伤害：-"+enemyData.atk);
             if (Hp <= 0)
             {
 
-                //ChangeToEnemy();
+                ChangeToEnemy();
                 OnDie();
             }
         }
@@ -67,9 +67,9 @@ public class NormalCellBase : CellBase
             if (damangeCounter[i] > max)
             {
                 max = damangeCounter[i];
-                actorType = (ActorType)i;
+                actorType = (ActorType)(i+14);
             } 
         }
-        LevelManager.Instance.CreateOneEnemy(actorType);
+        LevelManager.Instance.CreateOneEnemy(actorType,transform);
     }
 }

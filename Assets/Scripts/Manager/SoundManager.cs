@@ -89,6 +89,10 @@ public class SoundManager : MonoBehaviour
             clipList.Remove(clip);
         }
     }
+    public void ClearSoundList()
+    {
+        clipList = new List<AudioClip>();
+    }
     public void pauseAllTheSounds()
     {
         foreach (AudioSource audioSource in efxSources)
@@ -129,7 +133,7 @@ public class SoundManager : MonoBehaviour
                 frameCounter[i] = 0;
                 audioSource.clip = audioClip;
                 audioSource.PlayOneShot(audioClip);
-                Debug.Log("播放器" + i + "正在播放：" + audioClip.name);
+                //Debug.Log("播放器" + i + "正在播放：" + audioClip.name);
                 float time = audioClip.length;
                 coroutines[i] = StartCoroutine(DoSthAfterClipFinished(time, audioSource));
                 return;

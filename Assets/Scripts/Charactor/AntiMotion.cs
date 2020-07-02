@@ -5,7 +5,7 @@ using UnityEngine;
 public class AntiMotion : MonoBehaviour
 {
 
-    private float speed = 0.7f;
+    private float speed = 1.4f;
     public float damage;
     private Transform target;//目标
     private bool attached = false;

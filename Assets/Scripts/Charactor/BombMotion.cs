@@ -5,7 +5,7 @@ using UnityEngine;
 public class BombMotion : MonoBehaviour
 {
     private int index = 0;
-    private float speed = 2;
+    private float speed = 4;
     public Vector3[] wayPoints;
     public Sprite[] IdleSprite;
     public Sprite[] ExplosionSprite;
@@ -118,7 +118,7 @@ public class BombMotion : MonoBehaviour
         }
         if (index >= wayPointList.Length) return;
         transform.Translate((wayPointList[index] - transform.position).normalized * Time.deltaTime * speed);//移动，节点到当前位置的向量差的单位差*完成上一帧的时间*速度
-        if (Vector3.Distance(wayPointList[index], transform.position) < 0.03f)//三维坐标，距离（节点，当前位置）小于0.2f的时候执行
+        if (Vector3.Distance(wayPointList[index], transform.position) < 0.08f)//三维坐标，距离（节点，当前位置）小于0.2f的时候执行
         {
             index++;//增加索引，也就获取到下个节点坐标
             if (index > wayPointList.Length - 1)//如果大于最后一个节点时执行

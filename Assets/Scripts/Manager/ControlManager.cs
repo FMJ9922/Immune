@@ -203,13 +203,13 @@ public class ControlManager : MonoBehaviour
         }
         else if (!PathAvaliable || !CheckPathAvaliable())
         {
-            targetNode.tileType = temp;
+            targetNode.tileType = TileType.Empty;
             LoggerManager.Instance.ShowOneLog("此处无法放置！");
 
         }
         else
         {
-            targetNode.tileType = temp;
+            targetNode.tileType = TileType.Empty;
             LoggerManager.Instance.ShowOneLog("点数不足！");
         }
     }
@@ -313,12 +313,14 @@ public class ControlManager : MonoBehaviour
 
                             if (OnPlantCell != null)
                             {
+                                targetNode.tileType = TileType.Occupy;
                                 OnPlantCell();
                             }
                             int type = (int)cellType;
                             if ((type > 6 && type < 10) || (type > 10 && type < 13))
                             {
                                 LoggerManager.Instance.ShowOneLog("必须放置在前置细胞上");
+                                targetNode.tileType = TileType.Empty;
                             }
                             else 
                             {

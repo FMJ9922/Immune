@@ -24,6 +24,7 @@ public class EnemyMotion : MonoBehaviour
     private int kangTiNum = 0;
     public Transform AntiTrans;
 
+
     public void AddKangTi()
     {
         kangTiNum++;

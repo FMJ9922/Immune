@@ -20,8 +20,8 @@ public class WinUI : MonoBehaviour
         for(int i = 0; i < scoreRequests.Length; i++)
         {
             //异或
-            bool achieve = !(((int)scoreRequests[i].scoreType < 2 && !(scoreRequests[i].actualNum <= scoreRequests[i].requestNum))
-                            || (!((int)scoreRequests[i].scoreType < 2) && (scoreRequests[i].actualNum <= scoreRequests[i].requestNum)));
+            bool achieve = !(((int)scoreRequests[i].scoreType <= 2 && !(scoreRequests[i].actualNum <= scoreRequests[i].requestNum))
+                            || (!((int)scoreRequests[i].scoreType <= 2) && (scoreRequests[i].actualNum <= scoreRequests[i].requestNum)));
             /*Debug.Log(((int)scoreRequests[i].scoreType < 2 && !(scoreRequests[i].actualNum <= scoreRequests[i].requestNum))+" "+
                 (!((int)scoreRequests[i].scoreType < 2) && (scoreRequests[i].actualNum <= scoreRequests[i].requestNum)) + " " +
                 achieve);*/

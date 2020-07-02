@@ -131,7 +131,7 @@ public class LevelManager : MonoBehaviour
         Map = transform.Find("Map").gameObject;
         GenerateTileNode();
 
-        levelPoints = new Points(100, 100, 100);
+        levelPoints = new Points(10, 0, 0);
         finishCreate = false;
 
         StartCanvas.SetActive(true);
@@ -155,7 +155,7 @@ public class LevelManager : MonoBehaviour
     }
     private void Update()
     {
-        levelPoints.DeployPoints += Time.deltaTime / 5;
+        levelPoints.DeployPoints += Time.deltaTime / 3;
     }
     public bool SpendPoints(PointsType pointsType, float points)
     {
@@ -179,6 +179,7 @@ public class LevelManager : MonoBehaviour
             WinCanvas.GetComponent<WinUI>().InitWinUI(levelRequest);
             FailCanvas.SetActive(false);
             SoundManager.Instance.PlaySoundEffect(SoundResource.sfx_success);
+            SoundManager.Instance.ClearSoundList();
             GameManager.Instance.Set0xTimeScale();
             isEnd = true;
         }
@@ -189,6 +190,7 @@ public class LevelManager : MonoBehaviour
             FailCanvas.SetActive(true);
             FailCanvas.GetComponent<StartIntroduceUI>().content.text = str;
             SoundManager.Instance.PlaySoundEffect(SoundResource.sfx_fail);
+            SoundManager.Instance.ClearSoundList();
             PlayerPrefs.SetInt("LevelScore" + GameManager.Instance.iLevel, 0);
             GameManager.Instance.Set0xTimeScale();
             isEnd = true;
@@ -333,7 +335,7 @@ public class LevelManager : MonoBehaviour
                 enemy.GetComponent<EnemyMotion>().FindPathType = (FindPathType)waves[i].findPathType;
                 enemy.GetComponent<EnemyMotion>().originSpeed = waves[i].speed;
                 enemy.GetComponentInChildren<EnemyMotion>().enemyType = (EnemyType)(waves[i].enemyType-14);
-                enemy.GetComponent<EnemyHealth>().InitHealth *= 1 + ((float)i / 10); 
+                enemy.GetComponent<EnemyHealth>().InitHealth = 1 + ((float)i / 10); 
                 enemy.SetActive(true);
                 /*enemy.GetComponent<EnemyMotion>().draw = j==0?true:false;*/
 
@@ -351,13 +353,19 @@ public class LevelManager : MonoBehaviour
         InvokeRepeating("CheckSuccess", 0f,1f);
     }
     
-    public void CreateOneEnemy(ActorType actorType)
+    public void CreateOneEnemy(ActorType actorType,Transform transform)
     {
-        GameObject enemy = Instantiate(PrefabManager.GetEnemyPrefab(actorType), transform.position, Quaternion.identity, EnemyGroup.transform);//随机生成
+        GameObject _gameObject = PrefabManager.GetEnemyPrefab(actorType);
+        Debug.Log(_gameObject.name);
+        GameObject enemy = Instantiate(_gameObject, transform.position, Quaternion.identity, EnemyGroup.transform);//随机生成
         enemy.name = "EnemyInitByDeathCell";
-        enemy.GetComponent<EnemyMotion>().startPos = new Vector2(waves[0].startX, waves[0].startY);
-        enemy.GetComponent<EnemyMotion>().endPos = new Vector2(waves[0].endX, waves[0].endY);
-        enemy.GetComponent<EnemyMotion>().FindPathType = (FindPathType)waves[0].findPathType;
+        enemy.GetComponent<EnemyMotion>().startPos = transform.position;
+        enemy.GetComponent<EnemyMotion>().endPos = new Vector2(waves[curWave].endX, waves[curWave].endY);
+        enemy.GetComponent<EnemyMotion>().FindPathType = (FindPathType)waves[curWave].findPathType;
+        enemy.GetComponent<EnemyMotion>().originSpeed = waves[curWave].speed;
+        enemy.GetComponentInChildren<EnemyMotion>().enemyType = (EnemyType)(waves[curWave].enemyType - 14);
+        enemy.GetComponent<EnemyHealth>().InitHealth *= 1 + ((float)curWave / 10);
+        enemy.SetActive(true);
     }
 
     public void DrawDefaultRoute(int wave)
