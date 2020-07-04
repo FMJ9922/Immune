@@ -68,14 +68,14 @@ public class BagPanel : ViewBase
             case 11:
                 articleType = ArticleType.LRCell;
                 return articleType;
-            case 5:
+            case 4:
                 articleType = ArticleType.LRCell;
                 return articleType;
             //辅助
             case 2:
                 articleType = ArticleType.HelpCell;
                 return articleType;
-            case 4:
+            case 5:
                 articleType = ArticleType.HelpCell;
                 return articleType;
             case 6:

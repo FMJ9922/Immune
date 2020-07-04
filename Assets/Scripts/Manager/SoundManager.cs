@@ -145,7 +145,7 @@ public class SoundManager : MonoBehaviour
     }
     IEnumerator DoSthAfterClipFinished(float time,AudioSource self)
     {
-        yield return new WaitForSeconds(time);
+        yield return new WaitForSecondsRealtime(time);
         self.clip = null;
         CheckWaitClip();
     }

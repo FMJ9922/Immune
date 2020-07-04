@@ -1593,7 +1593,7 @@ GameObject:
   - component: {fileID: 5843508678456949151}
   - component: {fileID: 7230572228213031749}
   m_Layer: 0
-  m_Name: 'NKCell '
+  m_Name: NKCell
   m_TagString: Cell
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1631,7 +1631,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cellStatus: 0
-  cellType: 5
+  cellType: 4
   gridPos: {x: 0, y: 0}
   revisePosLeft: {x: 0.12, y: 0.342, z: 0}
   revisePosRight: {x: -0.02, y: 0.342, z: 0}

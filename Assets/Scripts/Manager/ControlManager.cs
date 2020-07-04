@@ -34,8 +34,8 @@ public class ControlManager : MonoBehaviour
     public CellBase lastCell = null;
 
     public Transform SelectGlow;
-    public bool AllowBJ = false;
-    private bool hasInitBJbtn = false;
+    //public bool AllowBJ = false;
+    //private bool hasInitBJbtn = false;
     void Awake()
     {
         if (instance != null && instance != this)
@@ -193,7 +193,7 @@ public class ControlManager : MonoBehaviour
             LevelManager.Instance.OnScoreEvent(ScoreType.CellDeployNum, 1);
             targetNode.tileType = TileType.Occupy;
 
-            if (AllowBJ && cellType == CellType.JX)
+            //if (AllowBJ && cellType == CellType.JX)
             {
 
             }
@@ -336,10 +336,10 @@ public class ControlManager : MonoBehaviour
                                 if (RightPlaceToUpGrade(cellBase.cellType, cellType)&&CheckCanPlaceCell(cellType))
                                 {
                                     cellBase.StartAction();
-                                    if (!hasInitBJbtn)
+                                    /*if (!hasInitBJbtn)
                                     {
                                         CellButtonUI.Instance.InitOneButton(JsonIO.GetAllowCellType().Length - 1);
-                                    }
+                                    }*/
                                     Debug.Log(cellType.ToString());
                                     StartCoroutine(WaitForTime(() => InitOneCell(cellType,targetNode), cellBase.GetUpgradeTime()));
                                 }

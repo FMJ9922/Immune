@@ -6,6 +6,8 @@ public class MusicManager : MonoBehaviour
 {
     private static MusicManager instance = null;
     private float musicVolumn;
+    public AudioClip[] audioClips;
+    public AudioSource audioSource;
     public static MusicManager Instance
     {
         get
@@ -22,6 +24,7 @@ public class MusicManager : MonoBehaviour
         set
         {
             musicVolumn = Mathf.Clamp(value, 0, 1);
+            ValueChangeCheck(musicVolumn);
         }
     }
     private void Awake()
@@ -37,13 +40,32 @@ public class MusicManager : MonoBehaviour
 
         DontDestroyOnLoad(this.gameObject);//加载关卡时不销毁GameManager
 
-        if (PlayerPrefs.HasKey("MusicVolumn"))
-        {
-            musicVolumn = PlayerPrefs.GetFloat("MusicVolumn");
-        }
-        else
-        {
-            musicVolumn = 1;
-        }
+        musicVolumn = PlayerPrefs.GetFloat("MusicVolumn", 1f);
+        ValueChangeCheck(musicVolumn);
+    }
+    private void Start()
+    {
+        PlayMusic();
+    }
+    public void ValueChangeCheck(float vol)
+    {
+        PlayerPrefs.SetFloat("MusicVolumn", vol);
+        audioSource.volume = vol;
+
+    }
+    public void PlayMusic()
+    {
+        int rand = Random.Range(0, 5);
+        audioSource.PlayOneShot(audioClips[rand]);
+        Debug.Log("paly");
+        float time = audioClips[rand].length;
+        StartCoroutine(DoSthAfterClipFinished(time*1.1f, audioSource));
+
+
+    }
+    IEnumerator DoSthAfterClipFinished(float time, AudioSource self)
+    {
+        yield return new WaitForSecondsRealtime(time + 1);
+        PlayMusic();
     }
 }

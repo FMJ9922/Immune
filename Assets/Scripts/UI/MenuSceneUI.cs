@@ -64,5 +64,8 @@ public class MenuSceneUI : MonoBehaviour
         SoundManager.Instance.PlaySoundEffect(SoundResource.sfx_page_turn);
     }
 
-    
+    public void Quit()
+    {
+        GameManager.Instance.QuitApplication();
+    }
 }

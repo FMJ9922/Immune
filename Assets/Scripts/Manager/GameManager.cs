@@ -130,7 +130,7 @@ public class GameManager : MonoBehaviour
     public void Set2xTimeScale()//二倍速
     {
         //Debug.Log("Time*2");
-        Time.timeScale = 4.0f;
+        Time.timeScale = 2.0f;
     }
     public void Set1xTimeScale()//一倍速
     {

@@ -8,6 +8,7 @@ public class NKCellControl : SRCellBase
     void Start()
     {
         attackType = AttackType.Other;
+        Debug.Log(atkDamage);
     }
 
     public override void AttackOneTime()

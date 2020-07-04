@@ -24,16 +24,16 @@ public class LoggerManager : MonoBehaviour
         string buildLog = log;
         if (lastLog!=null&&string.Equals(lastLog.logText.text, log))
         {
-            n++;
-            lastLog.SetLogInfo(log, n);
+            //n++;
+            //lastLog.SetLogInfo(log, n);
             return;
         }
         else
         {
             n = 0;
-            GameObject mylog = Instantiate(singleLog, transform);
-            mylog.GetComponent<SingleLog>().SetLogInfo(buildLog,n);
-            lastLog = mylog.GetComponent<SingleLog>();
+            //GameObject mylog = Instantiate(singleLog, transform);
+            //mylog.GetComponent<SingleLog>().SetLogInfo(buildLog,n);
+            //lastLog = mylog.GetComponent<SingleLog>();
         }
         
     }

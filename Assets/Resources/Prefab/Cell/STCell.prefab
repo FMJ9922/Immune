@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6112441261426908020}
   - component: {fileID: 2068933480910037933}
   m_Layer: 0
-  m_Name: 'STCell '
+  m_Name: STCell
   m_TagString: Cell
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -49,14 +49,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cellStatus: 0
-  cellType: 4
+  cellType: 5
   gridPos: {x: 0, y: 0}
   revisePosLeft: {x: 0.02, y: 0.31, z: 0}
   revisePosRight: {x: 0.02, y: 0.31, z: 0}
   ProduceSlider: {fileID: 2989657348521634397}
-  detector: {fileID: 3201874854256881809}
   product: {fileID: 2949188760724034538, guid: eeb4dbdc09efcc7499aa9e19018759de, type: 3}
   InitPos: {fileID: 6031371037954132429}
+  detector: {fileID: 3201874854256881809}
 --- !u!1 &1530454552696699967
 GameObject:
   m_ObjectHideFlags: 0
